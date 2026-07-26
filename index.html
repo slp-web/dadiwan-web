@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>大地湾彩陶文化数字化展示</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- ===== 欢迎遮罩 ===== -->
+<div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#3e2c1b; z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; transition:opacity 0.8s ease;">
+    <div style="font-size:5rem; margin-bottom:16px;">🏺</div>
+    <h1 style="color:#f0e2d0; font-size:2rem; margin-bottom:8px;">大地湾彩陶</h1>
+    <p style="color:#b8a088; font-size:1rem; margin-bottom:30px;">八千年的回响 · 数字化呈现</p>
+    <button onclick="enterSite()" style="padding:12px 40px; background:#bf8f60; color:#3e2c1b; border:none; border-radius:30px; font-size:1.1rem; font-weight:bold; cursor:pointer; transition:background 0.3s;" onmouseover="this.style.background='#d9a87a'" onmouseout="this.style.background='#bf8f60'">
+        开始探索
+    </button>
+</div>
+
+    <!-- ===== 导航栏 ===== -->
+    <nav>
+        <a href=" " onclick="showPage('home')">🏠 首页</a >
+        <a href="#" onclick="showPage('gallery')">🏺 彩陶图鉴</a >
+        <a href="#" onclick="showPage('patterns')">🎨 纹样赏析</a >
+        <a href="#" onclick="showPage('craft')">🔧 工艺简介</a >
+        <a href="#" onclick="showPage('interact')">🧩 互动小功能</a >
+        <a href="#" onclick="showPage('about')">📖 关于与资料</a >
+    </nav>
+
+    <!-- ===== 首页 ===== -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="spinning-pot">🏺</div>
+            <h1>大地湾彩陶</h1>
+            <p>距今8000年的黄河流域史前文化明珠</p >
+            <p style="font-size:1rem; margin-top:20px; color:#5a3e2b;">
+                点击上方导航，探索彩陶的纹样、工艺与故事
+            </p >
+        </div>
+    </div>
+
+    <!-- ===== 彩陶图鉴 ===== -->
+<div id="gallery" class="page">
+    <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🏺 彩陶图鉴</h2>
+    <p style="text-align:center; color:#5a3e2b; margin-bottom:24px;">点击任意陶器，可查看详情（3D展示即将上线）</p>
+    <div class="card-grid">
+        <!-- 1. 人头形器口彩陶瓶 -->
+        <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
+            <img src="彩陶图片/人头.jpg" alt="人头形器口彩陶瓶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <h4>人头形器口彩陶瓶</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾“镇馆之宝”，人像与陶器完美结合</p>
+        </div>
+        <!-- 2. 宽带纹三足彩陶钵 -->
+        <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
+            <img src="彩陶图片/三足.jpg" alt="宽带纹三足彩陶钵" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <h4>宽带纹三足彩陶钵</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">我国已知最早的彩陶之一，纹饰简洁古朴</p>
+        </div>
+        <!-- 3. 几何纹彩陶罐 -->
+        <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
+            <img src="彩陶图片/几何纹.jpeg" alt="几何纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <h4>几何纹彩陶罐</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">线条流畅，体现先民的抽象审美能力</p>
+        </div>
+        <!-- 4. 鱼纹彩陶盆 -->
+        <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
+            <img src="彩陶图片/鱼纹彩陶盆.jpg" alt="鱼纹彩陶盆" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <h4>鱼纹彩陶盆</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">鱼纹从具象到抽象的演变代表</p>
+        </div>
+        <!-- 5. 网格纹彩陶壶 -->
+        <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
+            <img src="彩陶图片/网格纹彩陶壶.jpg" alt="网格纹彩陶壶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <h4>网格纹彩陶壶</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">网格纹是大地湾最具代表性的装饰纹样</p>
+        </div>
+        <!-- 6. 变体鸟纹彩陶罐 -->
+        <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
+            <img src="彩陶图片/遍体鸟纹彩陶罐.jpeg" alt="变体鸟纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <h4>变体鸟纹彩陶罐</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，走向符号化与程式化</p>
+        </div>
+    </div>
+</div>
+
+    <!-- ===== 纹样赏析 ===== -->
+<div id="patterns" class="page">
+    <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🎨 纹样赏析</h2>
+    <p style="text-align:center; color:#5a3e2b; margin-bottom:24px;">大地湾彩陶的典型纹样及其文化内涵</p>
+    <div class="card-grid">
+        <!-- 鱼纹 -->
+        <div class="card">
+            <div style="width:100%; height:180px; background:#d9cdbc; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#5a3e2b;">🐟</div>
+            <h4>鱼纹</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾仰韶文化彩陶的代表性纹样，从具象到抽象演变，寓意多子多福与繁衍</p>
+        </div>
+        <!-- 变体鸟纹 -->
+        <div class="card">
+            <div style="width:100%; height:180px; background:#d9cdbc; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#5a3e2b;">🐦</div>
+            <h4>变体鸟纹</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，从写实走向符号化，体现了先民从具象思维向抽象思维的过渡</p>
+        </div>
+        <!-- 网格纹 -->
+        <div class="card">
+            <div style="width:100%; height:180px; background:#d9cdbc; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#5a3e2b;">⬛</div>
+            <h4>网格纹</h4>
+            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾最具代表性的装饰纹样之一，由线条交错构成，形态规整，富有节奏感</p>
+        </div>
+    </div>
+</div>
+<!-- ===== 工艺简介 ===== -->
+<div id="craft" class="page">
+    <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🔧 工艺简介</h2>
+    <p style="text-align:center; color:#5a3e2b; margin-bottom:24px;">大地湾彩陶制作六步骤</p>
+    <div class="card-grid">
+        <div class="card"><div style="font-size:3rem;">⛏️</div><h4>选土</h4><p style="font-size:0.85rem; color:#5a3e2b;">选用细腻纯净的黄土</p></div>
+        <div class="card"><div style="font-size:3rem;">💧</div><h4>淘洗</h4><p style="font-size:0.85rem; color:#5a3e2b;">去除杂质，提高可塑性</p></div>
+        <div class="card"><div style="font-size:3rem;">🖐️</div><h4>制坯</h4><p style="font-size:0.85rem; color:#5a3e2b;">手工捏塑或泥条盘筑</p></div>
+        <div class="card"><div style="font-size:3rem;">✂️</div><h4>修坯</h4><p style="font-size:0.85rem; color:#5a3e2b;">修整器型，打磨光滑</p></div>
+        <div class="card"><div style="font-size:3rem;">🎨</div><h4>彩绘</h4><p style="font-size:0.85rem; color:#5a3e2b;">用矿物颜料绘制纹样</p></div>
+        <div class="card"><div style="font-size:3rem;">🔥</div><h4>烧制</h4><p style="font-size:0.85rem; color:#5a3e2b;">入窑高温烧制成型</p></div>
+    </div>
+</div>
+   <!-- ===== 互动小功能 ===== -->
+<div id="interact" class="page">
+    <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🧩 互动小功能</h2>
+    <p style="text-align:center; color:#5a3e2b; margin-bottom:24px;">知识问答 · 纹样拼图（即将上线）</p>
+
+    <!-- 问答容器：JavaScript 会自动在这里生成题目 -->
+    <div id="quiz-container" style="max-width:600px; margin:0 auto;"></div>
+</div>
+
+<!-- ===== 关于与资料 ===== -->
+<div id="about" class="page">
+    <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">📖 关于与资料</h2>
+    <div style="max-width:800px; margin:0 auto;">
+
+        <!-- 遗址简介 -->
+        <div style="background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+            <h3 style="color:#3e2c1b;">📍 大地湾遗址简介</h3>
+            <p style="color:#3e2c1b; line-height:1.8; font-size:0.95rem;">
+                大地湾遗址位于甘肃省天水市秦安县五营镇，距今约8000年至5000年，是我国新石器时代早期的重要聚落遗址，也是黄河流域目前发现最早、规模最大的史前聚落之一。
+            </p>
+            <p style="color:#3e2c1b; line-height:1.8; font-size:0.95rem; margin-top:12px;">
+                遗址出土的彩陶是我国已知最早的彩陶之一，纹样丰富、器型多样，在中华文明起源研究中具有里程碑意义。其中，<strong>人头形器口彩陶瓶</strong>被誉为大地湾“镇馆之宝”，其独特的造型与纹饰承载了先民的审美理想与精神信仰。
+            </p>
+        </div>
+
+        <!-- 参考文献 -->
+        <div style="background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+            <h3 style="color:#3e2c1b;">📚 主要参考文献</h3>
+            <ul style="color:#5a3e2b; font-size:0.9rem; line-height:1.8; padding-left:20px;">
+                <li>孙少毅. 大地湾仰韶文化彩陶鱼纹研究[D]. 西北师范大学, 2021.</li>
+                <li>韩建业. 彩陶之路: 考古所见早期东西文化交流和亚欧世界体系[M]. 中国社会科学出版社, 2024.</li>
+                <li>侯丽. 马家窑文化中的水元素探析——以甘肃会宁地区出土彩陶为研究对象[J]. 丝绸之路, 2026.</li>
+                <li>刘杨. 马家窑彩陶纹样的设计解译与应用研究[D]. 鲁迅美术学院, 2025.</li>
+                <li>李洋. HTML5技术在移动Web前端设计与开发中的应用[J]. 电脑知识与技术, 2026.</li>
+                <li>王岁林. 大地湾彩陶文化融入园本课程的意义与可行性分析[J]. 天津教育, 2020.</li>
+                <li>李丹. 以服务设计为驱动的仰韶文化博物馆文创设计实践[D]. 西安石油大学, 2025.</li>
+            </ul>
+        </div>
+
+        <!-- 致谢 -->
+        <div style="background:white; border-radius:16px; padding:24px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+            <h3 style="color:#3e2c1b;">🙏 致谢</h3>
+            <p style="color:#3e2c1b; line-height:1.8; font-size:0.95rem;">
+                感谢指导老师在选题和设计方案上的悉心指导，感谢答辩组老师提出的宝贵修改意见，感谢家人和同学的支持与帮助。
+            </p>
+            <p style="color:#7a5a44; line-height:1.8; font-size:0.9rem; margin-top:12px; font-style:italic;">
+                本网站为毕业设计作品，旨在探索大地湾彩陶文化的数字化展示路径。如有不足之处，恳请各位老师批评指正。
+            </p>
+        </div>
+
+        <!-- 小彩蛋：徽章墙（可选） -->
+        <div style="text-align:center; margin-top:24px; font-size:0.85rem; color:#b8a088;">
+            🏺 大地湾彩陶 · 八千年的回响
+        </div>
+
+    </div>
+</div>
+
+    <!-- ===== 页脚 ===== -->
+    <footer>
+        <p>大地湾彩陶文化数字化展示网站 </p >
+    </footer>
+
+    <script src="script.js"></script>
+    <!-- ===== 徽章弹窗 ===== -->
+<div id="badge-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:white; border-radius:20px; padding:40px 30px 30px; max-width:340px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation: bounceIn 0.4s ease;">
+        <div id="badge-icon" style="font-size:4rem; margin-bottom:8px;">🏆</div>
+        <h2 id="badge-title" style="color:#3e2c1b; margin-bottom:4px;">彩陶大师</h2>
+        <p id="badge-desc" style="color:#7a5a44; font-size:0.9rem; margin-bottom:20px;">太棒了！你对大地湾彩陶文化有着深入的了解！</p>
+        <button onclick="closeBadgeModal()" style="padding:10px 40px; background:#5a3e2b; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer;">太棒了！</button>
+    </div>
+</div>
+</body>
+</html>
