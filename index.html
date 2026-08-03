@@ -8,13 +8,32 @@
 </head>
 <body>
     <!-- ===== 欢迎遮罩 ===== -->
-<div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#3e2c1b; z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; transition:opacity 0.8s ease;">
-    <div style="font-size:5rem; margin-bottom:16px;">🏺</div>
-    <h1 style="color:#f0e2d0; font-size:2rem; margin-bottom:8px;">大地湾彩陶</h1>
-    <p style="color:#b8a088; font-size:1rem; margin-bottom:30px;">八千年的回响 · 数字化呈现</p>
-    <button onclick="enterSite()" style="padding:12px 40px; background:#bf8f60; color:#3e2c1b; border:none; border-radius:30px; font-size:1.1rem; font-weight:bold; cursor:pointer; transition:background 0.3s;" onmouseover="this.style.background='#d9a87a'" onmouseout="this.style.background='#bf8f60'">
-        开始探索
-    </button>
+<div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#3e2c1b; z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; transition:opacity 0.8s ease; overflow:hidden;">
+    
+    <!-- 装饰背景光晕（可选） -->
+    <div style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(ellipse at center, rgba(191,143,96,0.08) 0%, transparent 70%); pointer-events:none;"></div>
+    
+    <!-- 主标题：从底部滑入 -->
+    <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.2s forwards;">
+        <div style="font-size:5rem; margin-bottom:8px; text-align:center;">🏺</div>
+    </div>
+    
+    <!-- 主标题：从底部滑入 -->
+    <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.4s forwards;">
+        <h1 style="color:#f0e2d0; font-size:2.8rem; margin-bottom:4px; text-align:center; font-weight:300; letter-spacing:4px;">大地湾彩陶</h1>
+    </div>
+    
+    <!-- 副标题：从底部滑入 -->
+    <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.6s forwards;">
+        <p style="color:#b8a088; font-size:1.1rem; margin-bottom:30px; text-align:center; letter-spacing:6px;">八千年的回响 · 数字化呈现</p>
+    </div>
+    
+    <!-- 按钮：从底部滑入 -->
+    <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.8s forwards;">
+        <button onclick="enterSite()" style="padding:14px 48px; background:#bf8f60; color:#3e2c1b; border:none; border-radius:30px; font-size:1.1rem; font-weight:bold; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 20px rgba(191,143,96,0.3); animation:breathe 2s ease-in-out infinite;" onmouseover="this.style.background='#d9a87a';this.style.boxShadow='0 6px 30px rgba(191,143,96,0.5)';this.style.animation='none';" onmouseout="this.style.background='#bf8f60';this.style.boxShadow='0 4px 20px rgba(191,143,96,0.3)';this.style.animation='breathe 2s ease-in-out infinite';">
+            开始探索
+        </button>
+    </div>
 </div>
 
     <!-- ===== 导航栏 ===== -->
@@ -28,16 +47,26 @@
     </nav>
 
     <!-- ===== 首页 ===== -->
-    <div id="home" class="page active">
-        <div class="hero">
-            <div class="spinning-pot">🏺</div>
-            <h1>大地湾彩陶</h1>
-            <p>距今8000年的黄河流域史前文化明珠</p >
-            <p style="font-size:1rem; margin-top:20px; color:#5a3e2b;">
-                点击上方导航，探索彩陶的纹样、工艺与故事
-            </p >
-        </div>
+<div id="home" class="page active">
+    <div class="hero">
+        <div class="spinning-pot">🏺</div>
+        <h1>大地湾彩陶</h1>
+        <p style="font-size:1.1rem; color:#5a3e2b; max-width:600px; margin:12px auto 0; line-height:1.6;">
+            八千年前的黄河流域史前文化明珠<br />
+            纹样 · 器型 · 工艺 · 数字化呈现
+        </p>
+        <!-- ===== 飘动纹样 ===== -->
+    <!-- 向右游的 -->
+<div class="pattern right" style="top:15%; left:0%; width:100px; height:100px; animation-duration:14s; animation-delay:0s; background-image: url('images/yu-wen.png');"></div>
+<div class="pattern right" style="top:55%; left:0%; width:70px; height:70px; animation-duration:18s; animation-delay:3s; background-image: url('images/niao-wen.png');"></div>
+<div class="pattern right" style="top:80%; left:0%; width:80px; height:80px; animation-duration:12s; animation-delay:6s; background-image: url('images/wa-wen.png');"></div>
+
+<!-- 向左游的 -->
+<div class="pattern left" style="top:25%; right:0%; width:60px; height: 60px; animation-duration:16s; animation-delay:2s; background-image: url('images/wa-wen.png');"></div>
+<div class="pattern left" style="top:65%; right:0%; width:90px; height:90px; animation-duration:20s; animation-delay:5s; background-image: url('images/yu-wen.png');"></div>
+<div class="pattern left" style="top:90%; right:0%; width:80px; height:80px; animation-duration:13s; animation-delay:4s; background-image: url('images/niao-wen.png');"></div>
     </div>
+</div>
 
     <!-- ===== 彩陶图鉴 ===== -->
 <div id="gallery" class="page">
@@ -46,68 +75,112 @@
     <div class="card-grid">
         <!-- 1. 人头形器口彩陶瓶 -->
         <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
-            <img src="彩陶图片/人头.jpg" alt="人头形器口彩陶瓶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <img src="images/ren-tou-xing-qi-kou-cai-tao-ping.jpg" alt="人头形器口彩陶瓶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>人头形器口彩陶瓶</h4>
             <p style="font-size:0.85rem; color:#5a3e2b;">大地湾“镇馆之宝”，人像与陶器完美结合</p>
         </div>
         <!-- 2. 宽带纹三足彩陶钵 -->
         <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
-            <img src="彩陶图片/三足.jpg" alt="宽带纹三足彩陶钵" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <img src="images/kuan-dai-wen-san-zu-cai-tao-bo.jpg" alt="宽带纹三足彩陶钵" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>宽带纹三足彩陶钵</h4>
             <p style="font-size:0.85rem; color:#5a3e2b;">我国已知最早的彩陶之一，纹饰简洁古朴</p>
         </div>
         <!-- 3. 几何纹彩陶罐 -->
         <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
-            <img src="彩陶图片/几何纹.jpeg" alt="几何纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <img src="images/ji-he-wen-cai-tao-guan.jpeg" alt="几何纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>几何纹彩陶罐</h4>
             <p style="font-size:0.85rem; color:#5a3e2b;">线条流畅，体现先民的抽象审美能力</p>
         </div>
         <!-- 4. 鱼纹彩陶盆 -->
         <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
-            <img src="彩陶图片/鱼纹彩陶盆.jpg" alt="鱼纹彩陶盆" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <img src="images/yu-wen-cai-tao-pen.jpg" alt="鱼纹彩陶盆" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>鱼纹彩陶盆</h4>
             <p style="font-size:0.85rem; color:#5a3e2b;">鱼纹从具象到抽象的演变代表</p>
         </div>
         <!-- 5. 网格纹彩陶壶 -->
         <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
-            <img src="彩陶图片/网格纹彩陶壶.jpg" alt="网格纹彩陶壶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <img src="images/wang-ge-wen-cai-tao-hu.jpg" alt="网格纹彩陶壶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>网格纹彩陶壶</h4>
             <p style="font-size:0.85rem; color:#5a3e2b;">网格纹是大地湾最具代表性的装饰纹样</p>
         </div>
         <!-- 6. 变体鸟纹彩陶罐 -->
         <div class="card" onclick="alert('3D展示即将上线，敬请期待！')">
-            <img src="彩陶图片/遍体鸟纹彩陶罐.jpeg" alt="变体鸟纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
+            <img src="images/bian-ti-niao-wen-cai-tao-guan.jpeg" alt="变体鸟纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>变体鸟纹彩陶罐</h4>
             <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，走向符号化与程式化</p>
         </div>
     </div>
 </div>
 
-    <!-- ===== 纹样赏析 ===== -->
+<!-- ===== 纹样赏析 ===== -->
 <div id="patterns" class="page">
     <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🎨 纹样赏析</h2>
     <p style="text-align:center; color:#5a3e2b; margin-bottom:24px;">大地湾彩陶的典型纹样及其文化内涵</p>
     <div class="card-grid">
         <!-- 鱼纹 -->
-        <div class="card">
-            <div style="width:100%; height:180px; background:#d9cdbc; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#5a3e2b;">🐟</div>
+        <div class="card" onmouseenter="showHint('鱼纹', '大地湾仰韶文化彩陶的代表性纹样，从具象到抽象演变，寓意多子多福与繁衍')" onmouseleave="hideHint()">
+            <img src="images/yu-wen.png" alt="鱼纹" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>鱼纹</h4>
-            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾仰韶文化彩陶的代表性纹样，从具象到抽象演变，寓意多子多福与繁衍</p>
+            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾仰韶文化彩陶的代表性纹样</p>
         </div>
         <!-- 变体鸟纹 -->
-        <div class="card">
-            <div style="width:100%; height:180px; background:#d9cdbc; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#5a3e2b;">🐦</div>
+        <div class="card" onmouseenter="showHint('变体鸟纹', '鸟纹逐渐简化，从写实走向符号化，体现了先民从具象思维向抽象思维的过渡')" onmouseleave="hideHint()">
+            <img src="images/niao-wen.png" alt="变体鸟纹" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>变体鸟纹</h4>
-            <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，从写实走向符号化，体现了先民从具象思维向抽象思维的过渡</p>
+            <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，从写实走向符号化</p>
         </div>
         <!-- 网格纹 -->
-        <div class="card">
-            <div style="width:100%; height:180px; background:#d9cdbc; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#5a3e2b;">⬛</div>
+        <div class="card" onmouseenter="showHint('网格纹', '大地湾最具代表性的装饰纹样之一，由线条交错构成，形态规整，富有节奏感')" onmouseleave="hideHint()">
+            <img src="images/wa-wen.png" alt="网格纹" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
             <h4>网格纹</h4>
-            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾最具代表性的装饰纹样之一，由线条交错构成，形态规整，富有节奏感</p>
+            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾最具代表性的装饰纹样之一</p>
+        </div>
+    </div>
+
+    <!-- 悬停提示气泡 -->
+    <div id="hint-bubble" style="display:none; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#3e2c1b; color:#f0e2d0; padding:16px 24px; border-radius:12px; max-width:400px; text-align:center; z-index:100; box-shadow:0 8px 24px rgba(0,0,0,0.3); pointer-events:none;">
+        <strong id="hint-title"></strong>
+        <p id="hint-desc" style="margin:4px 0 0; font-size:0.9rem; opacity:0.8;"></p>
+    </div>
+
+    <!-- ===== 滑动对比 ===== -->
+    <div style="margin-top:40px; background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+        <h3 style="text-align:center; margin-bottom:4px;">🔄 纹样演变 · 滑动探索</h3>
+        <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看鱼纹从具象到抽象的演变过程</p>
+
+        <div style="position:relative; width:100%; max-width:600px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+            <!-- 图片容器 -->
+            <div id="evolution-container" style="position:relative; width:100%; aspect-ratio:1/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
+
+                <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">
+                    演变进度 <span id="evo-progress">50</span>%
+                </div>
+
+                <img id="evo-image" src="images/yu-wen.png" alt="鱼纹演变" style="width:100%; height:100%; object-fit:cover; display:block;" />
+
+                <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to right, rgba(0,0,0,0) 30%, rgba(0,0,0,0.05) 70%); pointer-events:none; z-index:5;"></div>
+
+                <div id="evo-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.2); pointer-events:none; z-index:10; transition:left 0.05s;"></div>
+
+                <div id="evo-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
+
+                <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">具象 · 原始鱼纹</span>
+                <span id="evo-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">抽象 · 符号化</span>
+
+                <input type="range" id="evo-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0; opacity:0;" />
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:12px; padding:16px 0 8px; background:#f5efe6; flex-wrap:wrap;">
+                <button onclick="setEvoStage(0)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">原始</button>
+                <button onclick="setEvoStage(25)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">简化</button>
+                <button onclick="setEvoStage(50)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">抽象</button>
+                <button onclick="setEvoStage(75)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">符号化</button>
+                <button onclick="setEvoStage(100)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">最终</button>
+            </div>
         </div>
     </div>
 </div>
+<!-- ===== 纹样赏析结束 ===== -->
 <!-- ===== 工艺简介 ===== -->
 <div id="craft" class="page">
     <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🔧 工艺简介</h2>

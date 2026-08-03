@@ -76,7 +76,7 @@ nav a.active::after {
     margin-top: 20px;
     position: relative;
     overflow: hidden;
-    background: #e8dccc;
+    background: #c1dad2;
     min-height: 300px;
     display: flex;
     flex-direction: column;
@@ -84,38 +84,42 @@ nav a.active::after {
     justify-content: center;
 }
 
-/* 粒子层 */
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
-        radial-gradient(2px 2px at 40% 70%, rgba(120, 80, 50, 0.25), transparent),
-        radial-gradient(2px 2px at 60% 20%, rgba(120, 80, 50, 0.3), transparent),
-        radial-gradient(2px 2px at 80% 60%, rgba(120, 80, 50, 0.2), transparent),
-        radial-gradient(3px 3px at 10% 80%, rgba(120, 80, 50, 0.15), transparent),
-        radial-gradient(3px 3px at 90% 10%, rgba(120, 80, 50, 0.2), transparent),
-        radial-gradient(2px 2px at 50% 50%, rgba(120, 80, 50, 0.15), transparent);
-    background-size: 200px 200px;
-    animation: floatParticles 20s linear infinite;
-    pointer-events: none;
-    z-index: 0;
+/* ===== 纹样游动动画 ===== */
+@keyframes swimRight {
+    0% { transform: translate(-200px, 0) scaleX(1); }
+    100% { transform: translate(calc(100vw + 200px), 0) scaleX(1); }
 }
 
-@keyframes floatParticles {
-    0% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(10px, -15px) scale(1.02); }
-    50% { transform: translate(-5px, 10px) scale(0.98); }
-    75% { transform: translate(15px, 5px) scale(1.01); }
-    100% { transform: translate(0, 0) scale(1); }
+@keyframes swimLeft {
+    0% { transform: translate(calc(100vw + 200px), 0) scaleX(-1); }
+    100% { transform: translate(-200px, 0) scaleX(-1); }
+}
+
+.pattern {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+}
+
+.pattern.right {
+    animation: swimRight 16s linear infinite;
+    animation-fill-mode: both;
+}
+
+.pattern.left {
+    animation: swimLeft 16s linear infinite;
+    animation-fill-mode: both;
 }
 
 /* 确保文字在粒子层上方 */
-.hero * {
+.hero h1,
+.hero p,
+.hero .spinning-pot {
     position: relative;
     z-index: 1;
 }
@@ -250,4 +254,81 @@ nav a.active::after {
     .spinning-pot {
         font-size: 3rem;
     }
+}
+/* ===== 高级演变对比 ===== */
+#evo-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    cursor: ew-resize;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.8);
+}
+
+#evo-slider::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    cursor: ew-resize;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.8);
+}
+
+#evo-slider::-webkit-slider-runnable-track {
+    height: 100%;
+    background: transparent;
+}
+
+#evo-slider::-moz-range-track {
+    height: 100%;
+    background: transparent;
+}
+
+/* 缩略图按钮悬停效果 */
+#patterns .card-grid + div button:hover {
+    background: #bf8f60 !important;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+/* ===== 欢迎遮罩滑入动画 ===== */
+@keyframes slideUp {
+    0% {
+        transform: translateY(60px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===== 按钮呼吸灯动画 ===== */
+@keyframes breathe {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+        box-shadow: 0 4px 20px rgba(191, 143, 96, 0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.03);
+        box-shadow: 0 6px 40px rgba(191, 143, 96, 0.6);
+    }
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+        box-shadow: 0 4px 20px rgba(191, 143, 96, 0.3);
+    }
+}
+
+/* ===== 文字呼吸灯动画 ===== */
+@keyframes textBreathe {
+    0% { opacity: 0.7; transform: translateY(0) scale(1); }
+    50% { opacity: 1; transform: translateY(-2px) scale(1.02); }
+    100% { opacity: 0.7; transform: translateY(0) scale(1); }
 }

@@ -284,3 +284,66 @@ function enterSite() {
 }
 // 页面加载时执行初始化
 initWelcome();
+// ===== 悬停信息提示 =====
+function showHint(title, desc) {
+    var bubble = document.getElementById('hint-bubble');
+    document.getElementById('hint-title').textContent = title;
+    document.getElementById('hint-desc').textContent = desc;
+    bubble.style.display = 'block';
+}
+
+function hideHint() {
+    document.getElementById('hint-bubble').style.display = 'none';
+}
+// ===== 高级纹样演变对比 =====
+var evoSlider = document.getElementById('evo-slider');
+var evoLine = document.getElementById('evo-line');
+var evoProgress = document.getElementById('evo-progress');
+var evoLabel = document.getElementById('evo-stage-label');
+var evoGlow = document.getElementById('evo-glow');
+
+if (evoSlider) {
+    // 阶段标签映射
+    var stages = {
+        0: '具象 · 原始鱼纹',
+        25: '简化 · 线条概括',
+        50: '抽象 · 几何化',
+        75: '符号化 · 程式化',
+        100: '极致抽象 · 符号'
+    };
+
+    evoSlider.addEventListener('input', function() {
+        var val = parseInt(this.value);
+        // 更新分割线位置
+        evoLine.style.left = val + '%';
+        // 更新进度数字
+        evoProgress.textContent = val;
+        // 更新光晕位置
+        evoGlow.style.left = val + '%';
+
+        // 根据值显示对应的阶段标签
+        var labelText = '抽象 · 符号化';
+        if (val < 15) labelText = stages[0];
+        else if (val < 35) labelText = stages[25];
+        else if (val < 60) labelText = stages[50];
+        else if (val < 85) labelText = stages[75];
+        else labelText = stages[100];
+        evoLabel.textContent = labelText;
+
+        // 随着滑动，图片缓慢变化（通过CSS滤镜模拟演变效果）
+        var img = document.getElementById('evo-image');
+        var blur = Math.max(0, (val - 50) * 0.04);
+        var contrast = 100 - (val * 0.15);
+        var brightness = 100 - (val * 0.08);
+        img.style.filter = 'blur(' + blur + 'px) contrast(' + contrast + '%) brightness(' + brightness + '%)';
+    });
+}
+
+// 缩略图导航跳转
+function setEvoStage(value) {
+    var slider = document.getElementById('evo-slider');
+    if (slider) {
+        slider.value = value;
+        slider.dispatchEvent(new Event('input'));
+    }
+}
