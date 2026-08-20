@@ -503,7 +503,7 @@ function init3D() {
     // 加载模型
     var loader = new THREE.GLTFLoader();
     loader.load(
-        'https://github.com/slp-web/dadiwan-web/releases/download/v1.0.1/rentouxingqikoucaitaoping.glb',
+        'http://tk2o9510d.hn-bkt.clouddn.com/rentouxingqikoucaitaoping.glb',
         function(gltf) {
             var model = gltf.scene;
             model.scale.set(1.5, 1.5, 1.5);
@@ -517,6 +517,34 @@ function init3D() {
             console.error('❌ 模型加载失败:', error);
         }
     );
+
+    // 显示加载提示
+    var loadingDiv = document.createElement('div');
+    loadingDiv.id = 'loading-tip';
+    loadingDiv.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#5a3e2b; font-size:0.9rem; z-index:5;';
+    loadingDiv.textContent = '⏳ 彩陶加载中...';
+    container.appendChild(loadingDiv);
+
+    loader.load(
+    'http://tk2o9510d.hn-bkt.clouddn.com/rentouxingqikoucaitaoping.glb',
+    function(gltf) {
+        // 加载完成后移除提示
+        var tip = document.getElementById('loading-tip');
+        if (tip) tip.remove();
+        // ... 其余代码不变
+    },
+    function(xhr) {
+        // 可选：显示加载进度
+        var progress = Math.round(xhr.loaded / xhr.total * 100);
+        var tip = document.getElementById('loading-tip');
+        if (tip) tip.textContent = '⏳ 彩陶加载中 ' + progress + '%';
+    },
+    function(error) {
+        var tip = document.getElementById('loading-tip');
+        if (tip) tip.textContent = '❌ 加载失败，请刷新重试';
+        console.error('❌ 模型加载失败:', error);
+    }
+);
 
     // 保存到全局（供其他函数使用）
     window.threeScene = scene;
