@@ -1,17 +1,25 @@
  /* --- 样式区域：控制所有页面的外观 --- */
- * { margin: 0; padding: 0; box-sizing: border-box; }
- body { font-family: system-ui, sans-serif; background: #f5efe6; color: #3e2c1b; }
- 
- /* 导航栏 */
- nav {
-     background: #2cab9c;
-     padding: 16px 24px;
-     display: flex;
-     gap: 24px;
-     flex-wrap: wrap;
-     justify-content: center;
- }
- nav a {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: system-ui, sans-serif;
+    background: #f5efe6;
+    color: #3e2c1b;
+}
+
+/* ===== 导航栏 ===== */
+nav {
+    background: #2cab9c;
+    padding: 16px 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+nav a {
     color: #f0e2d0;
     text-decoration: none;
     font-weight: bold;
@@ -21,7 +29,6 @@
     position: relative;
 }
 
-/* 导航下划线动画 */
 nav a::after {
     content: '';
     position: absolute;
@@ -33,24 +40,21 @@ nav a::after {
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
-
 nav a:hover::after,
 nav a.active::after {
     width: 60%;
 }
- /* 当前页面的导航高亮 */
- nav a.active {
-     background: #7a5a44;
-     color: #fff;
-     border-radius: 6px;
- }
+nav a.active {
+    background: #7a5a44;
+    color: #fff;
+    border-radius: 6px;
+}
+nav a:hover {
+    background: #7a5a44;
+}
 
- nav a:hover {
-     background: #7a5a44;
- }
-
- /* 页面容器 */
- .page {
+/* ===== 页面容器 ===== */
+.page {
     display: none;
     max-width: 1000px;
     margin: 40px auto;
@@ -58,17 +62,21 @@ nav a.active::after {
     min-height: 60vh;
     animation: fadeIn 0.3s ease;
 }
-
 .page.active {
     display: block;
 }
-
 @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(8px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
- /* ===== 动态粒子背景 ===== */
+/* ===== 首页背景 ===== */
 .hero {
     text-align: center;
     padding: 60px 20px;
@@ -84,17 +92,88 @@ nav a.active::after {
     justify-content: center;
 }
 
+/* ===== 首页入场动画（keyframes 版本） ===== */
+.hero .spinning-pot {
+    opacity: 0;
+    font-size: 6rem;
+    margin: 10px 0;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
+
+.hero .spinning-pot.animate-in {
+    animation: slideDownIn 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: #3e2c1b;
+    opacity: 0;
+}
+
+.hero h1.animate-in {
+    animation: slideUpIn 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s forwards;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-top: 12px;
+    color: #5a3e2b;
+    opacity: 0;
+}
+
+.hero p.animate-in {
+    animation: slideUpIn 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s forwards;
+}
+
+@keyframes slideUpIn {
+    0% {
+        opacity: 0;
+        transform: translateY(80px) scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideDownIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-80px) scale(0.4);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 确保文字在粒子层上方 */
+.hero h1,
+.hero p,
+.hero .spinning-pot {
+    position: relative;
+    z-index: 1;
+}
+
 /* ===== 纹样游动动画 ===== */
 @keyframes swimRight {
-    0% { transform: translate(-200px, 0) scaleX(1); }
-    100% { transform: translate(calc(100vw + 200px), 0) scaleX(1); }
+    0% {
+        transform: translate(-200px, 0) scaleX(1);
+    }
+    100% {
+        transform: translate(calc(100vw + 200px), 0) scaleX(1);
+    }
 }
-
 @keyframes swimLeft {
-    0% { transform: translate(calc(100vw + 200px), 0) scaleX(-1); }
-    100% { transform: translate(-200px, 0) scaleX(-1); }
+    0% {
+        transform: translate(calc(100vw + 200px), 0) scaleX(-1);
+    }
+    100% {
+        transform: translate(-200px, 0) scaleX(-1);
+    }
 }
-
 .pattern {
     position: absolute;
     background-size: contain;
@@ -105,157 +184,87 @@ nav a.active::after {
     z-index: 0;
     will-change: transform;
 }
-
 .pattern.right {
     animation: swimRight 16s linear infinite;
     animation-fill-mode: both;
 }
-
 .pattern.left {
     animation: swimLeft 16s linear infinite;
     animation-fill-mode: both;
 }
 
-/* 确保文字在粒子层上方 */
-.hero h1,
-.hero p,
-.hero .spinning-pot {
-    position: relative;
-    z-index: 1;
+/* ===== 彩陶卡片网格 ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
 }
- .hero h1 { font-size: 2.8rem; color: #3e2c1b; }
- .hero p { font-size: 1.2rem; margin-top: 12px; color: #5a3e2b; }
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(60, 40, 20, 0.18);
+    background: #fcf8f2;
+}
+.card img {
+    transition: transform 0.5s ease;
+}
+.card:hover img {
+    transform: scale(1.02);
+}
+.card .placeholder-img {
+    width: 100%;
+    height: 160px;
+    background: #d9cdbc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a5a44;
+    font-size: 0.9rem;
+}
 
- /* 彩陶卡片网格 */
- .card-grid {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-     gap: 24px;
-     margin-top: 24px;
- }
- .card {
-     background: white;
-     border-radius: 12px;
-     padding: 16px;
-     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-     text-align: center;
-     cursor: pointer;
-     transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.3s ease;
- }
- .card:hover {
-     transform: translateY(-6px);
-     box-shadow: 0 16px 36px rgba(60, 40, 20, 0.18);
-     background: #fcf8f2;
- }
- .card img {
-     transition: transform 0.5s ease;
- }
- .card:hover img {
-     transform: scale(1.02);
- }
- 
- .card .placeholder-img {
-     width: 100%;
-     height: 160px;
-     background: #d9cdbc;
-     border-radius: 8px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     color: #7a5a44;
-     font-size: 0.9rem;
- }
+/* ===== 页脚 ===== */
+footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: #7a5a44;
+    border-top: 1px solid #d9cdbc;
+    margin-top: 40px;
+}
 
- footer {
-     text-align: center;
-     padding: 32px 20px;
-     color: #7a5a44;
-     border-top: 1px solid #d9cdbc;
-     margin-top: 40px;
- }
- /* 彩陶瓶旋转动画 */
- @keyframes spin {
-     from { transform: rotateY(0deg); }
-     to { transform: rotateY(360deg); }
- }
- .spinning-pot {
-     display: inline-block;
-     animation: spin 4s infinite linear;
-     font-size: 6rem;
-     margin: 10px 0;
-     filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
- }
+/* ===== 彩陶图片容器（不再旋转） ===== */
+.spinning-pot {
+    display: inline-block;
+    font-size: 6rem;
+    margin: 10px 0;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
 
- /* ===== 弹窗动画 ===== */
+/* ===== 弹窗动画 ===== */
 @keyframes bounceIn {
-    0% { transform: scale(0.6); opacity: 0; }
-    60% { transform: scale(1.02); }
-    100% { transform: scale(1); opacity: 1; }
-}
-/* ===== 移动端适配 ===== */
-@media (max-width: 768px) {
-    /* 导航：换行 + 缩小间距 */
-    nav {
-        padding: 12px 12px;
-        gap: 8px;
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
     }
-    nav a {
-        font-size: 0.85rem;
-        padding: 6px 12px;
+    60% {
+        transform: scale(1.02);
     }
-
-    /* 首页标题 */
-    .hero h1 {
-        font-size: 2rem;
-    }
-    .hero p {
-        font-size: 1rem;
-    }
-    .spinning-pot {
-        font-size: 4rem;
-    }
-
-    /* 卡片网格：单列 */
-    .card-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    /* 页面内边距 */
-    .page {
-        padding: 0 16px;
-        margin: 20px auto;
-    }
-
-    /* 关于页面 */
-    #about div[style*="max-width:800px"] {
-        padding: 0 4px;
-    }
-
-    /* 弹窗 */
-    #badge-modal > div {
-        max-width: 90% !important;
-        padding: 30px 20px !important;
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
-/* 小屏手机（宽度 ≤ 480px） */
-@media (max-width: 480px) {
-    nav a {
-        font-size: 0.75rem;
-        padding: 4px 8px;
-    }
-    .hero h1 {
-        font-size: 1.6rem;
-    }
-    .hero {
-        padding: 40px 16px;
-    }
-    .spinning-pot {
-        font-size: 3rem;
-    }
-}
-/* ===== 高级演变对比 ===== */
+/* ===== 滑动对比滑块样式 ===== */
 #evo-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -264,38 +273,35 @@ nav a.active::after {
     background: white;
     border-radius: 50%;
     cursor: ew-resize;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.8);
 }
-
 #evo-slider::-moz-range-thumb {
     width: 30px;
     height: 30px;
     background: white;
     border-radius: 50%;
     cursor: ew-resize;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.8);
 }
-
 #evo-slider::-webkit-slider-runnable-track {
     height: 100%;
     background: transparent;
 }
-
 #evo-slider::-moz-range-track {
     height: 100%;
     background: transparent;
 }
 
 /* 缩略图按钮悬停效果 */
-#patterns .card-grid + div button:hover {
+#patterns button:hover {
     background: #bf8f60 !important;
     color: white !important;
     transform: translateY(-2px);
 }
 
-/* ===== 欢迎遮罩滑入动画 ===== */
+/* ===== 欢迎遮罩动画 ===== */
 @keyframes slideUp {
     0% {
         transform: translateY(60px);
@@ -328,7 +334,84 @@ nav a.active::after {
 
 /* ===== 文字呼吸灯动画 ===== */
 @keyframes textBreathe {
-    0% { opacity: 0.7; transform: translateY(0) scale(1); }
-    50% { opacity: 1; transform: translateY(-2px) scale(1.02); }
-    100% { opacity: 0.7; transform: translateY(0) scale(1); }
+    0% {
+        opacity: 0.7;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.02);
+    }
+    100% {
+        opacity: 0.7;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== 滚动触发淡入上移动画 ===== */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== 移动端适配 ===== */
+@media (max-width: 768px) {
+    nav {
+        padding: 12px 12px;
+        gap: 8px;
+    }
+    nav a {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .spinning-pot {
+        font-size: 4rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .page {
+        padding: 0 16px;
+        margin: 20px auto;
+    }
+
+    #about div[style*="max-width:800px"] {
+        padding: 0 4px;
+    }
+
+    #badge-modal > div {
+        max-width: 90% !important;
+        padding: 30px 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    nav a {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+    .hero {
+        padding: 40px 16px;
+    }
+    .spinning-pot {
+        font-size: 3rem;
+    }
 }

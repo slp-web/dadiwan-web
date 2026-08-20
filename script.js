@@ -19,16 +19,28 @@ function showPage(pageId) {
     if (activeLink) {
         activeLink.classList.add('active');
     }
+
+    // 4. 切换到首页时，重新触发入场动画
+    if (pageId === 'home') {
+        triggerHomeAnimation();
+    }
+
+        // 切换到彩陶图鉴时，更新3D渲染器尺寸
+        if (pageId === 'gallery') {
+            setTimeout(function() {
+                resizeThree();
+            }, 50);
+        }
 }
 
 // ✅ 页面加载时，自动高亮首页（在函数外部调用）
 showPage('home');
 // ===== 知识问答数据 =====
-const quizData = [
+const questionBank = [
     {
         question: "大地湾彩陶距今约多少年？",
         options: ["3000年", "5000年", "8000年", "10000年"],
-        answer: 2 // 索引从0开始，2代表"8000年"
+        answer: 2
     },
     {
         question: "大地湾彩陶最著名的“镇馆之宝”是哪一件？",
@@ -49,15 +61,58 @@ const quizData = [
         question: "以下哪种纹样不是大地湾彩陶的典型纹样？",
         options: ["鱼纹", "变体鸟纹", "网格纹", "龙纹"],
         answer: 3
+    },
+    {
+        question: "大地湾彩陶的制作工艺中，第一步是？",
+        options: ["彩绘", "选土", "烧制", "修坯"],
+        answer: 1
+    },
+    {
+        question: "大地湾彩陶的纹样中，哪种纹样经历了从具象到抽象的演变？",
+        options: ["网格纹", "变体鸟纹", "鱼纹", "绳纹"],
+        answer: 2
+    },
+    {
+        question: "大地湾遗址距今约多少年？",
+        options: ["3000-4000年", "5000-6000年", "8000-5000年", "10000-8000年"],
+        answer: 2
+    },
+    {
+        question: "大地湾彩陶的主要颜色是什么？",
+        options: ["红色和黑色", "蓝色和白色", "绿色和黄色", "紫色和金色"],
+        answer: 0
+    },
+    {
+        question: "大地湾彩陶的纹样中，网格纹主要表现了什么？",
+        options: ["渔网", "农田", "星空", "水波"],
+        answer: 0
+    },
+    {
+        question: "大地湾遗址的考古发现证明了什么？",
+        options: ["中国彩陶起源于本土", "彩陶来自西方", "彩陶来自南方", "彩陶来自北方"],
+        answer: 0
+    },
+    {
+        question: "大地湾彩陶的制作工艺中，最后一步是？",
+        options: ["彩绘", "修坯", "烧制", "选土"],
+        answer: 2
     }
 ];
 
-
+let quizData = [];          // 当前抽取的题目
+// ===== 从题库中随机抽取N道题 =====
+function pickQuestions(n) {
+    const shuffled = [...questionBank];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, n);
+}
 let currentQuestion = 0;
 let score = 0;
 let answered = false;
-
-let timer = 10;          // 倒计时秒数
+let timer = 10;
 let timerInterval = null;
 
 // ===== 渲染题目 =====
@@ -234,6 +289,7 @@ function nextQuestion() {
 
 // ===== 重新开始 =====
 function restartQuiz() {
+    quizData = pickQuestions(8);
     currentQuestion = 0;
     score = 0;
     renderQuestion();
@@ -256,7 +312,8 @@ function showBadgeModal(badge, level, comment) {
 function closeBadgeModal() {
     document.getElementById('badge-modal').style.display = 'none';
 }
-// 页面加载时渲染第一题
+// 页面加载时：抽取8道题并渲染
+quizData = pickQuestions(8);
 renderQuestion();
 
 // ===== 欢迎遮罩：每次会话首次访问显示 =====
@@ -273,15 +330,18 @@ function initWelcome() {
 }
 
 function enterSite() {
-    // 存储访问标记（仅在当前会话有效）
     sessionStorage.setItem('dadiwan_visited', 'true');
-    
     var overlay = document.getElementById('welcome-overlay');
     overlay.style.opacity = '0';
     setTimeout(function() {
         overlay.style.display = 'none';
+        // 遮罩消失后再触发动画
+        setTimeout(function() {
+            triggerHomeAnimation();
+        }, 10);
     }, 800);
 }
+
 // 页面加载时执行初始化
 initWelcome();
 // ===== 悬停信息提示 =====
@@ -295,47 +355,42 @@ function showHint(title, desc) {
 function hideHint() {
     document.getElementById('hint-bubble').style.display = 'none';
 }
-// ===== 高级纹样演变对比 =====
+// ===== 滑动对比：5张图片切换 =====
 var evoSlider = document.getElementById('evo-slider');
 var evoLine = document.getElementById('evo-line');
 var evoProgress = document.getElementById('evo-progress');
 var evoLabel = document.getElementById('evo-stage-label');
 var evoGlow = document.getElementById('evo-glow');
+var evoImage = document.getElementById('evo-image');
+
+// 5张演变图片
+var evoImages = [
+    { src: 'images/yu-wen-1.png', label: '具象 · 原始鱼纹' },
+    { src: 'images/yu-wen-2.png', label: '简化 · 线条概括' },
+    { src: 'images/yu-wen-3.png', label: '抽象 · 几何化' },
+    { src: 'images/yu-wen-4.png', label: '符号化 · 程式化' },
+    { src: 'images/yu-wen-5.png', label: '极致抽象 · 符号' }
+];
 
 if (evoSlider) {
-    // 阶段标签映射
-    var stages = {
-        0: '具象 · 原始鱼纹',
-        25: '简化 · 线条概括',
-        50: '抽象 · 几何化',
-        75: '符号化 · 程式化',
-        100: '极致抽象 · 符号'
-    };
-
     evoSlider.addEventListener('input', function() {
         var val = parseInt(this.value);
         // 更新分割线位置
-        evoLine.style.left = val + '%';
+        if (evoLine) evoLine.style.left = val + '%';
         // 更新进度数字
-        evoProgress.textContent = val;
+        if (evoProgress) evoProgress.textContent = val;
         // 更新光晕位置
-        evoGlow.style.left = val + '%';
+        if (evoGlow) evoGlow.style.left = val + '%';
 
-        // 根据值显示对应的阶段标签
-        var labelText = '抽象 · 符号化';
-        if (val < 15) labelText = stages[0];
-        else if (val < 35) labelText = stages[25];
-        else if (val < 60) labelText = stages[50];
-        else if (val < 85) labelText = stages[75];
-        else labelText = stages[100];
-        evoLabel.textContent = labelText;
+        // 根据滑块值计算显示哪张图片（0-100 映射到 0-4）
+        var index = Math.round((val / 100) * (evoImages.length - 1));
+        if (index >= evoImages.length) index = evoImages.length - 1;
+        if (index < 0) index = 0;
 
-        // 随着滑动，图片缓慢变化（通过CSS滤镜模拟演变效果）
-        var img = document.getElementById('evo-image');
-        var blur = Math.max(0, (val - 50) * 0.04);
-        var contrast = 100 - (val * 0.15);
-        var brightness = 100 - (val * 0.08);
-        img.style.filter = 'blur(' + blur + 'px) contrast(' + contrast + '%) brightness(' + brightness + '%)';
+        // 切换图片
+        if (evoImage) evoImage.src = evoImages[index].src;
+        // 更新阶段标签
+        if (evoLabel) evoLabel.textContent = evoImages[index].label;
     });
 }
 
@@ -347,3 +402,167 @@ function setEvoStage(value) {
         slider.dispatchEvent(new Event('input'));
     }
 }
+
+// 页面加载时初始化滑动对比图片
+setEvoStage(50);
+
+// ===== 触发首页入场动画 =====
+function triggerHomeAnimation() {
+    var pot = document.querySelector('.hero .spinning-pot');
+    var title = document.querySelector('.hero h1');
+    var desc = document.querySelector('.hero p');
+
+    // 重置动画
+    [pot, title, desc].forEach(function(el) {
+        if (el) {
+            el.classList.remove('animate-in');
+            el.style.animation = 'none';
+            void el.offsetWidth;
+        }
+    });
+
+    // 强制回流后播放
+    document.body.offsetHeight;
+
+    setTimeout(function() {
+        if (pot) {
+            pot.classList.add('animate-in');
+            pot.style.animation = '';
+        }
+        setTimeout(function() {
+            if (title) {
+                title.classList.add('animate-in');
+                title.style.animation = '';
+            }
+        }, 150);
+        setTimeout(function() {
+            if (desc) {
+                desc.classList.add('animate-in');
+                desc.style.animation = '';
+            }
+        }, 300);
+    }, 50);
+}
+
+// ===== 滚动触发动画 =====
+document.addEventListener('DOMContentLoaded', function() {
+    var elements = document.querySelectorAll('.fade-up');
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+
+    elements.forEach(function(el) {
+        observer.observe(el);
+    });
+});
+
+// ===== 3D彩陶展示 =====
+function init3D() {
+    var container = document.getElementById('three-container');
+    if (!container) return;
+
+    var width = container.clientWidth || 500;
+    var height = container.clientHeight || 400;
+
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xd9cdbc);
+
+    var camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
+    camera.position.set(0, 1.5, 5.5);
+    camera.lookAt(0, 0, 0);
+
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 2.0;
+    controls.target.set(0, 0.5, 0);
+    controls.update();
+
+    // 灯光
+    var ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    var dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    dirLight.position.set(5, 10, 7);
+    scene.add(dirLight);
+
+    var fillLight = new THREE.DirectionalLight(0xffdd99, 0.5);
+    fillLight.position.set(-3, 1, -4);
+    scene.add(fillLight);
+
+    // 加载模型
+    var loader = new THREE.GLTFLoader();
+    loader.load(
+        'https://github.com/slp-web/dadiwan-web/releases/download/v1.0.1/rentouxingqikoucaitaoping.glb',
+        function(gltf) {
+            var model = gltf.scene;
+            model.scale.set(1.5, 1.5, 1.5);
+            model.position.x = -0.3;
+            scene.add(model);
+            controls.autoRotate = true;
+            console.log('✅ 模型加载成功！');
+        },
+        undefined,
+        function(error) {
+            console.error('❌ 模型加载失败:', error);
+        }
+    );
+
+    // 保存到全局（供其他函数使用）
+    window.threeScene = scene;
+    window.threeCamera = camera;
+    window.threeRenderer = renderer;
+    window.threeControls = controls;
+
+    // 动画循环
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // ===== 窗口变化自适应 =====
+    window.addEventListener('resize', function() {
+        var container = document.getElementById('three-container');
+        if (!container) return;
+        var width = container.clientWidth || 500;
+        var height = container.clientHeight || 400;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    });
+
+    // 主动触发一次 resize，确保尺寸正确
+    setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+    }, 50);
+}
+
+// ===== 更新 Three.js 渲染器尺寸 =====
+function resizeThree() {
+    var container = document.getElementById('three-container');
+    if (!container) return;
+    if (!window.threeRenderer || !window.threeCamera) return;
+
+    var width = container.clientWidth || 500;
+    var height = container.clientHeight || 400;
+    window.threeCamera.aspect = width / height;
+    window.threeCamera.updateProjectionMatrix();
+    window.threeRenderer.setSize(width, height);
+}
+
+// 页面加载完成后初始化3D
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(init3D, 100);
+});
