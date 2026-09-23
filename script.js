@@ -114,6 +114,7 @@ let score = 0;
 let answered = false;
 let timer = 10;
 let timerInterval = null;
+let quizStarted = false;  
 
 // ===== 渲染题目 =====
 function renderQuestion() {
@@ -219,32 +220,17 @@ function renderQuestion() {
     container.innerHTML = html;
     answered = false;
 
-   // ===== 启动计时器 =====
-timer = 10;
-timerInterval = setInterval(function() {
-    timer--;
-    const display = document.getElementById('timer-display');
-    if (display) display.textContent = timer;
-
-    if (timer <= 0) {
-        clearInterval(timerInterval);
-        // 只有在互动页面且未答题时才自动跳转
-        const interactPage = document.getElementById('interact');
-        if (interactPage && interactPage.classList.contains('active') && !answered) {
-            nextQuestion();
-        } else {
-            // 如果不在互动页面，重置计时器但不跳转
-            timer = 10;
-            if (display) display.textContent = timer;
-        }
+    // ===== 启动计时器（仅当用户已开始答题） =====
+    if (quizStarted) {
+        startQuizTimer();
     }
-}, 1000);
 }
 
 // ===== 选择答案 =====
 function selectAnswer(idx) {
     if (answered) return;
     answered = true;
+    quizStarted = true;
 
     const q = quizData[currentQuestion];
     const feedback = document.getElementById(`feedback-${currentQuestion}`);
@@ -289,11 +275,38 @@ function nextQuestion() {
 
 // ===== 重新开始 =====
 function restartQuiz() {
+    quizStarted = false;
     quizData = pickQuestions(8);
     currentQuestion = 0;
     score = 0;
     renderQuestion();
 }
+
+// ===== 启动答题计时器 =====
+function startQuizTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    timer = 10;
+    timerInterval = setInterval(function() {
+        timer--;
+        const display = document.getElementById('timer-display');
+        if (display) display.textContent = timer;
+
+        if (timer <= 0) {
+            clearInterval(timerInterval);
+            const interactPage = document.getElementById('interact');
+            if (interactPage && interactPage.classList.contains('active') && !answered) {
+                nextQuestion();
+            } else {
+                timer = 10;
+                if (display) display.textContent = timer;
+            }
+        }
+    }, 1000);
+}
+
 // ===== 显示徽章弹窗 =====
 function showBadgeModal(badge, level, comment) {
     // 只有当前在“互动小功能”页面才弹窗
@@ -406,6 +419,252 @@ function setEvoStage(value) {
 // 页面加载时初始化滑动对比图片
 setEvoStage(50);
 
+// ===== 蛙纹演变图片（5张） =====
+var waImages = [
+    { src: 'images/wa-wen-1.png', label: '具象 · 原始蛙纹' },
+    { src: 'images/wa-wen-2.png', label: '简化 · 线条概括' },
+    { src: 'images/wa-wen-3.png', label: '抽象 · 几何化' },
+    { src: 'images/wa-wen-4.png', label: '符号化 · 程式化' },
+    { src: 'images/wa-wen-5.png', label: '极致抽象 · 符号' }
+];
+
+// ===== 蛙纹滑动控制 =====
+var waSlider = document.getElementById('wa-slider');
+var waLine = document.getElementById('wa-line');
+var waProgress = document.getElementById('wa-progress');
+var waLabel = document.getElementById('wa-stage-label');
+var waGlow = document.getElementById('wa-glow');
+var waImage = document.getElementById('wa-image');
+
+if (waSlider) {
+    waSlider.addEventListener('input', function() {
+        var val = parseInt(this.value);
+        if (waLine) waLine.style.left = val + '%';
+        if (waProgress) waProgress.textContent = val;
+        if (waGlow) waGlow.style.left = val + '%';
+
+        var index = Math.round((val / 100) * (waImages.length - 1));
+        if (index >= waImages.length) index = waImages.length - 1;
+        if (index < 0) index = 0;
+
+        if (waImage) waImage.src = waImages[index].src;
+        if (waLabel) waLabel.textContent = waImages[index].label;
+    });
+}
+
+function setWaStage(value) {
+    var slider = document.getElementById('wa-slider');
+    if (slider) {
+        slider.value = value;
+        slider.dispatchEvent(new Event('input'));
+    }
+}
+
+// 页面加载时初始化蛙纹
+setWaStage(50);
+
+// ===== 鸟纹演变图片（5张） =====
+var niaoImages = [
+    { src: 'images/niao-wen-1.png', label: '具象 · 原始鸟纹' },
+    { src: 'images/niao-wen-2.png', label: '简化 · 线条概括' },
+    { src: 'images/niao-wen-3.png', label: '抽象 · 几何化' },
+    { src: 'images/niao-wen-4.png', label: '符号化 · 程式化' },
+    { src: 'images/niao-wen-5.png', label: '极致抽象 · 符号' }
+];
+
+// ===== 鸟纹滑动控制 =====
+var niaoSlider = document.getElementById('niao-slider');
+var niaoLine = document.getElementById('niao-line');
+var niaoProgress = document.getElementById('niao-progress');
+var niaoLabel = document.getElementById('niao-stage-label');
+var niaoGlow = document.getElementById('niao-glow');
+var niaoImage = document.getElementById('niao-image');
+
+if (niaoSlider) {
+    niaoSlider.addEventListener('input', function() {
+        var val = parseInt(this.value);
+        if (niaoLine) niaoLine.style.left = val + '%';
+        if (niaoProgress) niaoProgress.textContent = val;
+        if (niaoGlow) niaoGlow.style.left = val + '%';
+
+        var index = Math.round((val / 100) * (niaoImages.length - 1));
+        if (index >= niaoImages.length) index = niaoImages.length - 1;
+        if (index < 0) index = 0;
+
+        if (niaoImage) niaoImage.src = niaoImages[index].src;
+        if (niaoLabel) niaoLabel.textContent = niaoImages[index].label;
+    });
+}
+
+function setNiaoStage(value) {
+    var slider = document.getElementById('niao-slider');
+    if (slider) {
+        slider.value = value;
+        slider.dispatchEvent(new Event('input'));
+    }
+}
+
+// 页面加载时初始化鸟纹
+setNiaoStage(50);
+
+// ===== 彩陶数据 =====
+var potteryData = {
+    'ren-tou-ping': {
+        title: '人头形器口彩陶瓶',
+        desc: '大地湾"镇馆之宝"，人像与陶器完美结合',
+        info: '文化类型：仰韶文化\n年代：距今约6000年\n出土地点：大地湾遗址',
+        video: 'images/ren-tou-ping.mp4'
+    },
+    'kuan-dai-bo': {
+        title: '宽带纹三足彩陶钵',
+        desc: '我国已知最早的彩陶之一，纹饰简洁古朴',
+        info: '文化类型：大地湾文化\n年代：距今约8000年\n出土地点：大地湾遗址',
+        video: 'images/kuan-dai-bo.mp4'
+    },
+    'ji-he-guan': {
+        title: '几何纹彩陶罐',
+        desc: '线条流畅，体现先民的抽象审美能力',
+        info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
+        video: 'images/ji-he-guan.mp4'
+    },
+    'yu-wen-pen': {
+        title: '鱼纹彩陶盆',
+        desc: '鱼纹从具象到抽象的演变代表',
+        info: '文化类型：仰韶文化\n年代：距今约7000-6000年\n出土地点：大地湾遗址',
+        video: 'images/yu-wen-pen.mp4'
+    },
+    'wang-ge-hu': {
+        title: '网格纹彩陶壶',
+        desc: '网格纹是大地湾最具代表性的装饰纹样',
+        info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
+        video: 'images/wang-ge-hu.mp4'
+    },
+    'niao-wen-guan': {
+        title: '变体鸟纹彩陶罐',
+        desc: '鸟纹逐渐简化，走向符号化与程式化',
+        info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
+        video: 'images/niao-wen-guan.mp4'
+    }
+};
+
+// ===== 彩陶模型链接配置 =====
+var modelUrls = {
+    'ren-tou-ping': 'http://tk2o9510d.hn-bkt.clouddn.com/rentouxingqikoucaitaoping.glb',
+    'kuan-dai-bo': 'http://tk2o9510d.hn-bkt.clouddn.com/kuandaiwensanzucaitaobo.glb',
+    'ji-he-guan': 'http://tk2o9510d.hn-bkt.clouddn.com/jihewencaitaoguan.glb',
+    'yu-wen-pen': 'http://tk2o9510d.hn-bkt.clouddn.com/yuwencaitaopeng.glb',
+    'wang-ge-hu': 'http://tk2o9510d.hn-bkt.clouddn.com/wanggewencaitaohu.glb',
+    'niao-wen-guan': 'http://tk2o9510d.hn-bkt.clouddn.com/biantiniaowencaitaoguan.glb'
+};
+
+// ===== 切换加载3D模型 =====
+var currentModel = null;
+
+function loadModel(key) {
+    var container = document.getElementById('three-container');
+    if (!container) {
+        console.error('❌ three-container 不存在');
+        return;
+    }
+
+    var tip = document.getElementById('loading-tip');
+    if (!tip) {
+        tip = document.createElement('div');
+        tip.id = 'loading-tip';
+        tip.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#5a3e2b; font-size:0.9rem; z-index:5;';
+        container.style.position = 'relative';
+        container.appendChild(tip);
+    }
+    tip.textContent = '⏳ 彩陶加载中...';
+    tip.style.display = 'block';
+
+    var url = modelUrls[key];
+    if (!url) {
+        tip.textContent = '❌ 模型链接不存在';
+        return;
+    }
+
+    // 移除旧模型
+    if (currentModel) {
+        window.threeScene.remove(currentModel);
+        currentModel = null;
+    }
+
+    var loader = new THREE.GLTFLoader();
+    loader.load(
+        url,
+        function(gltf) {
+            var model = gltf.scene;
+            model.scale.set(1.5, 1.5, 1.5);
+            model.position.x = 0;
+            window.threeScene.add(model);
+            currentModel = model;
+            tip.textContent = '✅ 加载完成！';
+            // ✅ 模型加载完成后再次适配尺寸（加在这里）
+             setTimeout(function() {
+             resizeThree();
+            }, 50);
+            setTimeout(function() { tip.style.display = 'none'; }, 600);
+            console.log('✅ 模型加载成功:', key);
+        },
+        function(xhr) {
+            var progress = Math.round(xhr.loaded / xhr.total * 100);
+            var tip = document.getElementById('loading-tip');
+            if (tip) tip.textContent = '⏳ 彩陶加载中 ' + progress + '%';
+        },
+        function(error) {
+            var tip = document.getElementById('loading-tip');
+            if (tip) tip.textContent = '❌ 加载失败，请刷新重试';
+            console.error('❌ 模型加载失败:', error);
+        }
+    );
+}
+
+// ===== 打开详情 =====
+function openDetail(key) {
+    var data = potteryData[key];
+    if (!data) return;
+
+    // 隐藏卡片网格
+    var grid = document.querySelector('#gallery .card-grid');
+    if (grid) grid.style.display = 'none';
+    document.querySelector('#gallery .fade-up').style.display = 'none';  // 隐藏标题
+    document.querySelector('#gallery .fade-up + p').style.display = 'none';  // 隐藏描述
+
+    // 显示详情页
+    document.getElementById('detail-view').style.display = 'block';
+
+    // 填充文字信息
+    document.getElementById('detail-title').textContent = data.title;
+    document.getElementById('detail-desc').textContent = data.desc;
+    document.getElementById('detail-full-info').textContent = data.info;
+
+    // 设置视频
+    var video = document.getElementById('detail-video');
+    video.querySelector('source').src = data.video;
+    video.load();
+
+    // ✅ 关键：延迟执行，等浏览器完成布局后再适配3D尺寸
+    setTimeout(function() {
+        resizeThree();
+    }, 100);
+
+    // 加载模型
+    loadModel(key);
+}
+
+// ===== 返回列表 =====
+function closeDetail() {
+    document.getElementById('gallery').querySelector('.card-grid').style.display = 'grid';
+    document.getElementById('detail-view').style.display = 'none';
+    document.querySelector('#gallery .fade-up').style.display = '';
+    document.querySelector('#gallery .fade-up + p').style.display = '';
+
+    var video = document.getElementById('detail-video');
+    video.pause();
+    video.currentTime = 0;
+}
+
 // ===== 触发首页入场动画 =====
 function triggerHomeAnimation() {
     var pot = document.querySelector('.hero .spinning-pot');
@@ -465,6 +724,7 @@ function init3D() {
     var container = document.getElementById('three-container');
     if (!container) return;
 
+    // ✅ 使用容器的实际尺寸
     var width = container.clientWidth || 500;
     var height = container.clientHeight || 400;
 
@@ -500,97 +760,227 @@ function init3D() {
     fillLight.position.set(-3, 1, -4);
     scene.add(fillLight);
 
-    // 加载模型
-    var loader = new THREE.GLTFLoader();
-    loader.load(
-        'http://tk2o9510d.hn-bkt.clouddn.com/rentouxingqikoucaitaoping.glb',
-        function(gltf) {
-            var model = gltf.scene;
-            model.scale.set(1.5, 1.5, 1.5);
-            model.position.x = -0.3;
-            scene.add(model);
-            controls.autoRotate = true;
-            console.log('✅ 模型加载成功！');
-        },
-        undefined,
-        function(error) {
-            console.error('❌ 模型加载失败:', error);
-        }
-    );
-
-    // 显示加载提示
-    var loadingDiv = document.createElement('div');
-    loadingDiv.id = 'loading-tip';
-    loadingDiv.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#5a3e2b; font-size:0.9rem; z-index:5;';
-    loadingDiv.textContent = '⏳ 彩陶加载中...';
-    container.appendChild(loadingDiv);
-
-    loader.load(
-    'http://tk2o9510d.hn-bkt.clouddn.com/rentouxingqikoucaitaoping.glb',
-    function(gltf) {
-        // 加载完成后移除提示
-        var tip = document.getElementById('loading-tip');
-        if (tip) tip.remove();
-        // ... 其余代码不变
-    },
-    function(xhr) {
-        // 可选：显示加载进度
-        var progress = Math.round(xhr.loaded / xhr.total * 100);
-        var tip = document.getElementById('loading-tip');
-        if (tip) tip.textContent = '⏳ 彩陶加载中 ' + progress + '%';
-    },
-    function(error) {
-        var tip = document.getElementById('loading-tip');
-        if (tip) tip.textContent = '❌ 加载失败，请刷新重试';
-        console.error('❌ 模型加载失败:', error);
-    }
-);
-
     // 保存到全局（供其他函数使用）
     window.threeScene = scene;
     window.threeCamera = camera;
     window.threeRenderer = renderer;
     window.threeControls = controls;
 
-    // 动画循环
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    
+        // ===== 窗口变化自适应 =====
+        window.addEventListener('resize', function() {
+            resizeThree();
+        });
+    
+        // 页面加载后主动适配一次尺寸
+        setTimeout(function() {
+            resizeThree();
+        }, 100);
     }
-    animate();
-
-    // ===== 窗口变化自适应 =====
-    window.addEventListener('resize', function() {
-        var container = document.getElementById('three-container');
-        if (!container) return;
-        var width = container.clientWidth || 500;
-        var height = container.clientHeight || 400;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    });
-
-    // 主动触发一次 resize，确保尺寸正确
-    setTimeout(function() {
-        window.dispatchEvent(new Event('resize'));
-    }, 50);
-}
 
 // ===== 更新 Three.js 渲染器尺寸 =====
 function resizeThree() {
     var container = document.getElementById('three-container');
-    if (!container) return;
-    if (!window.threeRenderer || !window.threeCamera) return;
+    if (!container) {
+        console.warn('resizeThree: three-container 不存在');
+        return;
+    }
 
-    var width = container.clientWidth || 500;
-    var height = container.clientHeight || 400;
+    if (!window.threeRenderer || !window.threeCamera) {
+        console.warn('resizeThree: 渲染器或相机未初始化');
+        return;
+    }
+
+    var width = container.clientWidth;
+    var height = container.clientHeight;
+
+    if (width === 0 || height === 0) {
+        console.warn('resizeThree: 容器尺寸为0，可能是隐藏状态');
+        return;
+    }
+
+    console.log('resizeThree: 容器尺寸', width, height);
+    console.log('resizeThree: 渲染器旧尺寸', window.threeRenderer.domElement.width, window.threeRenderer.domElement.height);
+
     window.threeCamera.aspect = width / height;
     window.threeCamera.updateProjectionMatrix();
     window.threeRenderer.setSize(width, height);
+
+    console.log('resizeThree: 渲染器新尺寸', window.threeRenderer.domElement.width, window.threeRenderer.domElement.height);
 }
 
-// 页面加载完成后初始化3D
+// 页面加载完成后初始化3D，并默认加载人头瓶
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(init3D, 100);
+    setTimeout(function() {
+        loadModel('ren-tou-ping');
+    }, 300);
 });
+
+// ===== 纹样拼图（多套轮换） =====
+var puzzleList = [
+    {
+        name: '鱼纹①',
+        images: ['images/Y-W-1.png', 'images/Y-W-2.png', 'images/Y-W-3.png', 'images/Y-W-4.png', 'images/Y-W-5.png', 'images/Y-W-6.png']
+    },
+    {
+        name: '鱼纹②',
+        images: ['images/Y-W_01.png', 'images/Y-W_02.png', 'images/Y-W_03.png', 'images/Y-W_04.png', 'images/Y-W_05.png', 'images/Y-W_06.png']
+    }
+];
+
+var currentPuzzleIndex = 0;
+var puzzleState = [0, 1, 2, 3, 4, 5];
+var puzzleMoves = 0;
+var puzzleSolved = false;
+var selectedIndex = null;
+
+// 渲染拼图
+function renderPuzzle() {
+    var container = document.getElementById('puzzle-container');
+    if (!container) return;
+
+    var currentPuzzle = puzzleList[currentPuzzleIndex];
+    document.getElementById('puzzle-name').textContent = currentPuzzle.name;
+
+    container.innerHTML = '';
+    puzzleState.forEach(function(index, i) {
+        var div = document.createElement('div');
+        div.style.cssText = `
+            background-image: url('${currentPuzzle.images[index]}');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            cursor: pointer;
+            aspect-ratio: 1/1;
+            border: 3px solid ${selectedIndex === i ? '#bf8f60' : '#d9cdbc'};
+            transition: border-color 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        `;
+        div.onclick = function() { clickPuzzlePiece(i); };
+        container.appendChild(div);
+    });
+    updatePuzzleStatus();
+}
+
+// 更新状态
+function updatePuzzleStatus() {
+    document.getElementById('puzzle-moves').textContent = puzzleMoves;
+    if (puzzleSolved) {
+        document.getElementById('puzzle-name').textContent = puzzleList[currentPuzzleIndex].name + ' ✅';
+    }
+}
+
+// 检查是否拼好
+function checkPuzzleSolved() {
+    for (var i = 0; i < puzzleState.length; i++) {
+        if (puzzleState[i] !== i) return false;
+    }
+    return true;
+}
+
+// 点击拼图块
+function clickPuzzlePiece(index) {
+    if (puzzleSolved) return;
+
+    if (selectedIndex === null) {
+        selectedIndex = index;
+        renderPuzzle();
+    } else if (selectedIndex === index) {
+        selectedIndex = null;
+        renderPuzzle();
+    } else {
+        var temp = puzzleState[selectedIndex];
+        puzzleState[selectedIndex] = puzzleState[index];
+        puzzleState[index] = temp;
+        puzzleMoves++;
+        selectedIndex = null;
+        renderPuzzle();
+
+        if (checkPuzzleSolved()) {
+            puzzleSolved = true;
+            updatePuzzleStatus();
+            renderPuzzle();
+            setTimeout(function() {
+                showPuzzleModal(puzzleList[currentPuzzleIndex].name);
+            }, 300);
+        }
+    }
+}
+
+// 打乱拼图
+function shufflePuzzle() {
+    puzzleState = [0, 1, 2, 3, 4, 5];
+    puzzleMoves = 0;
+    puzzleSolved = false;
+    selectedIndex = null;
+
+    var swapCount = 15 + Math.floor(Math.random() * 10);
+    for (var s = 0; s < swapCount; s++) {
+        var a = Math.floor(Math.random() * 6);
+        var b = Math.floor(Math.random() * 6);
+        if (a !== b) {
+            var tmp = puzzleState[a];
+            puzzleState[a] = puzzleState[b];
+            puzzleState[b] = tmp;
+        }
+    }
+    if (checkPuzzleSolved()) {
+        puzzleState = [1, 0, 3, 2, 5, 4];
+    }
+
+    renderPuzzle();
+}
+
+// 换一个拼图
+function nextPuzzle() {
+    currentPuzzleIndex = (currentPuzzleIndex + 1) % puzzleList.length;
+    shufflePuzzle();
+}
+
+// 初始化
+shufflePuzzle();
+
+// ===== 纹样切换 =====
+function switchPattern(type, btn) {
+    document.querySelectorAll('.compare-panel').forEach(function(p) {
+        p.classList.remove('active');
+    });
+    document.querySelectorAll('.pattern-tab').forEach(function(t) {
+        t.classList.remove('active');
+    });
+    var panel = document.getElementById('compare-' + type);
+    if (panel) panel.classList.add('active');
+    if (btn) btn.classList.add('active');
+}
+
+// ===== 拼图完成弹窗 =====
+function showPuzzleModal(name) {
+    var text = document.getElementById('puzzle-modal-text');
+    if (text) text.textContent = '你已成功拼合「' + name + '」演变图';
+    document.getElementById('puzzle-modal').style.display = 'flex';
+}
+
+function closePuzzleModal() {
+    document.getElementById('puzzle-modal').style.display = 'none';
+}
+
+// ===== 互动小功能切换 =====
+function switchInteract(type, btn) {
+    document.querySelectorAll('.interact-panel').forEach(function(p) {
+        p.classList.remove('active');
+    });
+    document.querySelectorAll('.interact-tab').forEach(function(t) {
+        t.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-' + type);
+    if (panel) panel.classList.add('active');
+    if (btn) btn.classList.add('active');
+}

@@ -415,3 +415,79 @@ footer {
         font-size: 3rem;
     }
 }
+/* ===== 纹样切换标签 ===== */
+.pattern-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+    margin-bottom: 8px;
+}
+
+.pattern-tab {
+    padding: 10px 28px;
+    background: #d9cdbc;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #5a3e2b;
+    font-family: inherit;
+}
+
+.pattern-tab:hover {
+    background: #c4b49c;
+}
+
+.pattern-tab.active {
+    background: #5a3e2b;
+    color: white;
+}
+
+/* 面板切换 */
+.compare-panel {
+    display: none;
+}
+
+.compare-panel.active {
+    display: block;
+}
+
+/* ===== 互动小功能切换标签 ===== */
+.interact-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.interact-tab {
+    padding: 10px 28px;
+    background: #d9cdbc;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #5a3e2b;
+    font-family: inherit;
+}
+
+.interact-tab:hover {
+    background: #c4b49c;
+}
+
+.interact-tab.active {
+    background: #5a3e2b;
+    color: white;
+}
+
+.interact-panel {
+    display: none;
+}
+
+.interact-panel.active {
+    display: block;
+}
