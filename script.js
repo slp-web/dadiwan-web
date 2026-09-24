@@ -549,16 +549,16 @@ var potteryData = {
 
 // ===== 彩陶模型链接配置 =====
 var modelUrls = {
-    'ren-tou-ping': 'http://tk2o9510d.hn-bkt.clouddn.com/rentouxingqikoucaitaoping.glb',
-    'kuan-dai-bo': 'http://tk2o9510d.hn-bkt.clouddn.com/kuandaiwensanzucaitaobo.glb',
-    'ji-he-guan': 'http://tk2o9510d.hn-bkt.clouddn.com/jihewencaitaoguan.glb',
-    'yu-wen-pen': 'http://tk2o9510d.hn-bkt.clouddn.com/yuwencaitaopeng.glb',
-    'wang-ge-hu': 'http://tk2o9510d.hn-bkt.clouddn.com/wanggewencaitaohu.glb',
-    'niao-wen-guan': 'http://tk2o9510d.hn-bkt.clouddn.com/biantiniaowencaitaoguan.glb'
+    'ren-tou-ping': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/rentouxingqikoucaitaoping.glb',
+    'kuan-dai-bo': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/kuandaiwensanzucaitaobo.glb',
+    'ji-he-guan': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/jihewencaitaoguan.glb',
+    'yu-wen-pen': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/yuwencaitaopeng.glb',
+    'wang-ge-hu': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/wanggewencaitaohu.glb',
+    'niao-wen-guan': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/biantiniaowencaitaoguan.glb'
 };
 
 // ===== 切换加载3D模型 =====
-var currentModel = null;
+var modelLoadToken = 0;
 
 function loadModel(key) {
     var container = document.getElementById('three-container');
@@ -566,6 +566,9 @@ function loadModel(key) {
         console.error('❌ three-container 不存在');
         return;
     }
+
+    // 生成当前请求的令牌
+    var currentToken = ++modelLoadToken;
 
     var tip = document.getElementById('loading-tip');
     if (!tip) {
@@ -575,7 +578,7 @@ function loadModel(key) {
         container.style.position = 'relative';
         container.appendChild(tip);
     }
-    tip.textContent = '⏳ 彩陶加载中...';
+    tip.textContent = '⏳ 彩陶加载中 0%';
     tip.style.display = 'block';
 
     var url = modelUrls[key];
@@ -584,35 +587,65 @@ function loadModel(key) {
         return;
     }
 
-    // 移除旧模型
-    if (currentModel) {
-        window.threeScene.remove(currentModel);
-        currentModel = null;
+    // 移除旧模型，并清理场景中可能残留的模型
+    if (window.threeScene) {
+        // 移除当前引用的模型（用 window.currentModel 避免作用域报错）
+        if (window.currentModel) {
+            window.threeScene.remove(window.currentModel);
+            window.currentModel = null;
+        }
+        // 保险措施：清理场景中所有不属于基础元素（相机、灯光）的模型
+        var toRemove = [];
+        window.threeScene.children.forEach(function(child) {
+            if (child.isGroup || child.isMesh) {
+                toRemove.push(child);
+            }
+        });
+        toRemove.forEach(function(obj) {
+            window.threeScene.remove(obj);
+        });
     }
 
     var loader = new THREE.GLTFLoader();
     loader.load(
         url,
         function(gltf) {
+            // 关键：加载完成时，检查令牌是否匹配
+            if (currentToken !== modelLoadToken) {
+                console.log('⚠️ 丢弃过期模型:', key);
+                return; 
+            }
+
             var model = gltf.scene;
             model.scale.set(1.5, 1.5, 1.5);
             model.position.x = 0;
             window.threeScene.add(model);
-            currentModel = model;
+            window.currentModel = model;
+
             tip.textContent = '✅ 加载完成！';
-            // ✅ 模型加载完成后再次适配尺寸（加在这里）
-             setTimeout(function() {
-             resizeThree();
-            }, 50);
+            
+            setTimeout(function() { resizeThree(); }, 50);
             setTimeout(function() { tip.style.display = 'none'; }, 600);
             console.log('✅ 模型加载成功:', key);
         },
         function(xhr) {
-            var progress = Math.round(xhr.loaded / xhr.total * 100);
-            var tip = document.getElementById('loading-tip');
-            if (tip) tip.textContent = '⏳ 彩陶加载中 ' + progress + '%';
+            // 关键：进度更新时，如果令牌不匹配，直接忽略
+            if (currentToken !== modelLoadToken) return;
+
+            var progress = 0;
+            if (xhr.total && xhr.total > 0) {
+                progress = Math.round(xhr.loaded / xhr.total * 100);
+            } else {
+                progress = Math.round(xhr.loaded / 1024 / 1024) + 'MB';
+                tip.textContent = '⏳ 彩陶加载中 ' + progress;
+                return;
+            }
+            tip.textContent = '⏳ 彩陶加载中 ' + progress + '%';
         },
         function(error) {
+            // 关键：报错时也检查令牌
+            if (currentToken !== modelLoadToken) return;
+
             var tip = document.getElementById('loading-tip');
             if (tip) tip.textContent = '❌ 加载失败，请刷新重试';
             console.error('❌ 模型加载失败:', error);
