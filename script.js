@@ -155,6 +155,10 @@ function renderQuestion() {
     
         // ===== 先弹徽章窗 =====
         showBadgeModal(badge, level, comment);
+        // 根据成绩解锁不同徽章
+        if (level === '彩陶大师') unlockBadge('quiz_master');
+        else if (level === '彩陶爱好者') unlockBadge('quiz_lover');
+        else unlockBadge('quiz_beginner');
     
         // ===== 再显示成绩页面 =====
         container.innerHTML = `
@@ -358,15 +362,19 @@ function enterSite() {
 // 页面加载时执行初始化
 initWelcome();
 // ===== 悬停信息提示 =====
+// ===== 悬停信息提示 =====
 function showHint(title, desc) {
     var bubble = document.getElementById('hint-bubble');
+    if (!bubble) return;
     document.getElementById('hint-title').textContent = title;
     document.getElementById('hint-desc').textContent = desc;
-    bubble.style.display = 'block';
+    bubble.classList.add('show');
 }
 
 function hideHint() {
-    document.getElementById('hint-bubble').style.display = 'none';
+    var bubble = document.getElementById('hint-bubble');
+    if (!bubble) return;
+    bubble.classList.remove('show');
 }
 // ===== 滑动对比：5张图片切换 =====
 var evoSlider = document.getElementById('evo-slider');
@@ -549,12 +557,12 @@ var potteryData = {
 
 // ===== 彩陶模型链接配置 =====
 var modelUrls = {
-    'ren-tou-ping': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/rentouxingqikoucaitaoping.glb',
-    'kuan-dai-bo': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/kuandaiwensanzucaitaobo.glb',
-    'ji-he-guan': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/jihewencaitaoguan.glb',
-    'yu-wen-pen': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/yuwencaitaopeng.glb',
-    'wang-ge-hu': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/wanggewencaitaohu.glb',
-    'niao-wen-guan': 'https://dadiwan-models.oss-cn-beijing.aliyuncs.com/biantiniaowencaitaoguan.glb'
+    'ren-tou-ping': 'models/01/rentouxingqikoucaitaopingB.glb',
+    'kuan-dai-bo': 'models/01/kuandaiwensanzucaitaoboB.glb',
+    'ji-he-guan': 'models/01/jihewencaitaoguanB.glb',
+    'yu-wen-pen': 'models/01/yuwencaitaopenB.glb',
+    'wang-ge-hu': 'models/01/wanggewencaitaohuB.glb',
+    'niao-wen-guan': 'models/01/biantiniaowencaitaoguanB.glb'
 };
 
 // ===== 切换加载3D模型 =====
@@ -659,10 +667,10 @@ function openDetail(key) {
     if (!data) return;
 
     // 隐藏卡片网格
-    var grid = document.querySelector('#gallery .card-grid');
-    if (grid) grid.style.display = 'none';
-    document.querySelector('#gallery .fade-up').style.display = 'none';  // 隐藏标题
-    document.querySelector('#gallery .fade-up + p').style.display = 'none';  // 隐藏描述
+    var wrapper = document.getElementById('gallery-carousel-wrapper');
+    if (wrapper) wrapper.style.display = 'none';
+    document.querySelector('#gallery .fade-up').style.display = 'none';
+    document.querySelector('#gallery .fade-up + p').style.display = 'none';
 
     // 显示详情页
     document.getElementById('detail-view').style.display = 'block';
@@ -688,7 +696,7 @@ function openDetail(key) {
 
 // ===== 返回列表 =====
 function closeDetail() {
-    document.getElementById('gallery').querySelector('.card-grid').style.display = 'grid';
+    document.getElementById('gallery-carousel-wrapper').style.display = 'block';
     document.getElementById('detail-view').style.display = 'none';
     document.querySelector('#gallery .fade-up').style.display = '';
     document.querySelector('#gallery .fade-up + p').style.display = '';
@@ -860,12 +868,28 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== 纹样拼图（多套轮换） =====
 var puzzleList = [
     {
-        name: '鱼纹①',
+        name: '原始鱼纹',
         images: ['images/Y-W-1.png', 'images/Y-W-2.png', 'images/Y-W-3.png', 'images/Y-W-4.png', 'images/Y-W-5.png', 'images/Y-W-6.png']
     },
     {
-        name: '鱼纹②',
+        name: '长尾鱼纹',
         images: ['images/Y-W_01.png', 'images/Y-W_02.png', 'images/Y-W_03.png', 'images/Y-W_04.png', 'images/Y-W_05.png', 'images/Y-W_06.png']
+    },
+    {
+        name: '变体鸟纹',
+        images: ['images/N-W_01.png', 'images/N-W_02.png', 'images/N-W_03.png', 'images/N-W_04.png', 'images/N-W_05.png', 'images/N-W_06.png']
+    },
+    {
+        name: '抽象鸟纹',
+        images: ['images/N-W-0_01.png', 'images/N-W-0_02.png', 'images/N-W-0_03.png', 'images/N-W-0_04.png', 'images/N-W-0_05.png', 'images/N-W-0_06.png']
+    },
+    {
+        name: '网格蛙纹',
+        images: ['images/W-W-0_01.png', 'images/W-W-0_02.png', 'images/W-W-0_03.png', 'images/W-W-0_04.png', 'images/W-W-0_05.png', 'images/W-W-0_06.png']
+    },
+    {
+        name: '几何蛙纹',
+        images: ['images/W-W_01.png', 'images/W-W_02.png', 'images/W-W_03.png', 'images/W-W_04.png', 'images/W-W_05.png', 'images/W-W_06.png']
     }
 ];
 
@@ -981,24 +1005,97 @@ function nextPuzzle() {
 // 初始化
 shufflePuzzle();
 
-// ===== 纹样切换 =====
-function switchPattern(type, btn) {
+// ===== 纹样切换（点击卡片 → 打开弹窗） =====
+function switchPattern(type, element) {
+    // 高亮当前卡片
+    document.querySelectorAll('.pattern-card').forEach(function(c) {
+        c.classList.remove('active');
+    });
+    if (element) element.classList.add('active');
+
+    // 切换面板
     document.querySelectorAll('.compare-panel').forEach(function(p) {
         p.classList.remove('active');
     });
-    document.querySelectorAll('.pattern-tab').forEach(function(t) {
-        t.classList.remove('active');
-    });
     var panel = document.getElementById('compare-' + type);
     if (panel) panel.classList.add('active');
-    if (btn) btn.classList.add('active');
+
+    // 打开弹窗
+    document.getElementById('pattern-modal').style.display = 'flex';
+
+    // 👇 关键：等弹窗显示后，重新触发对应滑块，让图片和进度正确初始化
+    setTimeout(function() {
+        var sliderId = type === 'yu' ? 'evo-slider' : (type === 'niao' ? 'niao-slider' : 'wa-slider');
+        var slider = document.getElementById(sliderId);
+        if (slider) {
+            slider.dispatchEvent(new Event('input'));
+        }
+    }, 100);
 }
 
-// ===== 拼图完成弹窗 =====
+// 关闭弹窗
+function closePatternModal() {
+    document.getElementById('pattern-modal').style.display = 'none';
+}
+
+// 点击遮罩关闭
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('pattern-modal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closePatternModal();
+        });
+    }
+    // 按 ESC 键关闭
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePatternModal();
+    });
+});
+
+// 👇 新增：全局变量，用于在本次会话中记录拼图进度（防止 localStorage 被浏览器拦截导致进度丢失）
+let sessionCompletedPuzzles = [];
+
+// ===== 拼图完成弹窗（带累计定级 + 进度反馈） =====
 function showPuzzleModal(name) {
     var text = document.getElementById('puzzle-modal-text');
     if (text) text.textContent = '你已成功拼合「' + name + '」演变图';
     document.getElementById('puzzle-modal').style.display = 'flex';
+
+    // 1. 无论如何，先把当前拼图记在内存里
+    if (!sessionCompletedPuzzles.includes(name)) {
+        sessionCompletedPuzzles.push(name);
+    }
+
+    // 2. 尝试同步到 localStorage（如果被拦截，就忽略）
+    try {
+        var savedPuzzles = JSON.parse(localStorage.getItem('dadiwan_completed_puzzles') || '[]');
+        // 合并历史记录
+        savedPuzzles.forEach(function(p) {
+            if (!sessionCompletedPuzzles.includes(p)) {
+                sessionCompletedPuzzles.push(p);
+            }
+        });
+        localStorage.setItem('dadiwan_completed_puzzles', JSON.stringify(sessionCompletedPuzzles));
+    } catch(e) {
+        console.warn('浏览器拦截了 localStorage，本次拼图进度将仅保留在内存中');
+    }
+
+    var count = sessionCompletedPuzzles.length;
+    var totalPuzzles = puzzleList.length; // 当前总共 6 套
+
+    // 3. 根据累计数量发放不同级别的徽章，并记录是否有新徽章
+    var gotNewBadge = false;
+    if (count === 1) gotNewBadge = unlockBadge('puzzle_1') || gotNewBadge;
+    if (count >= 3) gotNewBadge = unlockBadge('puzzle_3') || gotNewBadge;
+    if (count >= totalPuzzles) gotNewBadge = unlockBadge('puzzle_all') || gotNewBadge;
+
+    // 4. 如果这次没有解锁新徽章，就弹一个进度提示，让玩家知道还在累计
+    if (!gotNewBadge) {
+        showBadgeToast({ 
+            icon: '🧩', 
+            title: '拼图成功！进度 ' + count + '/' + totalPuzzles 
+        });
+    }
 }
 
 function closePuzzleModal() {
@@ -1017,3 +1114,342 @@ function switchInteract(type, btn) {
     if (panel) panel.classList.add('active');
     if (btn) btn.classList.add('active');
 }
+
+// ===== 首页彩陶图片轮播（无缝循环版） =====
+function initHeroCarousel() {
+    var track = document.getElementById('carousel-track');
+    var originalSlides = document.querySelectorAll('.carousel-slide');
+    
+    if (!track || originalSlides.length <= 1) return;
+
+    // 💡 魔法第一步：在最后一张后面，偷偷克隆一张第一张图
+    var firstClone = originalSlides[0].cloneNode(true);
+    track.appendChild(firstClone);
+
+    var totalSlides = track.children.length; // 现在总数变成了 7
+    var currentIndex = 0;
+    var intervalTime = 3500;
+
+    setInterval(function() {
+        currentIndex++;
+        
+        // 正常向左滑动
+        track.style.transition = 'transform 0.8s ease-in-out';
+        track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+
+        // 💡 魔法第二步：当滑动到那张“克隆图”时，瞬间跳回真正的起点
+        if (currentIndex === totalSlides - 1) {
+            setTimeout(function() {
+                // 取消滑动动画
+                track.style.transition = 'none';
+                // 瞬间归位，注意这里是 0
+                track.style.transform = 'translateX(0)';
+                // 索引重新归 0
+                currentIndex = 0;
+            }, 800); // ⚠️ 这里的 800 必须和 CSS 里的 0.8s 完全一致！
+        }
+    }, intervalTime);
+}
+
+// 页面加载时启动轮播
+document.addEventListener('DOMContentLoaded', function() {
+    initHeroCarousel();
+});
+
+// ===== 徽章系统核心逻辑 =====
+const BADGE_KEY = 'dadiwan_badges';
+const badgeDefs = {
+    'quiz_master': { icon: '🏆', title: '彩陶大师', desc: '问答正确率 ≥ 80%' },
+    'quiz_lover': { icon: '📖', title: '彩陶爱好者', desc: '问答正确率 ≥ 60%' },
+    'quiz_beginner': { icon: '🔍', title: '彩陶初学者', desc: '完成一次知识问答' },
+    // 拼图徽章（累计完成数量定级）
+    'puzzle_1': { icon: '🧩', title: '初识纹样', desc: '完成 1 套纹样拼图' },
+    'puzzle_3': { icon: '🔍', title: '纹样解密者', desc: '累计完成 3 套纹样拼图' },
+    'puzzle_all': { icon: '🏆', title: '彩陶修复大师', desc: '完成全部纹样拼图' }
+};
+
+// 获取已解锁的徽章
+function getBadges() {
+    try { return JSON.parse(localStorage.getItem(BADGE_KEY)) || []; }
+    catch (e) { return []; }
+}
+
+// 解锁徽章
+function unlockBadge(id) {
+    if (!badgeDefs[id]) return false;
+    const unlocked = getBadges();
+    if (unlocked.includes(id)) return false; // 已有就不重复发，返回 false
+
+    unlocked.push(id);
+    
+    try {
+        localStorage.setItem(BADGE_KEY, JSON.stringify(unlocked));
+    } catch (e) {
+        console.warn('浏览器拦截了 localStorage，徽章无法持久化保存');
+    }
+    
+    renderBadgeWall(); 
+    showBadgeToast(badgeDefs[id]); 
+    return true; // 👈 关键：告诉调用者，这次确实拿到了新徽章！
+}
+
+// 显示飘窗
+function showBadgeToast(def) {
+    const toast = document.getElementById('badge-toast');
+    if (!toast) return;
+
+    document.getElementById('toast-icon').textContent = def.icon;
+    document.getElementById('toast-title').textContent = def.title;
+
+    toast.classList.add('show');
+
+    if (window.toastTimer) clearTimeout(window.toastTimer);
+    window.toastTimer = setTimeout(function() {
+        toast.classList.remove('show');
+    }, 3500);
+}
+
+// 渲染徽章墙（分问答和拼图两列）
+function renderBadgeWall() {
+    const quizWall = document.getElementById('badge-wall-quiz');
+    const puzzleWall = document.getElementById('badge-wall-puzzle');
+    
+    // 如果两个容器有一个不存在，直接退出
+    if (!quizWall || !puzzleWall) return;
+
+    const unlocked = getBadges();
+
+    // 1. 问答徽章列
+    const quizBadges = ['quiz_master', 'quiz_lover', 'quiz_beginner'];
+    quizWall.innerHTML = quizBadges.map(id => {
+        const def = badgeDefs[id];
+        const isUnlocked = unlocked.includes(id);
+        return `
+            <div class="badge-item ${isUnlocked ? 'unlocked' : 'locked'}">
+                <span class="badge-icon">${def.icon}</span>
+                <h4>${def.title}</h4>
+                <p style="font-size:0.7rem;">${def.desc}</p>
+            </div>
+        `;
+    }).join('');
+
+    // 2. 拼图徽章列
+    const puzzleBadges = ['puzzle_1', 'puzzle_3', 'puzzle_all'];
+    puzzleWall.innerHTML = puzzleBadges.map(id => {
+        const def = badgeDefs[id];
+        const isUnlocked = unlocked.includes(id);
+        return `
+            <div class="badge-item ${isUnlocked ? 'unlocked' : 'locked'}">
+                <span class="badge-icon">${def.icon}</span>
+                <h4>${def.title}</h4>
+                <p style="font-size:0.7rem;">${def.desc}</p>
+            </div>
+        `;
+    }).join('');
+}
+
+// 页面加载时渲染徽章墙
+document.addEventListener('DOMContentLoaded', function() {
+    renderBadgeWall();
+});
+
+// ===== 3D 环形旋转木马 =====
+let carouselIndex = 0;
+
+function updateCarousel() {
+    const cards = document.querySelectorAll('.carousel-card');
+    const total = cards.length;
+    if (total === 0) return;
+
+    cards.forEach(function(card, i) {
+        // 计算相对于当前索引的位置偏移
+        let offset = i - carouselIndex;
+
+        // 归一化到 [-total/2, total/2]，实现首尾相连
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+
+        // 清除所有位置类
+        card.classList.remove('pos-center', 'pos-left', 'pos-right', 'pos-hidden');
+
+        // 根据偏移量分配位置
+        if (offset === 0) {
+            card.classList.add('pos-center');
+        } else if (offset === -1) {
+            card.classList.add('pos-left');
+        } else if (offset === 1) {
+            card.classList.add('pos-right');
+        } else {
+            card.classList.add('pos-hidden');
+        }
+    });
+}
+
+function handleCardClick(card) {
+    const cards = Array.from(document.querySelectorAll('.carousel-card'));
+    const index = cards.indexOf(card);
+    const total = cards.length;
+
+    let offset = index - carouselIndex;
+    if (offset > total / 2) offset -= total;
+    if (offset < -total / 2) offset += total;
+
+    if (offset === 0) {
+        // 点击中间的卡片 → 打开详情
+        openDetail(card.dataset.key);
+    } else {
+        // 点击两侧的卡片 → 旋转到中间
+        carouselIndex = index;
+        updateCarousel();
+    }
+}
+
+// 页面加载时初始化
+document.addEventListener('DOMContentLoaded', function() {
+    updateCarousel();
+});
+
+// ===== 工艺简介：S形蜿蜒旋转 =====
+let craftIndex = 0;
+
+// 工艺步骤详情数据
+const craftData = {
+    'xuan-tu':  { icon: '⛏️', title: '选土', desc: '选用细腻纯净的黄土，去除粗砂与杂质。大地湾先民通常选取河谷地带的沉积黄土，土质细腻、可塑性强，是制作彩陶的基础。' },
+    'tao-xi':   { icon: '💧', title: '淘洗', desc: '将黄土加水搅拌，通过沉淀去除杂质，提高泥料的可塑性与纯度。这一步直接决定了陶器成品的细腻程度与烧制成功率。' },
+    'zhi-pi':   { icon: '🖐️', title: '制坯', desc: '采用手工捏塑或泥条盘筑法，将泥料塑造成陶器器型。大型器物多用泥条盘筑法，一层层向上盘绕成型，再拍打修整。' },
+    'xiu-pi':   { icon: '✂️', title: '修坯', desc: '待陶坯半干时，修整器型、打磨表面，使器壁厚薄均匀、内外光滑。这个环节决定了陶器的美观与耐用程度。' },
+    'cai-hui':  { icon: '🎨', title: '彩绘', desc: '用矿物颜料（主要是红彩和黑彩）在陶坯上绘制纹样。纹样题材丰富，包括鱼纹、鸟纹、蛙纹、网格纹等，反映先民的审美与信仰。' },
+    'shao-zhi': { icon: '🔥', title: '烧制', desc: '将陶坯放入窑炉高温烧制，温度通常在 800-1000℃ 之间。烧制使陶器最终成型，颜色也由红褐逐渐稳定，成为历经千年的彩陶。' }
+};
+
+function updateCraftCarousel() {
+    const cards = document.querySelectorAll('.craft-card');
+    const total = cards.length;
+    if (total === 0) return;
+
+    cards.forEach(function (card, i) {
+        let offset = i - craftIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+
+        card.classList.remove('pos-c0', 'pos-c1', 'pos-c2', 'pos-c3', 'pos-c4', 'pos-hidden');
+
+        if (offset === -2) card.classList.add('pos-c0');
+        else if (offset === -1) card.classList.add('pos-c1');
+        else if (offset === 0) card.classList.add('pos-c2');
+        else if (offset === 1) card.classList.add('pos-c3');
+        else if (offset === 2) card.classList.add('pos-c4');
+        else card.classList.add('pos-hidden');
+    });
+}
+
+function handleCraftClick(card) {
+    const cards = Array.from(document.querySelectorAll('.craft-card'));
+    const index = cards.indexOf(card);
+    const total = cards.length;
+
+    let offset = index - craftIndex;
+    if (offset > total / 2) offset -= total;
+    if (offset < -total / 2) offset += total;
+
+    if (offset === 0) {
+        // 点击中间卡片 → 打开详情
+        openCraftDetail(card.dataset.key);
+    } else {
+        // 点击两侧卡片 → 旋转到中间
+        craftIndex = index;
+        updateCraftCarousel();
+    }
+}
+
+function openCraftDetail(key) {
+    const data = craftData[key];
+    if (!data) return;
+
+    document.getElementById('craft-modal-icon').textContent = data.icon;
+    document.getElementById('craft-modal-title').textContent = data.title;
+    document.getElementById('craft-modal-desc').textContent = data.desc;
+    document.getElementById('craft-modal').style.display = 'flex';
+}
+
+function closeCraftModal() {
+    document.getElementById('craft-modal').style.display = 'none';
+}
+
+// 初始化工艺旋转
+document.addEventListener('DOMContentLoaded', function () {
+    updateCraftCarousel();
+
+    // 点击遮罩关闭
+    const craftModal = document.getElementById('craft-modal');
+    if (craftModal) {
+        craftModal.addEventListener('click', function (e) {
+            if (e.target === craftModal) closeCraftModal();
+        });
+    }
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeCraftModal();
+    });
+});
+
+// ===== 彩陶旋转木马：用鼠标位置找最近的卡片（绕开 3D 遮挡） =====
+document.addEventListener('DOMContentLoaded', function () {
+    var wrapper = document.querySelector('.carousel-3d-wrapper');
+    if (!wrapper) return;
+
+    wrapper.addEventListener('click', function (e) {
+        var cards = document.querySelectorAll('.carousel-card');
+        if (cards.length === 0) return;
+
+        var mouseX = e.clientX;
+        var mouseY = e.clientY;
+        var closest = null;
+        var minDist = Infinity;
+
+        cards.forEach(function (card) {
+            var rect = card.getBoundingClientRect();
+            var cx = rect.left + rect.width / 2;
+            var cy = rect.top + rect.height / 2;
+            var dist = Math.sqrt(Math.pow(mouseX - cx, 2) + Math.pow(mouseY - cy, 2));
+
+            if (dist < minDist) {
+                minDist = dist;
+                closest = card;
+            }
+        });
+
+        if (closest) {
+            handleCardClick(closest);
+        }
+    });
+
+    console.log('✅ 旋转木马点击委托已绑定');
+});
+
+// ===== 细闪粒子生成 =====
+(function generateSparkles() {
+    var layer = document.getElementById('sparkle-layer');
+    if (!layer) return;
+    
+    // 根据屏幕宽度自适应数量，桌面 40 个，手机 15 个
+    var isMobile = window.innerWidth < 768;
+    var count = isMobile ? 15 : 40;
+
+    for (var i = 0; i < count; i++) {
+        var s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        
+        // 关键：每颗闪烁的时长和延迟都随机，形成"不同频率"
+        s.style.animationDuration = (2 + Math.random() * 3) + 's';  // 2~5 秒
+        s.style.animationDelay = (Math.random() * 5) + 's';          // 0~5 秒延迟
+        
+        // 大小随机，3~5px 之间
+        var size = 3 + Math.random() * 2;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        
+        layer.appendChild(s);
+    }
+})();

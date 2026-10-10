@@ -6,9 +6,10 @@
     <title>大地湾彩陶文化数字化展示</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+    <!-- 细闪粒子层 -->
+    <div id="sparkle-layer"></div>
         <!-- ===== 欢迎遮罩 ===== -->
     <div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#3e2c1b; z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; transition:opacity 0.8s ease; overflow:hidden;">
         
@@ -52,7 +53,18 @@
     <div id="home" class="page active">
         <div class="hero">
             <div class="spinning-pot">
-                <img src="images/rentou.png" alt="人头形器口彩陶瓶" style="width:120px; height:120px; object-fit:cover; border-radius:50%; box-shadow:0 8px 32px rgba(0,0,0,0.15);" />
+                <!-- 轮播图容器（圆形视窗） -->
+                <div class="hero-carousel" id="hero-carousel">
+                    <!-- 轮播图轨道（所有图片排成一排，整体移动） -->
+                    <div class="carousel-track" id="carousel-track">
+                        <img src="images/rentou.png" alt="人头形器口彩陶瓶" class="carousel-slide" />
+                        <img src="images/kuandai.png" alt="宽带纹三足彩陶钵" class="carousel-slide" />
+                        <img src="images/yuwen.png" alt="鱼纹彩陶盆" class="carousel-slide" />
+                        <img src="images/wangge.png" alt="网格纹彩陶壶" class="carousel-slide" />
+                        <img src="images/bianti.png" alt="变体鸟纹彩陶罐" class="carousel-slide" />
+                        <img src="images/jihe.png" alt="几何纹彩陶罐" class="carousel-slide" />
+                    </div>
+                </div>
             </div>
             <h1>大地湾彩陶</h1>
             <p style="font-size:1.1rem; color:#5a3e2b; max-width:600px; margin:12px auto 0; line-height:1.6;">
@@ -75,44 +87,47 @@
         <!-- ===== 彩陶图鉴 ===== -->
     <div id="gallery" class="page">
         <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🏺 彩陶图鉴</h2>
-        <p class="fade-up" style="text-align:center; color:#5a3e2b; margin-bottom:24px;">拖拽旋转查看3D彩陶 · 点击卡片查看详情</p>
-        <!-- 其他6件陶器（2列网格） -->
-        <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
-            <!-- 1. 人头形器口彩陶瓶 -->
-        <div class="card fade-up" onclick="openDetail('ren-tou-ping')">
-            <img src="images/ren-tou-xing-qi-kou-cai-tao-ping.jpg" alt="人头形器口彩陶瓶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-            <h4>人头形器口彩陶瓶</h4>
-            <p style="font-size:0.85rem; color:#5a3e2b;">大地湾"镇馆之宝"，人像与陶器完美结合</p>
-        </div>
-            <!-- 2. 宽带纹三足彩陶钵 -->
-            <div class="card fade-up" onclick="openDetail('kuan-dai-bo')">
-                <img src="images/kuan-dai-wen-san-zu-cai-tao-bo.jpg" alt="宽带纹三足彩陶钵" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>宽带纹三足彩陶钵</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">我国已知最早的彩陶之一，纹饰简洁古朴</p>
-            </div>
-            <!-- 3. 几何纹彩陶罐 -->
-            <div class="card fade-up" onclick="openDetail('ji-he-guan')">
-                <img src="images/ji-he-wen-cai-tao-guan.jpeg" alt="几何纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>几何纹彩陶罐</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">线条流畅，体现先民的抽象审美能力</p>
-            </div>
-            <!-- 4. 鱼纹彩陶盆 -->
-            <div class="card fade-up" onclick="openDetail('yu-wen-pen')">
-                <img src="images/yu-wen-cai-tao-pen.jpg" alt="鱼纹彩陶盆" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>鱼纹彩陶盆</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">鱼纹从具象到抽象的演变代表</p>
-            </div>
-            <!-- 5. 网格纹彩陶壶 -->
-            <div class="card fade-up" onclick="openDetail('wang-ge-hu')">
-                <img src="images/wang-ge-wen-cai-tao-hu.jpg" alt="网格纹彩陶壶" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>网格纹彩陶壶</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">网格纹是大地湾最具代表性的装饰纹样</p>
-            </div>
-            <!-- 6. 变体鸟纹彩陶罐 -->
-            <div class="card fade-up" onclick="openDetail('niao-wen-guan')">
-                <img src="images/bian-ti-niao-wen-cai-tao-guan.jpeg" alt="变体鸟纹彩陶罐" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>变体鸟纹彩陶罐</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，走向符号化与程式化</p>
+        <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">拖拽旋转查看3D彩陶 · 点击卡片查看详情</p>
+        <!-- ===== 3D 环形旋转木马 ===== -->
+        <div class="carousel-3d-wrapper" id="gallery-carousel-wrapper">
+            <div class="carousel-3d" id="gallery-carousel">
+
+                <div class="carousel-card" data-key="ren-tou-ping">
+                    <img src="images/ren-tou-xing-qi-kou-cai-tao-ping.jpg" alt="人头形器口彩陶瓶" />
+                    <h4>人头形器口彩陶瓶</h4>
+                    <p>大地湾"镇馆之宝"，人像与陶器完美结合</p>
+                </div>
+
+                <div class="carousel-card" data-key="kuan-dai-bo">
+                    <img src="images/kuan-dai-wen-san-zu-cai-tao-bo.jpg" alt="宽带纹三足彩陶钵" />
+                    <h4>宽带纹三足彩陶钵</h4>
+                    <p>我国已知最早的彩陶之一，纹饰简洁古朴</p>
+                </div>
+
+                <div class="carousel-card" data-key="ji-he-guan">
+                    <img src="images/ji-he-wen-cai-tao-guan.jpeg" alt="几何纹彩陶罐" />
+                    <h4>几何纹彩陶罐</h4>
+                    <p>线条流畅，体现先民的抽象审美能力</p>
+                </div>
+
+                <div class="carousel-card" data-key="yu-wen-pen">
+                    <img src="images/yu-wen-cai-tao-pen.jpg" alt="鱼纹彩陶盆" />
+                    <h4>鱼纹彩陶盆</h4>
+                    <p>鱼纹从具象到抽象的演变代表</p>
+                </div>
+
+                <div class="carousel-card" data-key="wang-ge-hu">
+                    <img src="images/wang-ge-wen-cai-tao-hu.jpg" alt="网格纹彩陶壶" />
+                    <h4>网格纹彩陶壶</h4>
+                    <p>网格纹是大地湾最具代表性的装饰纹样</p>
+                </div>
+
+                <div class="carousel-card" data-key="niao-wen-guan">
+                    <img src="images/bian-ti-niao-wen-cai-tao-guan.jpeg" alt="变体鸟纹彩陶罐" />
+                    <h4>变体鸟纹彩陶罐</h4>
+                    <p>鸟纹逐渐简化，走向符号化与程式化</p>
+                </div>
+
             </div>
         </div>
         <!-- ===== 彩陶详情页（默认隐藏） ===== -->
@@ -140,149 +155,115 @@
         </div>
     </div>
 
-    <!-- ===== 纹样赏析 ===== -->
-    <div id="patterns" class="page">
-        <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🎨 纹样赏析</h2>
-        <p class="fade-up" style="text-align:center; color:#5a3e2b; margin-bottom:24px;">大地湾彩陶的典型纹样及其文化内涵</p>
-        <div class="card-grid">
-            <!-- 鱼纹 -->
-            <div class="card fade-up" onmouseenter="showHint('鱼纹', '大地湾仰韶文化彩陶的代表性纹样，从具象到抽象演变，寓意多子多福与繁衍')" onmouseleave="hideHint()">
-                <img src="images/yu-wen-5.png" alt="鱼纹" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>鱼纹</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">大地湾仰韶文化彩陶的代表性纹样</p>
-            </div>
-            <!-- 变体鸟纹 -->
-            <div class="card fade-up" onmouseenter="showHint('变体鸟纹', '鸟纹逐渐简化，从写实走向符号化，体现了先民从具象思维向抽象思维的过渡')" onmouseleave="hideHint()">
-                <img src="images/niao-wen.png" alt="变体鸟纹" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>变体鸟纹</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">鸟纹逐渐简化，从写实走向符号化</p>
-            </div>
-            <!-- 蛙纹 -->
-            <div class="card fade-up" onmouseenter="showHint('蛙纹', '大地湾最具代表性的装饰纹样之一，由抽象线条勾勒蛙的形态，古朴稚拙，蕴藏先民对繁衍的美好祈愿')" onmouseleave="hideHint()">
-                <img src="images/wa-wen-5.png" alt="蛙纹" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" />
-                <h4>蛙纹</h4>
-                <p style="font-size:0.85rem; color:#5a3e2b;">大地湾最具代表性的装饰纹样之一</p>
-            </div>
+   <!-- ===== 纹样赏析 ===== -->
+<div id="patterns" class="page">
+    <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🎨 纹样赏析</h2>
+    <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">点击上方卡片切换纹样，左右滑动查看演变过程</p>
+    <!-- 新增：卡片容器，让它们横着排 -->
+    <div class="pattern-cards-row">
+        <div class="card fade-up pattern-card" 
+            onclick="switchPattern('yu', this)" 
+            onmouseenter="showHint('鱼纹', '大地湾仰韶文化彩陶的代表性纹样，从具象到抽象演变，寓意多子多福与繁衍')" 
+            onmouseleave="hideHint()">
+            <img src="images/yu-wen-5.png" alt="鱼纹" />
+            <h4>鱼纹</h4>
+            <p>大地湾仰韶文化彩陶的代表性纹样</p>
         </div>
 
-        <!-- 悬停提示气泡 -->
-        <div id="hint-bubble" style="display:none; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#3e2c1b; color:#f0e2d0; padding:16px 24px; border-radius:12px; max-width:400px; text-align:center; z-index:100; box-shadow:0 8px 24px rgba(0,0,0,0.3); pointer-events:none;">
-            <strong id="hint-title"></strong>
-            <p id="hint-desc" style="margin:4px 0 0; font-size:0.9rem; opacity:0.8;"></p>
+        <div class="card fade-up pattern-card" 
+            onclick="switchPattern('niao', this)" 
+            onmouseenter="showHint('变体鸟纹', '鸟纹逐渐简化，从写实走向符号化，体现了先民从具象思维向抽象思维的过渡')" 
+            onmouseleave="hideHint()">
+            <img src="images/niao-wen.png" alt="变体鸟纹" />
+            <h4>变体鸟纹</h4>
+            <p>鸟纹逐渐简化，从写实走向符号化</p>
         </div>
 
-        <!-- ===== 纹样切换标签 ===== -->
-        <div class="pattern-tabs">
-            <button class="pattern-tab active" onclick="switchPattern('yu', this)">🐟 鱼纹</button>
-            <button class="pattern-tab" onclick="switchPattern('niao', this)">🐦 鸟纹</button>
-            <button class="pattern-tab" onclick="switchPattern('wa', this)">🐸 蛙纹</button>
+        <div class="card fade-up pattern-card" 
+            onclick="switchPattern('wa', this)" 
+            onmouseenter="showHint('蛙纹', '大地湾最具代表性的装饰纹样之一，由抽象线条勾勒蛙的形态，古朴稚拙，蕴藏先民对繁衍的美好祈愿')" 
+            onmouseleave="hideHint()">
+            <img src="images/wa-wen-5.png" alt="蛙纹" />
+            <h4>蛙纹</h4>
+            <p>大地湾最具代表性的装饰纹样之一</p>
         </div>
-
-        <!-- ===== 滑动对比 ===== -->
-        <div id="compare-yu" class="compare-panel active" style="margin-top:40px; background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-            <h3 style="text-align:center; margin-bottom:4px;">🔄 纹样演变 · 滑动探索</h3>
-            <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看鱼纹从具象到抽象的演变过程</p>
-
-            <div style="position:relative; width:100%; max-width:600px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
-                <div id="evolution-container" style="position:relative; width:100%; aspect-ratio:1/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
-                    <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">
-                        演变进度 <span id="evo-progress">50</span>%
-                    </div>
-                    <img id="evo-image" src="images/yu-wen.png" alt="鱼纹演变" style="width:100%; height:100%; object-fit:cover; display:block;" />
-                    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to right, rgba(0,0,0,0) 30%, rgba(0,0,0,0.05) 70%); pointer-events:none; z-index:5;"></div>
-                    <div id="evo-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.2); pointer-events:none; z-index:10; transition:left 0.05s;"></div>
-                    <div id="evo-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
-                    <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">具象 · 原始鱼纹</span>
-                    <span id="evo-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">抽象 · 符号化</span>
-                    <input type="range" id="evo-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0; opacity:0;" />
-                </div>
-                <div style="display:flex; justify-content:center; gap:12px; padding:16px 0 8px; background:#f5efe6; flex-wrap:wrap;">
-                    <button onclick="setEvoStage(0)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">原始</button>
-                    <button onclick="setEvoStage(25)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">简化</button>
-                    <button onclick="setEvoStage(50)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">抽象</button>
-                    <button onclick="setEvoStage(75)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">符号化</button>
-                    <button onclick="setEvoStage(100)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">最终</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== 鸟纹滑动对比 ===== -->
-        <div id="compare-niao" class="compare-panel" style="margin-top:40px; background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-            <h3 style="text-align:center; margin-bottom:4px;">🐦 鸟纹演变 · 滑动探索</h3>
-            <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看鸟纹从具象到抽象的演变过程</p>
-
-            <div style="position:relative; width:100%; max-width:600px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
-                <div style="position:relative; width:100%; aspect-ratio:1/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
-                    <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">
-                        演变进度 <span id="niao-progress">50</span>%
-                    </div>
-                    <img id="niao-image" src="images/niao-wen-3.png" alt="鸟纹演变" style="width:100%; height:100%; object-fit:cover; display:block;" />
-                    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to right, rgba(0,0,0,0) 30%, rgba(0,0,0,0.05) 70%); pointer-events:none; z-index:5;"></div>
-                    <div id="niao-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.2); pointer-events:none; z-index:10; transition:left 0.05s;"></div>
-                    <div id="niao-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
-                    <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">具象 · 原始鸟纹</span>
-                    <span id="niao-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">抽象 · 符号化</span>
-                    <input type="range" id="niao-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0; opacity:0;" />
-                </div>
-                <div style="display:flex; justify-content:center; gap:12px; padding:16px 0 8px; background:#f5efe6; flex-wrap:wrap;">
-                    <button onclick="setNiaoStage(0)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">原始</button>
-                    <button onclick="setNiaoStage(25)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">简化</button>
-                    <button onclick="setNiaoStage(50)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">抽象</button>
-                    <button onclick="setNiaoStage(75)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">符号化</button>
-                    <button onclick="setNiaoStage(100)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">最终</button>
-                </div>
-            </div>
-        </div>
-
-            <!-- ===== 蛙纹滑动对比 ===== -->
-            <div id="compare-wa" class="compare-panel" style="margin-top:40px; background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-                <h3 style="text-align:center; margin-bottom:4px;">🐸 蛙纹演变 · 滑动探索</h3>
-                <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看蛙纹从具象到抽象的演变过程</p>
-        
-                <div style="position:relative; width:100%; max-width:600px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
-                    <div style="position:relative; width:100%; aspect-ratio:1/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
-                        <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">
-                            演变进度 <span id="wa-progress">50</span>%
-                        </div>
-                        <img id="wa-image" src="images/wa-wen-3.png" alt="蛙纹演变" style="width:100%; height:100%; object-fit:cover; display:block;" />
-                        <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to right, rgba(0,0,0,0) 30%, rgba(0,0,0,0.05) 70%); pointer-events:none; z-index:5;"></div>
-                        <div id="wa-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.2); pointer-events:none; z-index:10; transition:left 0.05s;"></div>
-                        <div id="wa-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
-                        <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">具象 · 原始蛙纹</span>
-                        <span id="wa-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none; border:1px solid rgba(255,255,255,0.1);">抽象 · 符号化</span>
-                        <input type="range" id="wa-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0; opacity:0;" />
-                    </div>
-                    <div style="display:flex; justify-content:center; gap:12px; padding:16px 0 8px; background:#f5efe6; flex-wrap:wrap;">
-                        <button onclick="setWaStage(0)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">原始</button>
-                        <button onclick="setWaStage(25)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">简化</button>
-                        <button onclick="setWaStage(50)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">抽象</button>
-                        <button onclick="setWaStage(75)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">符号化</button>
-                        <button onclick="setWaStage(100)" style="padding:6px 16px; background:#d9cdbc; border:none; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:all 0.3s;">最终</button>
-                    </div>
-                </div>
-            </div>
     </div>
 
+    <!-- 悬停提示气泡 -->
+    <div id="hint-bubble">
+        <strong id="hint-title"></strong>
+        <p id="hint-desc"></p>
+    </div>
+
+</div>
     <!-- ===== 纹样赏析结束 ===== -->
 
     <!-- ===== 工艺简介 ===== -->
     <div id="craft" class="page">
         <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🔧 工艺简介</h2>
-        <p class="fade-up" style="text-align:center; color:#5a3e2b; margin-bottom:24px;">大地湾彩陶制作六步骤</p>
-        <div class="card-grid">
-            <div class="card fade-up"><div style="font-size:3rem;">⛏️</div><h4>选土</h4><p style="font-size:0.85rem; color:#5a3e2b;">选用细腻纯净的黄土</p></div>
-            <div class="card fade-up"><div style="font-size:3rem;">💧</div><h4>淘洗</h4><p style="font-size:0.85rem; color:#5a3e2b;">去除杂质，提高可塑性</p></div>
-            <div class="card fade-up"><div style="font-size:3rem;">🖐️</div><h4>制坯</h4><p style="font-size:0.85rem; color:#5a3e2b;">手工捏塑或泥条盘筑</p></div>
-            <div class="card fade-up"><div style="font-size:3rem;">✂️</div><h4>修坯</h4><p style="font-size:0.85rem; color:#5a3e2b;">修整器型，打磨光滑</p></div>
-            <div class="card fade-up"><div style="font-size:3rem;">🎨</div><h4>彩绘</h4><p style="font-size:0.85rem; color:#5a3e2b;">用矿物颜料绘制纹样</p></div>
-            <div class="card fade-up"><div style="font-size:3rem;">🔥</div><h4>烧制</h4><p style="font-size:0.85rem; color:#5a3e2b;">入窑高温烧制成型</p></div>
+        <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">点击两侧卡片旋转 · 点击中间卡片查看详情</p>
+
+        <div class="craft-carousel-wrapper">
+            <!-- SVG 波浪路径 -->
+            <svg class="craft-path-svg" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid meet">
+                <!-- 上波浪 -->
+                <path d="M 60 250 C 180 130, 320 130, 420 250 S 620 370, 720 250 S 920 130, 980 250"
+                    fill="none" stroke="#d9cdbc" stroke-width="2"/>
+                <!-- 下波浪（虚线，平行） -->
+                <path d="M 60 270 C 180 150, 320 150, 420 270 S 620 390, 720 270 S 920 150, 980 270"
+                    fill="none" stroke="#d9cdbc" stroke-width="2" stroke-dasharray="8 8"/>
+            </svg>
+
+            <!-- 旋转卡片 -->
+            <div class="craft-carousel" id="craft-carousel">
+                <div class="craft-card" data-key="xuan-tu" onclick="handleCraftClick(this)">
+                    <div class="craft-card-icon">⛏️</div>
+                    <h4>选土</h4>
+                    <p>选用细腻纯净的黄土</p>
+                </div>
+                <div class="craft-card" data-key="tao-xi" onclick="handleCraftClick(this)">
+                    <div class="craft-card-icon">💧</div>
+                    <h4>淘洗</h4>
+                    <p>去除杂质，提高可塑性</p>
+                </div>
+                <div class="craft-card" data-key="zhi-pi" onclick="handleCraftClick(this)">
+                    <div class="craft-card-icon">🖐️</div>
+                    <h4>制坯</h4>
+                    <p>手工捏塑或泥条盘筑</p>
+                </div>
+                <div class="craft-card" data-key="xiu-pi" onclick="handleCraftClick(this)">
+                    <div class="craft-card-icon">✂️</div>
+                    <h4>修坯</h4>
+                    <p>修整器型，打磨光滑</p>
+                </div>
+                <div class="craft-card" data-key="cai-hui" onclick="handleCraftClick(this)">
+                    <div class="craft-card-icon">🎨</div>
+                    <h4>彩绘</h4>
+                    <p>用矿物颜料绘制纹样</p>
+                </div>
+                <div class="craft-card" data-key="shao-zhi" onclick="handleCraftClick(this)">
+                    <div class="craft-card-icon">🔥</div>
+                    <h4>烧制</h4>
+                    <p>入窑高温烧制成型</p>
+                </div>
+            </div>
         </div>
     </div>
+
+<!-- ===== 工艺详情弹窗 ===== -->
+<div id="craft-modal">
+    <div id="craft-modal-content">
+        <button class="pattern-modal-close" onclick="closeCraftModal()">✕</button>
+        <div id="craft-modal-icon" style="font-size:4rem; text-align:center; margin-bottom:12px;">⛏️</div>
+        <h3 id="craft-modal-title" style="text-align:center; color:#3e2c1b; margin-bottom:12px;">选土</h3>
+        <p id="craft-modal-desc" style="color:#5a3e2b; line-height:1.9; font-size:0.95rem;"></p>
+    </div>
+</div>
 
     <!-- ===== 互动小功能 ===== -->
     <div id="interact" class="page">
         <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🧩 互动小功能</h2>
-        <p style="text-align:center; color:#5a3e2b; margin-bottom:24px;">知识问答 · 纹样拼图</p>
+        <p style="text-align:center; color:#9e9d9d; margin-bottom:24px;">知识问答 · 纹样拼图</p>
 
         <!-- ===== 切换标签 ===== -->
         <div class="interact-tabs">
@@ -297,7 +278,7 @@
 
         <!-- ===== 拼图面板 ===== -->
         <div id="panel-puzzle" class="interact-panel">
-            <div style="margin-top:20px; background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+            <div style="margin-top:20px; background:#fdf8f0; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
                 <h3 style="text-align:center; margin-bottom:4px;">🧩 纹样拼图</h3>
                 <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">点击两块碎片交换位置，拼出完整纹样</p>
 
@@ -356,7 +337,27 @@
                 </p>
             </div>
 
-            <!-- 小彩蛋：徽章墙（可选） -->
+            <!-- 徽章墙（分两列） -->
+            <div style="background:white; border-radius:16px; padding:24px; margin-top:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                <h3 style="color:#3e2c1b; margin-bottom:16px;">🏆 我的成就徽章</h3>
+                
+                <!-- 左右两列容器 -->
+                <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                    <!-- 左列：知识问答 -->
+                    <div style="flex: 1; min-width: 200px;">
+                        <h4 style="color:#7a5a44; font-size:0.9rem; margin-bottom:12px; padding-bottom:6px; border-bottom:1px dashed #d9cdbc;">📝 知识问答</h4>
+                        <div id="badge-wall-quiz" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(80px,1fr)); gap:12px;"></div>
+                    </div>
+                    
+                    <!-- 右列：纹样拼图 -->
+                    <div style="flex: 1; min-width: 200px;">
+                        <h4 style="color:#7a5a44; font-size:0.9rem; margin-bottom:12px; padding-bottom:6px; border-bottom:1px dashed #d9cdbc;">🧩 纹样拼图</h4>
+                        <div id="badge-wall-puzzle" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(80px,1fr)); gap:12px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部装饰 -->
             <div style="text-align:center; margin-top:24px; font-size:0.85rem; color:#b8a088;">
                 🏺 大地湾彩陶 · 八千年的回响
             </div>
@@ -374,7 +375,7 @@
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
-        <script src="script.js"></script>
+        
         <!-- ===== 徽章弹窗 ===== -->
     <div id="badge-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
         <div style="background:white; border-radius:20px; padding:40px 30px 30px; max-width:340px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation: bounceIn 0.4s ease;">
@@ -394,6 +395,74 @@
             <button onclick="closePuzzleModal()" style="padding:10px 40px; background:#5a3e2b; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer;">太棒了！</button>
         </div>
     </div>
+  
+    <!-- 获得徽章飘窗 -->
+    <div id="badge-toast">
+        <div class="toast-icon-wrapper" id="toast-icon">🏆</div>
+        <div class="toast-text-wrapper">
+            <span class="toast-label">获得成就</span>
+            <span class="toast-title" id="toast-title">彩陶大师</span>
+        </div>
+    </div>
 
+    <!-- ===== 纹样演变弹窗 ===== -->
+    <div id="pattern-modal">
+        <div id="pattern-modal-content">
+            <button class="pattern-modal-close" onclick="closePatternModal()">✕</button>
+            
+            <!-- 原来的三个面板，直接放进来 -->
+            <div id="compare-yu" class="compare-panel active" style="margin-top:0;">
+                <h3 style="text-align:center; margin-bottom:4px;">🐟 鱼纹演变 · 滑动探索</h3>
+                <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看鱼纹从具象到抽象的演变过程</p>
+                <div style="position:relative; width:100%; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+                    <div id="evolution-container" style="position:relative; width:100%; aspect-ratio:2/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
+                        <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">演变进度 <span id="evo-progress">50</span>%</div>
+                        <img id="evo-image" src="images/yu-wen.png" alt="鱼纹演变" style="width:100%; height:100%; object-fit:contain; display:block;" />
+                        <div id="evo-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6); pointer-events:none; z-index:10;"></div>
+                        <div id="evo-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
+                        <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none;">具象 · 原始鱼纹</span>
+                        <span id="evo-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none;">抽象 · 符号化</span>
+                        <input type="range" id="evo-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0;" />
+                    </div>
+                    <div style="text-align: center; padding: 16px 0 10px; background: #f5efe6; color: #7a5a44; font-size: 0.9rem;">从游鱼到几何，见证先民审美意识的觉醒</div>
+                </div>
+            </div>
+
+            <div id="compare-niao" class="compare-panel" style="margin-top:0;">
+                <h3 style="text-align:center; margin-bottom:4px;">🐦 鸟纹演变 · 滑动探索</h3>
+                <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看鸟纹从具象到抽象的演变过程</p>
+                <div style="position:relative; width:100%; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+                    <div style="position:relative; width:100%; aspect-ratio:2/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
+                        <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">演变进度 <span id="niao-progress">50</span>%</div>
+                        <img id="niao-image" src="images/niao-wen-3.png" alt="鸟纹演变" style="width:100%; height:100%; object-fit:contain; display:block;" />
+                        <div id="niao-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6); pointer-events:none; z-index:10;"></div>
+                        <div id="niao-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
+                        <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none;">具象 · 原始鸟纹</span>
+                        <span id="niao-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none;">抽象 · 符号化</span>
+                        <input type="range" id="niao-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0;" />
+                    </div>
+                    <div style="text-align: center; padding: 16px 0 10px; background: #f5efe6; color: #7a5a44; font-size: 0.9rem;">飞鸟掠过时空，从写实临摹走向符号化图腾</div>
+                </div>
+            </div>
+
+            <div id="compare-wa" class="compare-panel" style="margin-top:0;">
+                <h3 style="text-align:center; margin-bottom:4px;">🐸 蛙纹演变 · 滑动探索</h3>
+                <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">左右滑动查看蛙纹从具象到抽象的演变过程</p>
+                <div style="position:relative; width:100%; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+                    <div style="position:relative; width:100%; aspect-ratio:2/1; background:#d9cdbc; overflow:hidden; touch-action:none;">
+                        <div style="position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; padding:6px 20px; border-radius:20px; font-size:0.8rem; pointer-events:none;">演变进度 <span id="wa-progress">50</span>%</div>
+                        <img id="wa-image" src="images/wa-wen-3.png" alt="蛙纹演变" style="width:100%; height:100%; object-fit:contain; display:block;" />
+                        <div id="wa-line" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:white; box-shadow:0 0 20px rgba(255,255,255,0.6); pointer-events:none; z-index:10;"></div>
+                        <div id="wa-glow" style="position:absolute; top:0; left:50%; width:60px; height:100%; background:radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%); pointer-events:none; z-index:8; transform:translateX(-50%); filter:blur(8px);"></div>
+                        <span style="position:absolute; bottom:20px; left:20px; z-index:15; background:rgba(0,0,0,0.5); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none;">具象 · 原始蛙纹</span>
+                        <span id="wa-stage-label" style="position:absolute; bottom:20px; right:20px; z-index:15; background:rgba(0,0,0,0.5); color:white; padding:4px 16px; border-radius:20px; font-size:0.75rem; pointer-events:none;">抽象 · 符号化</span>
+                        <input type="range" id="wa-slider" min="0" max="100" value="50" style="position:absolute; top:0; left:0; width:100%; height:100%; -webkit-appearance:none; appearance:none; background:transparent; z-index:30; cursor:ew-resize; margin:0; padding:0;" />
+                    </div>
+                    <div style="text-align: center; padding: 16px 0 10px; background: #f5efe6; color: #7a5a44; font-size: 0.9rem;">蛙鸣千年，化繁为简，凝结为古朴的几何韵律</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

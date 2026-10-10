@@ -6,21 +6,36 @@
 }
 body {
     font-family: system-ui, sans-serif;
-    background: #f5efe6;
-    color: #3e2c1b;
+    background: #655c5c;
+    color: #d6c2af;
 }
 
 /* ===== 导航栏 ===== */
 nav {
-    background: #2cab9c;
-    padding: 16px 24px;
+    background: #b06d3b; /* 深陶土色底 */
+    padding: 20px 24px;
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
     justify-content: center;
+    position: relative;
+
+    /* 👇 核心：上下两条镜像螺旋纹，营造“环绕盘绕”的视觉效果 */
+    background-image: 
+        /* 顶部：向上盘旋的螺旋 */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='18' viewBox='0 0 60 18'%3E%3Cpath d='M0 9 Q7.5 1, 15 9 T30 9 T45 9 T60 9' fill='none' stroke='rgba(255,220,180,0.4)' stroke-width='1.3'/%3E%3Cpath d='M0 9 Q7.5 17, 15 9 T30 9 T45 9 T60 9' fill='none' stroke='rgba(255,220,180,0.4)' stroke-width='1.3'/%3E%3Ccircle cx='7.5' cy='4.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3Ccircle cx='22.5' cy='13.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3Ccircle cx='37.5' cy='4.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3Ccircle cx='52.5' cy='13.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3C/svg%3E"),
+        /* 底部：向下盘旋的镜像螺旋 */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='18' viewBox='0 0 60 18'%3E%3Cpath d='M0 9 Q7.5 17, 15 9 T30 9 T45 9 T60 9' fill='none' stroke='rgba(255,220,180,0.4)' stroke-width='1.3'/%3E%3Cpath d='M0 9 Q7.5 1, 15 9 T30 9 T45 9 T60 9' fill='none' stroke='rgba(255,220,180,0.4)' stroke-width='1.3'/%3E%3Ccircle cx='7.5' cy='13.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3Ccircle cx='22.5' cy='4.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3Ccircle cx='37.5' cy='13.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3Ccircle cx='52.5' cy='4.5' r='1' fill='rgba(255,220,180,0.7)'/%3E%3C/svg%3E");
+    background-repeat: repeat-x, repeat-x;
+    background-position: top center, bottom center;
+    background-size: 60px 18px, 60px 18px;
+
+    /* 保留原来的边框线，更稳重 */
+    border-top: 2px solid rgba(255, 220, 180, 0.25);
+    border-bottom: 2px solid rgba(255, 220, 180, 0.25);
 }
 nav a {
-    color: #f0e2d0;
+    color: #201f1e;
     text-decoration: none;
     font-weight: bold;
     padding: 8px 16px;
@@ -84,7 +99,7 @@ nav a:hover {
     margin-top: 20px;
     position: relative;
     overflow: hidden;
-    background: #c1dad2;
+    background: #afacac8a;
     min-height: 300px;
     display: flex;
     flex-direction: column;
@@ -236,7 +251,7 @@ nav a:hover {
 footer {
     text-align: center;
     padding: 32px 20px;
-    color: #7a5a44;
+    color: #ffffff;
     border-top: 1px solid #d9cdbc;
     margin-top: 40px;
 }
@@ -264,34 +279,53 @@ footer {
     }
 }
 
-/* ===== 滑动对比滑块样式 ===== */
-#evo-slider::-webkit-slider-thumb {
+/* ===== 滑动对比滑块样式（鱼、鸟、蛙通用） ===== */
+#evo-slider, #niao-slider, #wa-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 30px;
-    height: 30px;
-    background: white;
-    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 30;
     cursor: ew-resize;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    margin: 0; padding: 0;
 }
-#evo-slider::-moz-range-thumb {
-    width: 30px;
-    height: 30px;
-    background: white;
-    border-radius: 50%;
-    cursor: ew-resize;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.8);
-}
-#evo-slider::-webkit-slider-runnable-track {
+
+/* 轨道透明 */
+#evo-slider::-webkit-slider-runnable-track,
+#niao-slider::-webkit-slider-runnable-track,
+#wa-slider::-webkit-slider-runnable-track {
     height: 100%;
     background: transparent;
 }
-#evo-slider::-moz-range-track {
+#evo-slider::-moz-range-track,
+#niao-slider::-moz-range-track,
+#wa-slider::-moz-range-track {
     height: 100%;
     background: transparent;
+}
+
+/* ===== 滑块小圆点隐藏（拖动靠自定义逻辑，不需要可见圆点） ===== */
+#evo-slider::-webkit-slider-thumb,
+#niao-slider::-webkit-slider-thumb,
+#wa-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+#evo-slider::-moz-range-thumb,
+#niao-slider::-moz-range-thumb,
+#wa-slider::-moz-range-thumb {
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 /* 缩略图按钮悬停效果 */
@@ -415,35 +449,6 @@ footer {
         font-size: 3rem;
     }
 }
-/* ===== 纹样切换标签 ===== */
-.pattern-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 40px;
-    margin-bottom: 8px;
-}
-
-.pattern-tab {
-    padding: 10px 28px;
-    background: #d9cdbc;
-    border: none;
-    border-radius: 30px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    color: #5a3e2b;
-    font-family: inherit;
-}
-
-.pattern-tab:hover {
-    background: #c4b49c;
-}
-
-.pattern-tab.active {
-    background: #5a3e2b;
-    color: white;
-}
 
 /* 面板切换 */
 .compare-panel {
@@ -490,4 +495,676 @@ footer {
 
 .interact-panel.active {
     display: block;
+}
+
+/* ===== 首页轮播图 ===== */
+.hero-carousel {
+    width: 180px;        /* 圆形视窗的宽度 */
+    height: 180px;       /* 圆形视窗的高度 */
+    border-radius: 50%;  /* 保持圆形 */
+    overflow: hidden;    /* 关键！把超出圆形的图片裁掉 */
+    margin: 10px auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-track {
+    display: flex;       /* 让所有图片横向排成一排 */
+    height: 100%;
+    width: 100%;
+    transition: transform 0.8s ease-in-out; /* 关键！滑动时的动画效果，0.8秒平滑过渡 */
+    will-change: transform; /* 性能优化，滑动更流畅 */
+}
+
+.carousel-slide {
+    flex-shrink: 0;      /* 不允许图片被压缩 */
+    width: 100%;         /* 每张图占满整个视窗宽度 */
+    height: 100%;
+    object-fit: cover;   /* 保证图片铺满圆形且不变形 */
+}
+
+/* 徽章墙样式 */
+.badge-item {
+    background: #f5efe6; border-radius: 12px; padding: 16px 10px;
+    text-align: center; transition: all 0.3s; border: 2px solid transparent;
+}
+.badge-item.unlocked { border-color: #bf8f60; background: #fcf8f2; }
+.badge-item.locked { filter: grayscale(1); opacity: 0.4; }
+.badge-item .badge-icon { font-size: 2.4rem; display: block; margin-bottom: 8px; }
+.badge-item h4 { color: #3e2c1b; font-size: 0.95rem; margin-bottom: 4px; }
+.badge-item p { color: #7a5a44; font-size: 0.75rem; line-height: 1.4; }
+
+/* ===== 获得徽章飘窗（花边卡片版） ===== */
+#badge-toast {
+    position: fixed;
+    top: 100px; /* 避免挡住顶部导航栏 */
+    right: 20px;
+    z-index: 10000;
+    
+    /* 默认隐藏在屏幕右侧外面 */
+    opacity: 0;
+    transform: translateX(120%);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* 👇 背景图设置 */
+    background-image: url('images/badge-bg.png');
+    background-size: 100% 100%; /* 让图片完美拉伸填充卡片，不变形 */
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* 👇 尺寸和排版 */
+    width: 380px; /* 网页上显示的宽度 */
+    height: 97px; /* 按原图比例(685/175≈3.91)算出来的高度，保证不变形 */
+    
+    /* 用 padding 把内容往中间挤，避开两边的卷曲花边 */
+    padding: 0 55px; 
+    box-sizing: border-box; /* 保证 padding 不会把总宽度撑爆 */
+
+    /* 布局 */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 图标和文字靠左对齐 */
+    gap: 12px;
+    
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* 保留一点悬浮感 */
+}
+
+/* 添加这个类时卡片滑入 */
+#badge-toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 徽章图标样式 */
+.toast-icon-wrapper {
+    font-size: 2.2rem;
+    background: #f5efe6;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* 防止图标被压扁 */
+}
+
+/* 文字排版 */
+.toast-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap; /* 防止文字换行破坏花边 */
+}
+
+.toast-label {
+    font-size: 0.75rem;
+    color: #e8cfa6; /* 浅金色，配深棕色背景 */
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.toast-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff; /* 纯白色 */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* 加一点阴影增加可读性 */
+}
+
+/* 移动端适配：屏幕小的时候让卡片变小一点 */
+@media (max-width: 480px) {
+    #badge-toast {
+        width: 300px;
+        height: 77px; /* 等比例缩小 */
+        padding: 0 40px;
+        top: 80px;
+        right: 10px;
+    }
+    .toast-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        font-size: 1.8rem;
+    }
+    .toast-title {
+        font-size: 0.95rem;
+    }
+}
+
+/* ===== 全站底纹（回纹肌理） ===== */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* 👇 请确认你的底纹图片名字和路径对不对，比如叫 bg-pattern.png */
+    background-image: url('images/dw.png'); 
+    background-repeat: repeat;
+    
+    /* 👇 控制图案大小：图本身很密，放大到 800px 以上才显得舒展 */
+    background-size: 800px 800px; 
+    
+    /* 👇 核心：控制透明度，因为对比度高，透明度要调得很低 */
+    opacity: 0.4; /* 如果觉得看不见就调到 0.1，如果觉得太抢眼就调到 0.04 */
+    
+    pointer-events: none; 
+    z-index: -1; 
+}
+
+/* ===== 3D 环形旋转木马 ===== */
+.carousel-3d-wrapper {
+    perspective: 1500px;
+    perspective-origin: center center;
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.carousel-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.carousel-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 280px;
+    height: 400px;
+    margin-left: -140px;  /* 宽度的一半，用于居中 */
+    margin-top: -200px;   /* 高度的一半 */
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.carousel-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.carousel-card h4 {
+    margin: 12px 0 6px;
+    color: #3e2c1b;
+    font-size: 1rem;
+}
+
+.carousel-card p {
+    font-size: 0.78rem;
+    color: #5a3e2b;
+    line-height: 1.4;
+}
+
+/* 中间：最大，完全可见 */
+.carousel-card.pos-center {
+    transform: translateX(0) translateZ(80px);
+    z-index: 10;
+    opacity: 1;
+    box-shadow: 0 20px 50px rgba(60, 40, 20, 0.25);
+}
+
+/* 左侧：向左倾斜，稍微退后 */
+.carousel-card.pos-left {
+    transform: translateX(-280px) translateZ(-100px) rotateY(22deg);
+    z-index: 5;
+    opacity: 0.7;
+}
+
+/* 右侧：向右倾斜，稍微退后 */
+.carousel-card.pos-right {
+    transform: translateX(280px) translateZ(-100px) rotateY(-22deg);
+    z-index: 5;
+    opacity: 0.7;
+}
+
+/* 隐藏在背后 */
+.carousel-card.pos-hidden {
+    transform: translateX(0) translateZ(-600px) scale(0.5);
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 悬停效果 */
+.carousel-card.pos-center:hover {
+    transform: translateX(0) translateZ(110px);
+    box-shadow: 0 24px 60px rgba(60, 40, 20, 0.3);
+}
+
+.carousel-card.pos-left:hover,
+.carousel-card.pos-right:hover {
+    opacity: 0.9;
+    transform: translateX(-280px) translateZ(-60px) rotateY(22deg);
+}
+.carousel-card.pos-right:hover {
+    transform: translateX(280px) translateZ(-60px) rotateY(-22deg);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .carousel-3d-wrapper {
+        height: 400px;
+        perspective: 1000px;
+    }
+    .carousel-card {
+        width: 220px;
+        height: 320px;
+        margin-left: -110px;
+        margin-top: -160px;
+        padding: 12px;
+    }
+    .carousel-card img {
+        height: 150px;
+    }
+    .carousel-card h4 { font-size: 0.9rem; }
+    .carousel-card p { font-size: 0.72rem; }
+
+    .carousel-card.pos-left {
+        transform: translateX(-190px) translateZ(-120px) rotateY(25deg);
+    }
+    .carousel-card.pos-right {
+        transform: translateX(190px) translateZ(-120px) rotateY(-25deg);
+    }
+}
+
+/* ===== 纹样悬停提示框（花边版） ===== */
+#hint-bubble {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    z-index: 100;
+    pointer-events: none;
+    
+    /* 👇 花边背景图 */
+    background-image: url('images/badge-bg.png');
+    background-size: 100% 100%; /* 让图片完美拉伸填充 */
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    /* 👇 尺寸和排版（比之前的徽章卡片稍大，因为文字更长） */
+    width: 520px;  /* 宽度 */
+    height: 135px; /* 根据原图比例 685/175≈3.91 估算 */
+    
+    /* 用 padding 把文字往中间挤，避开两边的卷曲花边 */
+    padding: 20px 65px;
+    box-sizing: border-box;
+    
+    /* 布局 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* 文字颜色：因为背景是深棕色，文字必须用浅色 */
+    color: #f0e2d0; 
+    
+    /* 默认隐藏 */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* 显示状态 */
+#hint-bubble.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+#hint-bubble strong {
+    font-size: 1.05rem;
+    color: #e8cfa6; /* 浅金色标题 */
+    margin-bottom: 6px;
+}
+
+#hint-bubble p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #ffffff;
+    opacity: 0.9;
+    max-width: 100%;
+    word-break: break-all; /* 防止长文本撑爆 */
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    #hint-bubble {
+        width: 90vw; /* 手机上宽度占满 */
+        height: auto;
+        min-height: 110px;
+        padding: 16px 50px;
+        bottom: 30px;
+    }
+    #hint-bubble strong { font-size: 0.95rem; }
+    #hint-bubble p { font-size: 0.75rem; }
+}
+
+/* ===== 纹样卡片 ===== */
+.pattern-card {
+    cursor: pointer;
+    background: #ffffff99;         /* 👈 卡片底色，改成你想要的颜色 */
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.pattern-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(60, 40, 20, 0.18);
+    background: #f5efe6;         /* 👈 鼠标悬停时的底色 */
+}
+
+.pattern-card.active {
+    border-color: #bf8f60;       /* 👈 选中时的边框颜色 */
+    background: #fcf8f2;         /* 👈 选中时的底色 */
+    box-shadow: 0 8px 24px rgba(191, 143, 96, 0.25);
+}
+
+/* ===== 纹样赏析卡片行 ===== */
+.pattern-cards-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 60px;
+    margin-bottom: 24px;
+}
+
+.pattern-cards-row .card {
+    width: 280px;              /* 固定宽度 */
+    height: 380px;             /* 固定高度，防止被拉伸 */
+    flex-shrink: 0;
+    overflow: hidden;          /* 防止内容溢出 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 让卡片里的图片固定高度，不要被拉伸 */
+.pattern-cards-row .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;         /* 保持比例裁剪 */
+    flex-shrink: 0;
+}
+
+.pattern-cards-row .card h4 {
+    margin: 12px 0 6px;
+    color: #3e2c1b;
+    font-size: 1rem;
+}
+
+.pattern-cards-row .card p {
+    font-size: 0.85rem;
+    color: #5a3e2b;
+    line-height: 1.5;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+}
+
+/* 手机上变回单列 */
+@media (max-width: 768px) {
+    .pattern-cards-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .pattern-cards-row .card {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        min-height: 360px;
+    }
+}
+
+/* ===== 纹样演变弹窗 ===== */
+#pattern-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#pattern-modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: bounceIn 0.4s ease;
+}
+
+.pattern-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: #f5efe6;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #5a3e2b;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.pattern-modal-close:hover {
+    background: #bf8f60;
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* ===== 工艺简介 - S形蜿蜒路径 ===== */
+.craft-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    height: 520px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.craft-path-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.craft-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.craft-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 170px;
+    height: 230px;
+    margin-left: -85px;
+    margin-top: -115px;
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.craft-card-icon {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+}
+
+.craft-card h4 {
+    margin: 4px 0;
+    color: #3e2c1b;
+    font-size: 0.95rem;
+}
+
+.craft-card p {
+    font-size: 0.72rem;
+    color: #7a5a44;
+    line-height: 1.4;
+}
+
+/* 5 个位置：中心最大，向外缩小 */
+.craft-card.pos-c0 {
+    transform: translate(-400px, -50px) scale(0.55);
+    z-index: 3;
+    opacity: 0.5;
+}
+.craft-card.pos-c1 {
+    transform: translate(-210px, 70px) scale(0.75);
+    z-index: 5;
+    opacity: 0.75;
+}
+.craft-card.pos-c2 {
+    transform: translate(0, -20px) scale(1);
+    z-index: 10;
+    opacity: 1;
+    box-shadow: 0 20px 50px rgba(60, 40, 20, 0.25);
+}
+.craft-card.pos-c3 {
+    transform: translate(210px, 70px) scale(0.75);
+    z-index: 5;
+    opacity: 0.75;
+}
+.craft-card.pos-c4 {
+    transform: translate(400px, -50px) scale(0.55);
+    z-index: 3;
+    opacity: 0.5;
+}
+.craft-card.pos-hidden {
+    transform: translate(0, 0) scale(0.3);
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ===== 工艺详情弹窗 ===== */
+#craft-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#craft-modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 30px 30px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: bounceIn 0.4s ease;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .craft-carousel-wrapper {
+        height: 420px;
+    }
+    .craft-card {
+        width: 140px;
+        height: 195px;
+        margin-left: -70px;
+        margin-top: -97px;
+        padding: 10px;
+    }
+    .craft-card-icon { font-size: 1.9rem; }
+    .craft-card h4 { font-size: 0.85rem; }
+    .craft-card p { font-size: 0.65rem; }
+    .craft-card.pos-c0 { transform: translate(-260px, -40px) scale(0.55); }
+    .craft-card.pos-c1 { transform: translate(-140px, 60px) scale(0.75); }
+    .craft-card.pos-c3 { transform: translate(140px, 60px) scale(0.75); }
+    .craft-card.pos-c4 { transform: translate(260px, -40px) scale(0.55); }
+}
+
+/* ===== 知识问答卡片底色 ===== */
+#quiz-container > div {
+    background: #fdf8f0 !important;
+}
+
+/* ===== 细闪粒子层 ===== */
+#sparkle-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;   /* 不挡点击 */
+    z-index: 0;             /* 在底纹之上、内容之下 */
+    overflow: hidden;
+}
+
+.sparkle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff8e0 0%, rgba(255, 248, 224, 0) 70%);
+    box-shadow: 0 0 6px rgba(255, 235, 180, 0.9);
+    animation: sparkleTwinkle 3s ease-in-out infinite;
+    opacity: 0;
+}
+
+@keyframes sparkleTwinkle {
+    0%   { opacity: 0;   transform: scale(0.5); }
+    50%  { opacity: 0.9; transform: scale(1.2); }
+    100% { opacity: 0;   transform: scale(0.5); }
+}
+
+/* 手机上减少粒子数量 */
+@media (max-width: 768px) {
+    .sparkle { width: 2px; height: 2px; }
 }
