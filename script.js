@@ -1431,9 +1431,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var layer = document.getElementById('sparkle-layer');
     if (!layer) return;
     
-    // 根据屏幕宽度自适应数量，桌面 40 个，手机 15 个
+    // 根据屏幕宽度自适应数量，桌面 20 个，手机 8 个
     var isMobile = window.innerWidth < 768;
-    var count = isMobile ? 15 : 40;
+    var count = isMobile ? 8 : 20;
 
     for (var i = 0; i < count; i++) {
         var s = document.createElement('div');
@@ -1442,7 +1442,7 @@ document.addEventListener('DOMContentLoaded', function () {
         s.style.top = Math.random() * 100 + '%';
         
         // 关键：每颗闪烁的时长和延迟都随机，形成"不同频率"
-        s.style.animationDuration = (2 + Math.random() * 3) + 's';  // 2~5 秒
+        s.style.animationDuration = (5 + Math.random() * 5) + 's';  // 5~10 秒
         s.style.animationDelay = (Math.random() * 5) + 's';          // 0~5 秒延迟
         
         // 大小随机，3~5px 之间
