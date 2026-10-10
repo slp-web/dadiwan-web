@@ -557,12 +557,12 @@ var potteryData = {
 
 // ===== 彩陶模型链接配置 =====
 var modelUrls = {
-    'ren-tou-ping': 'models/01/rentouxingqikoucaitaopingB.glb',
-    'kuan-dai-bo': 'models/01/kuandaiwensanzucaitaoboB.glb',
-    'ji-he-guan': 'models/01/jihewencaitaoguanB.glb',
-    'yu-wen-pen': 'models/01/yuwencaitaopenB.glb',
-    'wang-ge-hu': 'models/01/wanggewencaitaohuB.glb',
-    'niao-wen-guan': 'models/01/biantiniaowencaitaoguanB.glb'
+    'ren-tou-ping': 'models/rentouxingqikoucaitaopingB.glb',
+    'kuan-dai-bo': 'models/kuandaiwensanzucaitaoboB.glb',
+    'ji-he-guan': 'models/jihewencaitaoguanB.glb',
+    'yu-wen-pen': 'models/yuwencaitaopenB.glb',
+    'wang-ge-hu': 'models/wanggewencaitaohuB.glb',
+    'niao-wen-guan': 'models/biantiniaowencaitaoguanB.glb'
 };
 
 // ===== 切换加载3D模型 =====
