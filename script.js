@@ -521,13 +521,13 @@ var potteryData = {
         title: '人头形器口彩陶瓶',
         desc: '大地湾"镇馆之宝"，人像与陶器完美结合',
         info: '文化类型：仰韶文化\n年代：距今约6000年\n出土地点：大地湾遗址',
-        video: 'images/ren-tou-ping.mp4'
+        video: 'videos/qiliuhaishaonv.mp4'
     },
     'kuan-dai-bo': {
         title: '宽带纹三足彩陶钵',
         desc: '我国已知最早的彩陶之一，纹饰简洁古朴',
         info: '文化类型：大地湾文化\n年代：距今约8000年\n出土地点：大地湾遗址',
-        video: 'images/kuan-dai-bo.mp4'
+        video: 'videos/qiliuhaishaonv.mp4'
     },
     'ji-he-guan': {
         title: '几何纹彩陶罐',
@@ -680,10 +680,17 @@ function openDetail(key) {
     document.getElementById('detail-desc').textContent = data.desc;
     document.getElementById('detail-full-info').textContent = data.info;
 
-    // 设置视频
+    /// 设置视频
     var video = document.getElementById('detail-video');
-    video.querySelector('source').src = data.video;
-    video.load();
+    var videoContainer = video.parentElement; 
+
+    if (data.video) {
+        video.querySelector('source').src = data.video;
+        video.load();
+        videoContainer.style.display = 'block'; // 有视频就显示
+    } else {
+        videoContainer.style.display = 'none';  // 没视频就隐藏
+    }
 
     // ✅ 关键：延迟执行，等浏览器完成布局后再适配3D尺寸
     setTimeout(function() {
