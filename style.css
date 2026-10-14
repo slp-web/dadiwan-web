@@ -744,19 +744,32 @@ body::before {
     pointer-events: none;
 }
 
-/* 悬停效果 */
+/* ===== 悬停高亮效果 ===== */
 .carousel-card.pos-center:hover {
     transform: translateX(0) translateZ(110px);
-    box-shadow: 0 24px 60px rgba(60, 40, 20, 0.3);
+    box-shadow: 0 0 0 3px #bf8f60, 0 24px 60px rgba(60, 40, 20, 0.35);
 }
 
-.carousel-card.pos-left:hover,
-.carousel-card.pos-right:hover {
-    opacity: 0.9;
+.carousel-card.pos-left:hover {
+    opacity: 1;
     transform: translateX(-280px) translateZ(-60px) rotateY(22deg);
+    box-shadow: 0 0 0 3px #bf8f60, 0 16px 40px rgba(60, 40, 20, 0.28);
 }
+
 .carousel-card.pos-right:hover {
+    opacity: 1;
     transform: translateX(280px) translateZ(-60px) rotateY(-22deg);
+    box-shadow: 0 0 0 3px #bf8f60, 0 16px 40px rgba(60, 40, 20, 0.28);
+}
+
+/* 鼠标悬停在中间卡片的图片上时，鼠标变成手型，提示可点 */
+.carousel-card.pos-center img {
+    cursor: pointer;
+}
+
+/* 中间卡片非图片区域，光标保持默认 */
+.carousel-card.pos-center {
+    cursor: default;
 }
 
 /* 移动端适配 */

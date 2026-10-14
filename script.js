@@ -527,31 +527,31 @@ var potteryData = {
         title: '宽带纹三足彩陶钵',
         desc: '我国已知最早的彩陶之一，纹饰简洁古朴',
         info: '文化类型：大地湾文化\n年代：距今约8000年\n出土地点：大地湾遗址',
-        video: 'videos/qiliuhaishaonv.mp4'
+        video: 'videos/caitaobo.mp4'
     },
     'ji-he-guan': {
         title: '几何纹彩陶罐',
         desc: '线条流畅，体现先民的抽象审美能力',
         info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'images/ji-he-guan.mp4'
+        video: 'videos/jihewendashu.mp4'
     },
     'yu-wen-pen': {
         title: '鱼纹彩陶盆',
         desc: '鱼纹从具象到抽象的演变代表',
         info: '文化类型：仰韶文化\n年代：距今约7000-6000年\n出土地点：大地湾遗址',
-        video: 'images/yu-wen-pen.mp4'
+        video: 'videos/caitaopen.mp4'
     },
     'wang-ge-hu': {
         title: '网格纹彩陶壶',
         desc: '网格纹是大地湾最具代表性的装饰纹样',
         info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'images/wang-ge-hu.mp4'
+        video: 'videos/wanggewenaojiaojie.mp4'
     },
     'niao-wen-guan': {
         title: '变体鸟纹彩陶罐',
         desc: '鸟纹逐渐简化，走向符号化与程式化',
         info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'images/niao-wen-guan.mp4'
+        video: 'videos/wanggewenaojiaojie.mp4'
     }
 };
 
@@ -1399,34 +1399,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// ===== 彩陶旋转木马：用鼠标位置找最近的卡片（绕开 3D 遮挡） =====
+// ===== 彩陶旋转木马：点击逻辑 =====
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('.carousel-3d-wrapper');
     if (!wrapper) return;
 
     wrapper.addEventListener('click', function (e) {
-        var cards = document.querySelectorAll('.carousel-card');
-        if (cards.length === 0) return;
+        // 👇 直接看浏览器判断用户点中了哪张卡片
+        var card = e.target.closest('.carousel-card');
+        if (!card) return;
 
-        var mouseX = e.clientX;
-        var mouseY = e.clientY;
-        var closest = null;
-        var minDist = Infinity;
+        var cards = Array.from(document.querySelectorAll('.carousel-card'));
+        var clickedIndex = cards.indexOf(card);
+        var total = cards.length;
 
-        cards.forEach(function (card) {
-            var rect = card.getBoundingClientRect();
-            var cx = rect.left + rect.width / 2;
-            var cy = rect.top + rect.height / 2;
-            var dist = Math.sqrt(Math.pow(mouseX - cx, 2) + Math.pow(mouseY - cy, 2));
+        var offset = clickedIndex - carouselIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
 
-            if (dist < minDist) {
-                minDist = dist;
-                closest = card;
+        if (offset === 0) {
+            // 中间卡片：只有点击图片才打开详情
+            if (e.target.tagName === 'IMG') {
+                openDetail(card.dataset.key);
             }
-        });
-
-        if (closest) {
-            handleCardClick(closest);
+            // 点击中间卡片的文字/空白，什么都不做
+        } else {
+            // 左/右卡片：旋转到中间
+            carouselIndex = clickedIndex;
+            updateCarousel();
         }
     });
 
