@@ -10,46 +10,66 @@
 <body>
     <!-- 细闪粒子层 -->
     <div id="sparkle-layer"></div>
-        <!-- ===== 欢迎遮罩 ===== -->
-    <div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#3e2c1b; z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; transition:opacity 0.8s ease; overflow:hidden;">
-        
-        <!-- 装饰背景光晕（可选） -->
-        <div style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(ellipse at center, rgba(191,143,96,0.08) 0%, transparent 70%); pointer-events:none;"></div>
-        
-        <!-- 主标题：从底部滑入 -->
-        <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.2s forwards;">
-            <div style="font-size:5rem; margin-bottom:8px; text-align:center;">🏺</div>
-        </div>
-        
-        <!-- 主标题：从底部滑入 -->
-        <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.4s forwards;">
-            <h1 style="color:#f0e2d0; font-size:2.8rem; margin-bottom:4px; text-align:center; font-weight:300; letter-spacing:4px;">大地湾彩陶</h1>
-        </div>
-        
-        <!-- 副标题：从底部滑入 -->
-        <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.6s forwards;">
-            <p style="color:#b8a088; font-size:1.1rem; margin-bottom:30px; text-align:center; letter-spacing:6px;">八千年的回响 · 数字化呈现</p>
-        </div>
-        
-        <!-- 按钮：从底部滑入 -->
-        <div style="transform:translateY(60px); opacity:0; animation:slideUp 0.8s ease-out 0.8s forwards;">
-            <button onclick="enterSite()" style="padding:14px 48px; background:#bf8f60; color:#3e2c1b; border:none; border-radius:30px; font-size:1.1rem; font-weight:bold; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 20px rgba(191,143,96,0.3); animation:breathe 2s ease-in-out infinite;" onmouseover="this.style.background='#d9a87a';this.style.boxShadow='0 6px 30px rgba(191,143,96,0.5)';this.style.animation='none';" onmouseout="this.style.background='#bf8f60';this.style.boxShadow='0 4px 20px rgba(191,143,96,0.3)';this.style.animation='breathe 2s ease-in-out infinite';">
-                开始探索
+    
+    <!-- ===== 欢迎遮罩 ===== -->
+    <div id="welcome-overlay">
+        <!-- 背景光晕 -->
+        <div class="welcome-glow"></div>
+
+        <!-- 顶部装饰线 -->
+        <div class="welcome-line top"></div>
+
+        <!-- 主内容 -->
+        <div class="welcome-content">
+
+            <!-- 顶部小标 -->
+            <div class="welcome-eyebrow">DADI WAN · 大地湾</div>
+
+            <!-- 器物图标 -->
+            <div class="welcome-icon">🏺</div>
+
+            <!-- 主标题 -->
+            <h1 class="welcome-title">
+                <span class="title-line1">立马开启</span>
+                <span class="title-line2">一段彩陶之旅</span>
+            </h1>
+
+            <!-- 金色分隔符 -->
+            <div class="welcome-divider">
+                <span class="line"></span>
+                <span class="dot"></span>
+                <span class="line"></span>
+            </div>
+
+            <!-- 副标题 -->
+            <p class="welcome-subtitle">
+                八千年的回响 &nbsp;·&nbsp; 数字化呈现
+            </p>
+
+            <!-- 印章按钮 -->
+            <button class="welcome-btn" onclick="enterSite()">
+                <span>开 始 探 索</span>
             </button>
+
+            <!-- 底部小字 -->
+            <p class="welcome-footer">ENTER THE EXHIBITION</p>
         </div>
+
+        <!-- 底部装饰线 -->
+        <div class="welcome-line bottom"></div>
     </div>
 
-        <!-- ===== 导航栏 ===== -->
-        <nav>
-            <a href=" " onclick="showPage('home')">首页</a >
-            <a href="#" onclick="showPage('gallery')"> 彩陶图鉴</a >
-            <a href="#" onclick="showPage('patterns')">纹样赏析</a >
-            <a href="#" onclick="showPage('craft')">工艺简介</a >
-            <a href="#" onclick="showPage('interact')">互动小功能</a >
-            <a href="#" onclick="showPage('about')">关于与资料</a >
-        </nav>
+    <!-- ===== 导航栏 ===== -->
+    <nav>
+        <a href=" " onclick="showPage('home')">首页</a >
+        <a href="#" onclick="showPage('gallery')"> 彩陶图鉴</a >
+        <a href="#" onclick="showPage('patterns')">纹样赏析</a >
+        <a href="#" onclick="showPage('craft')">工艺简介</a >
+        <a href="#" onclick="showPage('interact')">互动小功能</a >
+        <a href="#" onclick="showPage('about')">关于与资料</a >
+    </nav>
 
-        <!-- ===== 首页 ===== -->
+    <!-- ===== 首页 ===== -->
     <div id="home" class="page active">
         <div class="hero">
             <div class="spinning-pot">
@@ -72,22 +92,23 @@
                 纹样 · 器型 · 工艺 · 数字化呈现
             </p>
             <!-- ===== 飘动纹样 ===== -->
-        <!-- 向右游的 -->
-    <div class="pattern right" style="top:15%; left:0%; width:100px; height:100px; animation-duration:14s; animation-delay:0s; background-image: url('images/yu-wen.png');"></div>
-    <div class="pattern right" style="top:55%; left:0%; width:70px; height:70px; animation-duration:18s; animation-delay:3s; background-image: url('images/niao-wen.png');"></div>
-    <div class="pattern right" style="top:80%; left:0%; width:80px; height:80px; animation-duration:12s; animation-delay:6s; background-image: url('images/wa-wen.png');"></div>
+            <!-- 向右游的 -->
+            <div class="pattern right" style="top:15%; left:0%; width:100px; height:100px; animation-duration:14s; animation-delay:0s; background-image: url('images/yu-wen.png');"></div>
+            <div class="pattern right" style="top:55%; left:0%; width:70px; height:70px; animation-duration:18s; animation-delay:3s; background-image: url('images/niao-wen.png');"></div>
+            <div class="pattern right" style="top:80%; left:0%; width:80px; height:80px; animation-duration:12s; animation-delay:6s; background-image: url('images/wa-wen.png');"></div>
 
-    <!-- 向左游的 -->
-    <div class="pattern left" style="top:25%; right:0%; width:60px; height: 60px; animation-duration:16s; animation-delay:2s; background-image: url('images/wa-wen.png');"></div>
-    <div class="pattern left" style="top:65%; right:0%; width:90px; height:90px; animation-duration:20s; animation-delay:5s; background-image: url('images/yu-wen.png');"></div>
-    <div class="pattern left" style="top:90%; right:0%; width:80px; height:80px; animation-duration:13s; animation-delay:4s; background-image: url('images/niao-wen.png');"></div>
+            <!-- 向左游的 -->
+            <div class="pattern left" style="top:25%; right:0%; width:60px; height: 60px; animation-duration:16s; animation-delay:2s; background-image: url('images/wa-wen.png');"></div>
+            <div class="pattern left" style="top:65%; right:0%; width:90px; height:90px; animation-duration:20s; animation-delay:5s; background-image: url('images/yu-wen.png');"></div>
+            <div class="pattern left" style="top:90%; right:0%; width:80px; height:80px; animation-duration:13s; animation-delay:4s; background-image: url('images/niao-wen.png');"></div>
         </div>
+
     </div>
 
-        <!-- ===== 彩陶图鉴 ===== -->
+    <!-- ===== 彩陶图鉴 ===== -->
     <div id="gallery" class="page">
-        <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🏺 彩陶图鉴</h2>
-        <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">拖拽旋转查看3D彩陶 · 点击卡片查看详情</p>
+        <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;"> 彩陶图鉴</h2>
+        <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;"> 点击卡片查看详情·拖拽旋转查看3D彩陶</p>
         <!-- ===== 3D 环形旋转木马 ===== -->
         <div class="carousel-3d-wrapper" id="gallery-carousel-wrapper">
             <div class="carousel-3d" id="gallery-carousel">
@@ -157,8 +178,8 @@
 
    <!-- ===== 纹样赏析 ===== -->
 <div id="patterns" class="page">
-    <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🎨 纹样赏析</h2>
-    <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">点击上方卡片切换纹样，左右滑动查看演变过程</p>
+    <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">纹样赏析</h2>
+    <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">点击下方卡片查看纹样，左右滑动查看演变过程</p>
     <!-- 新增：卡片容器，让它们横着排 -->
     <div class="pattern-cards-row">
         <div class="card fade-up pattern-card" 
@@ -200,7 +221,7 @@
 
     <!-- ===== 工艺简介 ===== -->
     <div id="craft" class="page">
-        <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">🔧 工艺简介</h2>
+        <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">工艺简介</h2>
         <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:24px;">点击两侧卡片旋转 · 点击中间卡片查看详情</p>
 
         <div class="craft-carousel-wrapper">
@@ -262,35 +283,144 @@
 
     <!-- ===== 互动小功能 ===== -->
     <div id="interact" class="page">
-        <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">🧩 互动小功能</h2>
+        <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">互动小功能</h2>
         <p style="text-align:center; color:#9e9d9d; margin-bottom:24px;">知识问答 · 纹样拼图</p>
 
         <!-- ===== 切换标签 ===== -->
         <div class="interact-tabs">
             <button class="interact-tab active" onclick="switchInteract('quiz', this)">📝 知识问答</button>
             <button class="interact-tab" onclick="switchInteract('puzzle', this)">🧩 纹样拼图</button>
+            <button class="interact-tab" onclick="switchInteract('pottery', this)">🏺 制陶体验</button>
         </div>
 
         <!-- ===== 问答面板 ===== -->
         <div id="panel-quiz" class="interact-panel active">
-            <div id="quiz-container" style="max-width:800px; margin:0 auto;"></div>
+            <div class="interact-wrap">
+                <div class="interact-desc-bar">📝 知识问答 · 检验你对大地湾彩陶文化的了解</div>
+                <div class="interact-content">
+                    <div id="quiz-container"></div>
+                </div>
+            </div>
         </div>
 
         <!-- ===== 拼图面板 ===== -->
         <div id="panel-puzzle" class="interact-panel">
-            <div style="margin-top:20px; background:#fdf8f0; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-                <h3 style="text-align:center; margin-bottom:4px;">🧩 纹样拼图</h3>
-                <p style="text-align:center; color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">点击两块碎片交换位置，拼出完整纹样</p>
+            <div class="interact-wrap">
+                <div class="interact-desc-bar">🧩 纹样拼图 · 点击两块碎片交换位置</div>
+                <div class="interact-content">
+                    <div id="puzzle-container" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:450px; margin:0 auto; aspect-ratio:3/2; padding:8px;"></div>
 
-                <div id="puzzle-container" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:450px; margin:0 auto; aspect-ratio:3/2; background:#d9cdbc; border-radius:12px; padding:8px;"></div>
+                    <div style="display:flex; justify-content:center; gap:20px; margin-top:16px; flex-wrap:wrap;">
+                        <span style="color:#7a5a44; font-size:0.9rem;">步数：<span id="puzzle-moves" style="color:#a97a48; font-weight:bold;">0</span></span>
+                        <span style="color:#7a5a44; font-size:0.9rem;">当前：<span id="puzzle-name" style="color:#a97a48; font-weight:bold;">鱼纹①</span></span>
+                    </div>
 
-                <div style="display:flex; justify-content:center; gap:20px; margin-top:12px; flex-wrap:wrap;">
-                    <span style="color:#5a3e2b; font-size:0.9rem;">步数：<span id="puzzle-moves">0</span></span>
-                    <span style="color:#5a3e2b; font-size:0.9rem;">当前：<span id="puzzle-name">鱼纹①</span></span>
+                    <div style="display:flex; justify-content:center; margin-top:16px;">
+                        <button onclick="nextPuzzle()" class="interact-btn">🔄 换一个</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 制陶体验面板 ===== -->
+        <div id="panel-pottery" class="interact-panel">
+            <div class="pottery-wrap">
+                <!-- 四步进度 -->
+                <div class="pottery-step-progress">
+                    <div class="pottery-step-item active" data-step="1">
+                        <div class="pottery-step-num">1</div>
+                        <span>捏陶</span>
+                    </div>
+                    <div class="pottery-step-line"></div>
+                    <div class="pottery-step-item" data-step="2">
+                        <div class="pottery-step-num">2</div>
+                        <span>纹样</span>
+                    </div>
+                    <div class="pottery-step-line"></div>
+                    <div class="pottery-step-item" data-step="3">
+                        <div class="pottery-step-num">3</div>
+                        <span>上色</span>
+                    </div>
+                    <div class="pottery-step-line"></div>
+                    <div class="pottery-step-item" data-step="4">
+                        <div class="pottery-step-num">4</div>
+                        <span>烧制</span>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:center; margin-top:12px;">
-                    <button onclick="nextPuzzle()" style="padding:8px 28px; background:#5a3e2b; color:white; border:none; border-radius:6px; font-size:0.9rem; cursor:pointer;">🔄 换一个</button>
+                <div class="pottery-desc-bar" id="pottery-desc">
+                    🏺 第一步 · 捏陶：拖动滑块，捏出你心中的彩陶
+                </div>
+
+                <div class="pottery-content-row">
+                    <!-- 左：画布 -->
+                    <div class="pottery-wheel-box">
+                        <div class="pottery-wheel-bg"></div>
+                        <canvas id="pottery-canvas" width="300" height="400"></canvas>
+                    </div>
+
+                    <!-- 右：控制面板（四步共用，内容随步骤切换） -->
+                    <div class="pottery-slider-area" id="pottery-controls">
+                        <!-- 第一步：滑块 -->
+                        <div class="pottery-step-panel" data-step="1">
+                            <label>高度：<span id="val-height">180</span></label>
+                            <input type="range" id="slider-height" min="100" max="250" value="180">
+
+                            <label>腹部宽度：<span id="val-belly">90</span></label>
+                            <input type="range" id="slider-belly" min="40" max="120" value="90">
+
+                            <label>颈部宽度：<span id="val-neck">40</span></label>
+                            <input type="range" id="slider-neck" min="20" max="70" value="40">
+
+                            <label>底部宽度：<span id="val-bottom">50</span></label>
+                            <input type="range" id="slider-bottom" min="20" max="90" value="50">
+
+                            <button class="pottery-next-btn" onclick="potteryNextStep()">下一步 · 纹样 →</button>
+                        </div>
+
+                        <!-- 第二步：纹样 -->
+                        <div class="pottery-step-panel" data-step="2" style="display:none;">
+                            <p style="color:#7a5a44; font-size:0.85rem; margin-bottom:12px;">选一个纹样，然后点击陶器印上去</p>
+                            <div class="pottery-pattern-list">
+                                <button class="pattern-stamp" onclick="selectStamp('grid', this)">菱形网格</button>
+                                <button class="pattern-stamp" onclick="selectStamp('wave', this)">水波纹</button>
+                                <button class="pattern-stamp" onclick="selectStamp('fish', this)">鱼纹</button>
+                                <button class="pattern-stamp" onclick="selectStamp('zigzag', this)">锯齿纹</button>
+                            </div>
+                            <button class="pottery-clear-btn" onclick="clearPatterns()">🗑️ 清除全部纹样</button>
+                            <div style="display:flex; gap:8px; margin-top:12px;">
+                                <button class="pottery-prev-btn" onclick="potteryPrevStep()">← 上一步</button>
+                                <button class="pottery-next-btn" onclick="potteryNextStep()">下一步 · 上色 →</button>
+                            </div>
+                        </div>
+
+                        <!-- 第三步：上色 -->
+                        <div class="pottery-step-panel" data-step="3" style="display:none;">
+                            <p style="color:#7a5a44; font-size:0.85rem; margin-bottom:12px;">选一个颜色，作为陶器的底色</p>
+                            <div class="pottery-color-list">
+                                <button class="color-btn" style="background:#c48b59;" onclick="setPotteryColor('#c48b59', this)"></button>
+                                <button class="color-btn" style="background:#8c5c35;" onclick="setPotteryColor('#8c5c35', this)"></button>
+                                <button class="color-btn" style="background:#a0522d;" onclick="setPotteryColor('#a0522d', this)"></button>
+                                <button class="color-btn" style="background:#d9b382;" onclick="setPotteryColor('#d9b382', this)"></button>
+                                <button class="color-btn" style="background:#e8cfa6;" onclick="setPotteryColor('#e8cfa6', this)"></button>
+                                <button class="color-btn" style="background:#5a3e2b;" onclick="setPotteryColor('#5a3e2b', this)"></button>
+                            </div>
+                            <div style="display:flex; gap:8px; margin-top:12px;">
+                                <button class="pottery-prev-btn" onclick="potteryPrevStep()">← 上一步</button>
+                                <button class="pottery-next-btn" onclick="potteryNextStep()">下一步 · 烧制 →</button>
+                            </div>
+                        </div>
+
+                        <!-- 第四步：烧制 -->
+                        <div class="pottery-step-panel" data-step="4" style="display:none;">
+                            <p style="color:#7a5a44; font-size:0.85rem; margin-bottom:12px;">点击烧制按钮，见证你的彩陶诞生</p>
+                            <button class="pottery-fire-btn" onclick="firePottery()">🔥 入窑烧制</button>
+                            <button class="pottery-save-btn" id="pottery-save-btn" style="display:none;" onclick="savePotteryImage()">💾 保存我的彩陶</button>
+                            <div style="display:flex; gap:8px; margin-top:12px;">
+                                <button class="pottery-prev-btn" onclick="potteryPrevStep()">← 上一步</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -298,73 +428,111 @@
 
     <!-- ===== 关于与资料 ===== -->
     <div id="about" class="page">
-        <h2 style="text-align:center; font-size:2rem; margin-bottom:8px;">📖 关于与资料</h2>
-        <div style="max-width:800px; margin:0 auto;">
 
-            <!-- 遗址简介 -->
-            <div style="background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-                <h3 style="color:#3e2c1b;">📍 大地湾遗址简介</h3>
-                <p style="color:#3e2c1b; line-height:1.8; font-size:0.95rem;">
-                    大地湾遗址位于甘肃省天水市秦安县五营镇，距今约8000年至5000年，是我国新石器时代早期的重要聚落遗址，也是黄河流域目前发现最早、规模最大的史前聚落之一。
-                </p>
-                <p style="color:#3e2c1b; line-height:1.8; font-size:0.95rem; margin-top:12px;">
-                    遗址出土的彩陶是我国已知最早的彩陶之一，纹样丰富、器型多样，在中华文明起源研究中具有里程碑意义。其中，<strong>人头形器口彩陶瓶</strong>被誉为大地湾“镇馆之宝”，其独特的造型与纹饰承载了先民的审美理想与精神信仰。
-                </p>
+        <!-- 顶部标题 -->
+        <h2 class="fade-up" style="text-align:center; font-size:2rem; margin-bottom:8px;">尾声 · 八千年的回响</h2>
+        <p class="fade-up" style="text-align:center; color:#9e9d9d; margin-bottom:32px;">走完这段旅程，你已经认识了大地湾彩陶的故事</p>
+
+        <!-- 数据看板 -->
+        <div class="about-stats fade-up">
+            <div class="about-stat">
+                <div class="about-stat-num">8000<span>年</span></div>
+                <div class="about-stat-label">历史跨度</div>
             </div>
-
-            <!-- 参考文献 -->
-            <div style="background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-                <h3 style="color:#3e2c1b;">📚 主要参考文献</h3>
-                <ul style="color:#5a3e2b; font-size:0.9rem; line-height:1.8; padding-left:20px;">
-                    <li>孙少毅. 大地湾仰韶文化彩陶鱼纹研究[D]. 西北师范大学, 2021.</li>
-                    <li>韩建业. 彩陶之路: 考古所见早期东西文化交流和亚欧世界体系[M]. 中国社会科学出版社, 2024.</li>
-                    <li>侯丽. 马家窑文化中的水元素探析——以甘肃会宁地区出土彩陶为研究对象[J]. 丝绸之路, 2026.</li>
-                    <li>刘杨. 马家窑彩陶纹样的设计解译与应用研究[D]. 鲁迅美术学院, 2025.</li>
-                    <li>李洋. HTML5技术在移动Web前端设计与开发中的应用[J]. 电脑知识与技术, 2026.</li>
-                    <li>王岁林. 大地湾彩陶文化融入园本课程的意义与可行性分析[J]. 天津教育, 2020.</li>
-                    <li>李丹. 以服务设计为驱动的仰韶文化博物馆文创设计实践[D]. 西安石油大学, 2025.</li>
-                </ul>
+            <div class="about-stat">
+                <div class="about-stat-num">6<span>件</span></div>
+                <div class="about-stat-label">彩陶图鉴</div>
             </div>
-
-            <!-- 致谢 -->
-            <div style="background:white; border-radius:16px; padding:24px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-                <h3 style="color:#3e2c1b;">🙏 致谢</h3>
-                <p style="color:#3e2c1b; line-height:1.8; font-size:0.95rem;">
-                    感谢指导老师在选题和设计方案上的悉心指导，感谢答辩组老师提出的宝贵修改意见，感谢家人和同学的支持与帮助。
-                </p>
-                <p style="color:#7a5a44; line-height:1.8; font-size:0.9rem; margin-top:12px; font-style:italic;">
-                    本网站为毕业设计作品，旨在探索大地湾彩陶文化的数字化展示路径。如有不足之处，恳请各位老师批评指正。
-                </p>
+            <div class="about-stat">
+                <div class="about-stat-num">3<span>类</span></div>
+                <div class="about-stat-label">典型纹样</div>
             </div>
+            <div class="about-stat">
+                <div class="about-stat-num">3<span>项</span></div>
+                <div class="about-stat-label">互动体验</div>
+            </div>
+        </div>
 
-            <!-- 徽章墙（分两列） -->
-            <div style="background:white; border-radius:16px; padding:24px; margin-top:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-                <h3 style="color:#3e2c1b; margin-bottom:16px;">🏆 我的成就徽章</h3>
-                
-                <!-- 左右两列容器 -->
-                <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-                    <!-- 左列：知识问答 -->
-                    <div style="flex: 1; min-width: 200px;">
-                        <h4 style="color:#7a5a44; font-size:0.9rem; margin-bottom:12px; padding-bottom:6px; border-bottom:1px dashed #d9cdbc;">📝 知识问答</h4>
-                        <div id="badge-wall-quiz" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(80px,1fr)); gap:12px;"></div>
-                    </div>
-                    
-                    <!-- 右列：纹样拼图 -->
-                    <div style="flex: 1; min-width: 200px;">
-                        <h4 style="color:#7a5a44; font-size:0.9rem; margin-bottom:12px; padding-bottom:6px; border-bottom:1px dashed #d9cdbc;">🧩 纹样拼图</h4>
-                        <div id="badge-wall-puzzle" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(80px,1fr)); gap:12px;"></div>
-                    </div>
+        <!-- 文化时间轴 -->
+        <div class="about-timeline fade-up">
+            <h3 class="about-section-title">🕰️ 大地湾文化脉络</h3>
+            <div class="timeline-track">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">距今 8000 年</div>
+                    <div class="timeline-text">大地湾一期文化，我国已知最早的彩陶出现</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">距今 7000 年</div>
+                    <div class="timeline-text">鱼纹、变体鸟纹等彩陶纹样繁荣发展</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">距今 6000 年</div>
+                    <div class="timeline-text">人头形器口彩陶瓶诞生，被誉为“镇馆之宝”</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">距今 5000 年</div>
+                    <div class="timeline-text">大地湾文化晚期，彩陶工艺走向成熟与程式化</div>
                 </div>
             </div>
-
-            <!-- 底部装饰 -->
-            <div style="text-align:center; margin-top:24px; font-size:0.85rem; color:#b8a088;">
-                🏺 大地湾彩陶 · 八千年的回响
-            </div>
-
         </div>
-    </div>
 
+        <!-- 我的成就徽章 -->
+        <div class="about-badges fade-up">
+            <h3 class="about-section-title">🏆 我的参观纪念</h3>
+            <p style="color:#7a5a44; font-size:0.9rem; margin-bottom:16px;">完成互动任务，收集属于你的彩陶徽章</p>
+            <div style="display:flex; gap:24px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <h4 style="color:#7a5a44; font-size:0.9rem; margin-bottom:12px; padding-bottom:6px; border-bottom:1px dashed #d9cdbc;">📝 知识问答</h4>
+                    <div id="badge-wall-quiz" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(80px,1fr)); gap:12px;"></div>
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <h4 style="color:#7a5a44; font-size:0.9rem; margin-bottom:12px; padding-bottom:6px; border-bottom:1px dashed #d9cdbc;">🧩 纹样拼图</h4>
+                    <div id="badge-wall-puzzle" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(80px,1fr)); gap:12px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 折叠式学术资料 -->
+        <div class="about-collapse fade-up">
+            <details>
+                <summary>📚 学术资料与参考文献</summary>
+                <div class="about-collapse-content">
+                    <h4 style="color:#3e2c1b; margin-bottom:10px;">📍 大地湾遗址简介</h4>
+                    <p style="color:#5a3e2b; line-height:1.9; font-size:0.9rem;">
+                        大地湾遗址位于甘肃省天水市秦安县五营镇，距今约8000年至5000年，是我国新石器时代早期的重要聚落遗址，也是黄河流域目前发现最早、规模最大的史前聚落之一。遗址出土的彩陶是我国已知最早的彩陶之一，纹样丰富、器型多样，在中华文明起源研究中具有里程碑意义。
+                    </p>
+                    <h4 style="color:#3e2c1b; margin:20px 0 10px;">📖 主要参考文献</h4>
+                    <ul style="color:#5a3e2b; font-size:0.85rem; line-height:1.9; padding-left:20px;">
+                        <li>孙少毅. 大地湾仰韶文化彩陶鱼纹研究[D]. 西北师范大学, 2021.</li>
+                        <li>韩建业. 彩陶之路: 考古所见早期东西文化交流和亚欧世界体系[M]. 中国社会科学出版社, 2024.</li>
+                        <li>侯丽. 马家窑文化中的水元素探析[J]. 丝绸之路, 2026.</li>
+                        <li>刘杨. 马家窑彩陶纹样的设计解译与应用研究[D]. 鲁迅美术学院, 2025.</li>
+                        <li>李洋. HTML5技术在移动Web前端设计与开发中的应用[J]. 电脑知识与技术, 2026.</li>
+                        <li>王岁林. 大地湾彩陶文化融入园本课程的意义与可行性分析[J]. 天津教育, 2020.</li>
+                        <li>李丹. 以服务设计为驱动的仰韶文化博物馆文创设计实践[D]. 西安石油大学, 2025.</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+
+        <!-- 致谢 -->
+        <div class="about-thanks fade-up">
+            <p style="color:#080604; line-height:1.9; font-size:0.9rem; text-align:center; font-style:italic;">
+                感谢每一位驻足观看这段八千年旅程的你。
+            </p>
+        </div>
+
+        <!-- 底部引导 -->
+        <div class="about-end fade-up">
+            <p style="color:#b8a088; font-size:0.85rem; letter-spacing:2px;">🏺 大地湾彩陶 · 八千年的回响</p>
+            <button onclick="showPage('home')" class="about-end-btn">← 重新开始探索</button>
+        </div>
+
+    </div>
         <!-- ===== 页脚 ===== -->
         <footer>
             <p>大地湾彩陶文化数字化展示网站 </p >

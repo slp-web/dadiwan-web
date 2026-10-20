@@ -164,14 +164,14 @@ function renderQuestion() {
         container.innerHTML = `
             <div style="background:white; border-radius:16px; padding:30px 24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); text-align:center;">
                 <div style="font-size:4rem; margin-bottom:8px;">${badge}</div>
-                <h2 style="color:#3e2c1b; margin-bottom:4px;">🎉 答题完成！</h2>
+                <h2 style="font-family:'Noto Serif SC',serif; letter-spacing:4px; font-weight:700; color:#3e2c1b; margin-bottom:4px;">🎉 答题完成！</h2>
                 <p style="color:#7a5a44; font-size:0.95rem;">你获得了“${level}”称号</p>
                 <div style="background:#f5efe6; border-radius:12px; padding:16px; margin:16px auto; display:inline-block; min-width:180px;">
-                    <p style="font-size:2.2rem; font-weight:bold; color:#bf8f60;">${score} / ${maxScore}</p>
-                    <p style="font-size:0.85rem; color:#7a5a44;">正确率 ${percentage}%</p>
+                <p style="font-family:'Noto Serif SC',serif; font-size:2.2rem; font-weight:900; letter-spacing:3px; color:#bf8f60;">${score} / ${maxScore}</p>
+                <p style="font-size:0.85rem; color:#7a5a44;">正确率 ${percentage}%</p>
                 </div>
                 <p style="color:#5a3e2b; font-size:0.95rem; max-width:300px; margin:0 auto 16px;">${comment}</p>
-                <button onclick="restartQuiz()" style="padding:10px 36px; background:#5a3e2b; color:white; border:none; border-radius:8px; font-size:1rem; cursor:pointer;">重新挑战</button>
+                <button onclick="restartQuiz()" style="font-family:'Noto Serif SC',serif; font-weight:600; letter-spacing:2px; padding:12px 40px; background:#5a3e2b; color:white; border:none; border-radius:8px; font-size:1rem; cursor:pointer;">重新挑战</button>
             </div>
         `;
         return;
@@ -200,7 +200,7 @@ function renderQuestion() {
             </div>
 
             <!-- 题目 -->
-            <p style="font-weight:bold; font-size:1.1rem; margin-bottom:12px;">${currentQuestion + 1}. ${q.question}</p>
+            <p style="font-family:'Noto Serif SC','宋体',serif; font-weight:700; font-size:1.15rem; letter-spacing:1.5px; color:#3e2c1b; line-height:1.8; margin-bottom:12px;">${currentQuestion + 1}. ${q.question}</p>
             <div style="display:flex; flex-direction:column; gap:8px;">
     `;
 
@@ -208,7 +208,7 @@ function renderQuestion() {
         html += `
             <button onclick="selectAnswer(${idx})" 
                     class="quiz-option"
-                    style="text-align:left; padding:10px 16px; background:#f5efe6; border:2px solid #d9cdbc; border-radius:8px; cursor:pointer; font-size:0.95rem; transition: all 0.2s;">
+                    style="text-align:left; padding:12px 20px; background:#f5efe6; border:2px solid #d9cdbc; border-radius:8px; cursor:pointer; font-family:'Noto Serif SC','宋体',serif; font-size:1rem; letter-spacing:0.8px; line-height:1.6; transition: all 0.2s;">
                 ${String.fromCharCode(65 + idx)}. ${opt}
             </button>
         `;
@@ -335,14 +335,10 @@ renderQuestion();
 
 // ===== 欢迎遮罩：每次会话首次访问显示 =====
 function initWelcome() {
-    // 检查当前会话是否已经访问过
     var visited = sessionStorage.getItem('dadiwan_visited');
-    
     if (!visited) {
-        // 本次会话第一次打开：显示遮罩
         var overlay = document.getElementById('welcome-overlay');
-        overlay.style.display = 'flex';
-        overlay.style.opacity = '1';
+        overlay.classList.add('show');
     }
 }
 
@@ -351,8 +347,8 @@ function enterSite() {
     var overlay = document.getElementById('welcome-overlay');
     overlay.style.opacity = '0';
     setTimeout(function() {
-        overlay.style.display = 'none';
-        // 遮罩消失后再触发动画
+        overlay.classList.remove('show');
+        overlay.style.opacity = '';
         setTimeout(function() {
             triggerHomeAnimation();
         }, 10);
@@ -521,37 +517,37 @@ var potteryData = {
         title: '人头形器口彩陶瓶',
         desc: '大地湾"镇馆之宝"，人像与陶器完美结合',
         info: '文化类型：仰韶文化\n年代：距今约6000年\n出土地点：大地湾遗址',
-        video: 'videos/qiliuhaishaonv.mp4'
+        video: 'videos/caitaoping.mp4'
     },
     'kuan-dai-bo': {
         title: '宽带纹三足彩陶钵',
         desc: '我国已知最早的彩陶之一，纹饰简洁古朴',
         info: '文化类型：大地湾文化\n年代：距今约8000年\n出土地点：大地湾遗址',
-        video: 'videos/caitaobo.mp4'
+        video: 'videos/sanzucaitaobo.mp4'
     },
     'ji-he-guan': {
         title: '几何纹彩陶罐',
         desc: '线条流畅，体现先民的抽象审美能力',
         info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'videos/jihewendashu.mp4'
+        video: 'videos/jihewen.mp4'
     },
     'yu-wen-pen': {
         title: '鱼纹彩陶盆',
         desc: '鱼纹从具象到抽象的演变代表',
         info: '文化类型：仰韶文化\n年代：距今约7000-6000年\n出土地点：大地湾遗址',
-        video: 'videos/caitaopen.mp4'
+        video: 'videos/yuwencaitaopen.mp4'
     },
     'wang-ge-hu': {
         title: '网格纹彩陶壶',
         desc: '网格纹是大地湾最具代表性的装饰纹样',
         info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'videos/wanggewenaojiaojie.mp4'
+        video: 'videos/wanggewencaitaoguan.mp4'
     },
     'niao-wen-guan': {
         title: '变体鸟纹彩陶罐',
         desc: '鸟纹逐渐简化，走向符号化与程式化',
         info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'videos/wanggewenaojiaojie.mp4'
+        video: 'videos/biantiniaowencaitaoguan.mp4'
     }
 };
 
@@ -1399,18 +1395,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// ===== 彩陶旋转木马：点击逻辑 =====
+// ===== 彩陶旋转木马：点击逻辑（坐标判断，绕过 3D 变换命中不准的问题） =====
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('.carousel-3d-wrapper');
     if (!wrapper) return;
 
     wrapper.addEventListener('click', function (e) {
-        // 👇 直接看浏览器判断用户点中了哪张卡片
-        var card = e.target.closest('.carousel-card');
-        if (!card) return;
+        var cards = document.querySelectorAll('.carousel-card');
+        if (cards.length === 0) return;
 
-        var cards = Array.from(document.querySelectorAll('.carousel-card'));
-        var clickedIndex = cards.indexOf(card);
+        var mouseX = e.clientX;
+        var mouseY = e.clientY;
+
+        // 1. 找到视觉上离鼠标最近的卡片
+        var closest = null;
+        var minDist = Infinity;
+        cards.forEach(function (card) {
+            var rect = card.getBoundingClientRect();
+            var cx = rect.left + rect.width / 2;
+            var cy = rect.top + rect.height / 2;
+            var dist = Math.sqrt(Math.pow(mouseX - cx, 2) + Math.pow(mouseY - cy, 2));
+            if (dist < minDist) {
+                minDist = dist;
+                closest = card;
+            }
+        });
+
+        if (!closest) return;
+
+        var cardsArr = Array.from(cards);
+        var clickedIndex = cardsArr.indexOf(closest);
         var total = cards.length;
 
         var offset = clickedIndex - carouselIndex;
@@ -1418,13 +1432,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (offset < -total / 2) offset += total;
 
         if (offset === 0) {
-            // 中间卡片：只有点击图片才打开详情
-            if (e.target.tagName === 'IMG') {
-                openDetail(card.dataset.key);
+            // 2. 中间卡片：用坐标判断鼠标是否真的落在图片上
+            var img = closest.querySelector('img');
+            if (img) {
+                var imgRect = img.getBoundingClientRect();
+                if (mouseX >= imgRect.left && mouseX <= imgRect.right &&
+                    mouseY >= imgRect.top && mouseY <= imgRect.bottom) {
+                    openDetail(closest.dataset.key);
+                    return;
+                }
             }
-            // 点击中间卡片的文字/空白，什么都不做
+            // 点在中间卡片的非图片区域 → 什么都不做
         } else {
-            // 左/右卡片：旋转到中间
+            // 3. 左/右卡片：旋转到中间
             carouselIndex = clickedIndex;
             updateCarousel();
         }
@@ -1460,3 +1480,301 @@ document.addEventListener('DOMContentLoaded', function () {
         layer.appendChild(s);
     }
 })();
+
+// ===== 制陶体验 · 完整四步 =====
+(function initPotteryGame() {
+    var canvas = document.getElementById('pottery-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+
+    // 全局状态
+    window.potteryState = {
+        height: 180,
+        belly: 90,
+        neck: 40,
+        bottom: 50,
+        color: '#c48b59',
+        patterns: [],
+        step: 1,
+        currentStamp: null,
+        fired: false
+    };
+
+    var slHeight = document.getElementById('slider-height');
+    var slBelly = document.getElementById('slider-belly');
+    var slNeck = document.getElementById('slider-neck');
+    var slBottom = document.getElementById('slider-bottom');
+
+    // 画陶器（包含轮廓、颜色、纹样、烧制效果）
+    window.redrawPottery = function () {
+        var s = window.potteryState;
+        var h = s.height;
+        var belly = s.belly;
+        var neck = s.neck;
+        var bottom = s.bottom;
+
+        document.getElementById('val-height').innerText = h;
+        document.getElementById('val-belly').innerText = belly;
+        document.getElementById('val-neck').innerText = neck;
+        document.getElementById('val-bottom').innerText = bottom;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        var cx = canvas.width / 2;
+        var baseY = 350;
+        var topY = baseY - h;
+        var neckTopY = topY + 25;
+        var halfNeck = neck / 2;
+        var halfBelly = belly / 2;
+        var halfBottom = bottom / 2;
+
+        // 烧制后的颜色：把用户选的颜色调暗
+        var fillColor = s.color;
+        if (s.fired) {
+            fillColor = shadeColor(s.color, -25);
+        }
+
+        // 轮廓
+        ctx.beginPath();
+        ctx.moveTo(cx - halfNeck, neckTopY);
+        ctx.bezierCurveTo(cx - halfNeck, neckTopY, cx - halfBelly * 0.75, topY + h * 0.35, cx - halfBelly, topY + h * 0.55);
+        ctx.bezierCurveTo(cx - halfBelly, baseY - h * 0.25, cx - halfBottom, baseY, cx - halfBottom, baseY);
+        ctx.lineTo(cx + halfBottom, baseY);
+        ctx.bezierCurveTo(cx + halfBottom, baseY, cx + halfBelly, baseY - h * 0.25, cx + halfBelly, topY + h * 0.55);
+        ctx.bezierCurveTo(cx + halfBelly * 0.75, topY + h * 0.35, cx + halfNeck, neckTopY, cx + halfNeck, neckTopY);
+        ctx.lineTo(cx - halfNeck, neckTopY);
+        ctx.closePath();
+
+        var potGrad = ctx.createLinearGradient(cx - halfBelly, 0, cx + halfBelly, 0);
+        potGrad.addColorStop(0, shadeColor(fillColor, -20));
+        potGrad.addColorStop(0.5, fillColor);
+        potGrad.addColorStop(1, shadeColor(fillColor, -30));
+        ctx.fillStyle = potGrad;
+        ctx.fill();
+        ctx.strokeStyle = s.fired ? '#3e2c1b' : '#7a5a44';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // 高光
+        ctx.beginPath();
+        ctx.ellipse(cx - halfBelly * 0.22, topY + h * 0.48, halfBelly * 0.18, h * 0.26, 0, 0, Math.PI * 2);
+        var hg = ctx.createRadialGradient(cx - halfBelly * 0.22, topY + h * 0.48, 0, cx - halfBelly * 0.22, topY + h * 0.48, halfBelly * 0.18);
+        hg.addColorStop(0, 'rgba(255,255,255,0.32)');
+        hg.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = hg;
+        ctx.fill();
+
+        // 画所有纹样
+        s.patterns.forEach(function (p) {
+            drawPattern(ctx, p.type, p.x, p.y, p.size, s.fired);
+        });
+    };
+
+    // 颜色加深/变浅
+    function shadeColor(hex, percent) {
+        var num = parseInt(hex.replace('#', ''), 16);
+        var r = Math.max(0, Math.min(255, (num >> 16) + percent));
+        var g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + percent));
+        var b = Math.max(0, Math.min(255, (num & 0x0000FF) + percent));
+        return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    // 画单个纹样
+    function drawPattern(context, type, x, y, size, fired) {
+        context.save();
+        context.translate(x, y);
+        context.strokeStyle = fired ? 'rgba(255,255,255,0.65)' : 'rgba(62,44,27,0.85)';
+        context.fillStyle = fired ? 'rgba(255,255,255,0.65)' : 'rgba(62,44,27,0.85)';
+        context.lineWidth = 2;
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+        var s = size;
+
+        if (type === 'grid') {
+            // 菱形网格纹：斜向交叉的菱形格
+            var step = s * 0.7;
+            for (var i = -2; i <= 2; i++) {
+                // 从左下到右上
+                context.beginPath();
+                context.moveTo(i * step - s, s);
+                context.lineTo(i * step + s, -s);
+                context.stroke();
+                // 从左上到右下
+                context.beginPath();
+                context.moveTo(i * step - s, -s);
+                context.lineTo(i * step + s, s);
+                context.stroke();
+            }
+        } else if (type === 'wave') {
+            // 多层水波纹：三条平行的波浪线
+            for (var k = -1; k <= 1; k++) {
+                context.beginPath();
+                var offsetY = k * s * 0.35;
+                context.moveTo(-s * 1.2, offsetY);
+                context.quadraticCurveTo(-s * 0.6, offsetY - s * 0.4, 0, offsetY);
+                context.quadraticCurveTo(s * 0.6, offsetY + s * 0.4, s * 1.2, offsetY);
+                context.stroke();
+            }
+        } else if (type === 'fish') {
+            // 鱼纹：身体 + 尾巴 + 眼睛 + 鳞片
+            // 鱼身
+            context.beginPath();
+            context.ellipse(0, 0, s * 0.8, s * 0.4, 0, 0, Math.PI * 2);
+            context.stroke();
+            // 鱼尾
+            context.beginPath();
+            context.moveTo(-s * 0.8, 0);
+            context.lineTo(-s * 1.3, -s * 0.4);
+            context.lineTo(-s * 1.3, s * 0.4);
+            context.closePath();
+            context.stroke();
+            // 眼睛
+            context.beginPath();
+            context.arc(s * 0.4, -s * 0.08, s * 0.1, 0, Math.PI * 2);
+            context.fill();
+            // 鳞片（三条弧线）
+            context.beginPath();
+            context.arc(s * 0.1, 0, s * 0.2, -Math.PI * 0.5, Math.PI * 0.5);
+            context.stroke();
+            context.beginPath();
+            context.arc(-s * 0.2, 0, s * 0.2, -Math.PI * 0.5, Math.PI * 0.5);
+            context.stroke();
+            context.beginPath();
+            context.arc(-s * 0.5, 0, s * 0.2, -Math.PI * 0.5, Math.PI * 0.5);
+            context.stroke();
+        } else if (type === 'zigzag') {
+            // 锯齿纹：上下两排交错的折线
+            var zigStep = s * 0.35;
+            // 上排
+            context.beginPath();
+            for (var j = -3; j <= 3; j++) {
+                var px = j * zigStep;
+                var py = (j % 2 === 0) ? -s * 0.5 : -s * 0.2;
+                if (j === -3) context.moveTo(px, py);
+                else context.lineTo(px, py);
+            }
+            context.stroke();
+            // 下排
+            context.beginPath();
+            for (var j2 = -3; j2 <= 3; j2++) {
+                var px2 = j2 * zigStep;
+                var py2 = (j2 % 2 === 0) ? s * 0.2 : s * 0.5;
+                if (j2 === -3) context.moveTo(px2, py2);
+                else context.lineTo(px2, py2);
+            }
+            context.stroke();
+        }
+
+        context.restore();
+    }  
+
+    // 滑块事件
+    [slHeight, slBelly, slNeck, slBottom].forEach(function (slider) {
+        slider.addEventListener('input', function () {
+            window.potteryState.height = Number(slHeight.value);
+            window.potteryState.belly = Number(slBelly.value);
+            window.potteryState.neck = Number(slNeck.value);
+            window.potteryState.bottom = Number(slBottom.value);
+            window.redrawPottery();
+        });
+    });
+
+    // 点击画布 → 印纹样
+    canvas.addEventListener('click', function (e) {
+        var s = window.potteryState;
+        if (s.step !== 2 || !s.currentStamp) return;
+        var rect = canvas.getBoundingClientRect();
+        var x = (e.clientX - rect.left) * (canvas.width / rect.width);
+        var y = (e.clientY - rect.top) * (canvas.height / rect.height);
+        s.patterns.push({ type: s.currentStamp, x: x, y: y, size: 20 });
+        window.redrawPottery();
+    });
+
+    // 首次绘制
+    window.redrawPottery();
+})();
+
+// ===== 制陶步骤切换 =====
+function switchPotteryStep(step) {
+    var s = window.potteryState;
+    s.step = step;
+
+    // 更新顶部步骤条
+    document.querySelectorAll('.pottery-step-item').forEach(function (item) {
+        var n = parseInt(item.dataset.step);
+        item.classList.toggle('active', n === step);
+    });
+
+    // 更新说明文字
+    var descs = {
+        1: '🏺 第一步 · 捏陶：拖动滑块，捏出你心中的彩陶',
+        2: '🎨 第二步 · 纹样：选一个纹样，点击陶器印上去',
+        3: '🖌️ 第三步 · 上色：选一个颜色作为陶器的底色',
+        4: '🔥 第四步 · 烧制：点击按钮，见证你的彩陶诞生'
+    };
+    document.getElementById('pottery-desc').textContent = descs[step];
+
+    // 更新右侧面板
+    document.querySelectorAll('.pottery-step-panel').forEach(function (p) {
+        p.style.display = (parseInt(p.dataset.step) === step) ? 'block' : 'none';
+    });
+}
+
+function potteryNextStep() {
+    var s = window.potteryState;
+    if (s.step < 4) switchPotteryStep(s.step + 1);
+}
+function potteryPrevStep() {
+    var s = window.potteryState;
+    if (s.step > 1) switchPotteryStep(s.step - 1);
+}
+
+// ===== 纹样选择 =====
+function selectStamp(type, btn) {
+    window.potteryState.currentStamp = type;
+    document.querySelectorAll('.pattern-stamp').forEach(function (b) {
+        b.classList.remove('active');
+    });
+    btn.classList.add('active');
+}
+function clearPatterns() {
+    window.potteryState.patterns = [];
+    window.redrawPottery();
+}
+
+// ===== 上色 =====
+function setPotteryColor(color, btn) {
+    window.potteryState.color = color;
+    document.querySelectorAll('.color-btn').forEach(function (b) {
+        b.classList.remove('active');
+    });
+    btn.classList.add('active');
+    window.redrawPottery();
+}
+
+// ===== 烧制 =====
+function firePottery() {
+    var box = document.querySelector('.pottery-wheel-box');
+    box.classList.add('firing');
+
+    // 3 秒后完成烧制
+    setTimeout(function () {
+        box.classList.remove('firing');
+        window.potteryState.fired = true;
+        window.redrawPottery();
+
+        // 显示保存按钮
+        document.getElementById('pottery-save-btn').style.display = 'block';
+    }, 2000);
+}
+
+// ===== 保存成品 =====
+function savePotteryImage() {
+    var canvas = document.getElementById('pottery-canvas');
+    var link = document.createElement('a');
+    link.download = '我的彩陶.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+ 
