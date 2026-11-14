@@ -516,38 +516,38 @@ var potteryData = {
     'ren-tou-ping': {
         title: '人头形器口彩陶瓶',
         desc: '大地湾"镇馆之宝"，人像与陶器完美结合',
-        info: '文化类型：仰韶文化\n年代：距今约6000年\n出土地点：大地湾遗址',
+        info: '文化类型：仰韶文化早期\n年代：距今约5500年',
         video: 'videos/caitaoping.mp4'
     },
     'kuan-dai-bo': {
         title: '宽带纹三足彩陶钵',
         desc: '我国已知最早的彩陶之一，纹饰简洁古朴',
-        info: '文化类型：大地湾文化\n年代：距今约8000年\n出土地点：大地湾遗址',
+        info: '文化类型：大地湾一期\n年代：距今约7800年',
         video: 'videos/sanzucaitaobo.mp4'
     },
-    'ji-he-guan': {
-        title: '几何纹彩陶罐',
-        desc: '线条流畅，体现先民的抽象审美能力',
-        info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'videos/jihewen.mp4'
+    'shui-bo-wen': {
+        title: '水波纹彩陶瓶',
+        desc: '流畅的水波线条，展现先民对自然的观察与审美',
+        info: '文化类型：仰韶文化早期\n年代：距今约6500年',
+        video: 'videos/shuibowencaitaoping.mp4'
     },
     'yu-wen-pen': {
         title: '鱼纹彩陶盆',
         desc: '鱼纹从具象到抽象的演变代表',
-        info: '文化类型：仰韶文化\n年代：距今约7000-6000年\n出土地点：大地湾遗址',
+        info: '文化类型：仰韶文化早期\n年代：距今约6000年',
         video: 'videos/yuwencaitaopen.mp4'
     },
-    'wang-ge-hu': {
-        title: '网格纹彩陶壶',
-        desc: '网格纹是大地湾最具代表性的装饰纹样',
-        info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'videos/wanggewencaitaoguan.mp4'
+    'yuan-ti-bo': {
+        title: '宽带纹圆底彩陶钵',
+        desc: '器表绘有深色宽带纹，是大地湾早期的典型特征',
+        info: '文化类型：大地湾一期\n年代：距今约7800年',
+        video: 'videos/kuandaiwenyuandicaitaobo.mp4'
     },
-    'niao-wen-guan': {
-        title: '变体鸟纹彩陶罐',
-        desc: '鸟纹逐渐简化，走向符号化与程式化',
-        info: '文化类型：仰韶文化\n年代：距今约5500-5000年\n出土地点：大地湾遗址',
-        video: 'videos/biantiniaowencaitaoguan.mp4'
+    'tao-ping': {
+        title: '弧线网格纹彩陶瓶',
+        desc: '纹样逐渐简化，走向符号化与程式化',
+        info: '文化类型：仰韶文化早期\n年代：距今约6500年',
+        video: 'videos/huxianwanggewencaitaoping.mp4'
     }
 };
 
@@ -555,10 +555,10 @@ var potteryData = {
 var modelUrls = {
     'ren-tou-ping': 'models/rentouxingqikoucaitaopingB.glb',
     'kuan-dai-bo': 'models/kuandaiwensanzucaitaoboB.glb',
-    'ji-he-guan': 'models/jihewencaitaoguanB.glb',
+    'shui-bo-wen': 'models/shuibowencaitaopingB.glb',
     'yu-wen-pen': 'models/yuwencaitaopenB.glb',
-    'wang-ge-hu': 'models/wanggewencaitaohuB.glb',
-    'niao-wen-guan': 'models/biantiniaowencaitaoguanB.glb'
+    'yuan-ti-bo': 'models/kuandaiwencaitaoboB.glb',
+    'tao-ping': 'models/taopingB.glb'
 };
 
 // ===== 切换加载3D模型 =====
@@ -1064,35 +1064,21 @@ function showPuzzleModal(name) {
     if (text) text.textContent = '你已成功拼合「' + name + '」演变图';
     document.getElementById('puzzle-modal').style.display = 'flex';
 
-    // 1. 无论如何，先把当前拼图记在内存里
+    // 🔥 直接把进度记在内存里（sessionCompletedPuzzles）
     if (!sessionCompletedPuzzles.includes(name)) {
         sessionCompletedPuzzles.push(name);
-    }
-
-    // 2. 尝试同步到 localStorage（如果被拦截，就忽略）
-    try {
-        var savedPuzzles = JSON.parse(localStorage.getItem('dadiwan_completed_puzzles') || '[]');
-        // 合并历史记录
-        savedPuzzles.forEach(function(p) {
-            if (!sessionCompletedPuzzles.includes(p)) {
-                sessionCompletedPuzzles.push(p);
-            }
-        });
-        localStorage.setItem('dadiwan_completed_puzzles', JSON.stringify(sessionCompletedPuzzles));
-    } catch(e) {
-        console.warn('浏览器拦截了 localStorage，本次拼图进度将仅保留在内存中');
     }
 
     var count = sessionCompletedPuzzles.length;
     var totalPuzzles = puzzleList.length; // 当前总共 6 套
 
-    // 3. 根据累计数量发放不同级别的徽章，并记录是否有新徽章
+    // 根据累计数量发放不同级别的徽章，并记录是否有新徽章
     var gotNewBadge = false;
     if (count === 1) gotNewBadge = unlockBadge('puzzle_1') || gotNewBadge;
     if (count >= 3) gotNewBadge = unlockBadge('puzzle_3') || gotNewBadge;
     if (count >= totalPuzzles) gotNewBadge = unlockBadge('puzzle_all') || gotNewBadge;
 
-    // 4. 如果这次没有解锁新徽章，就弹一个进度提示，让玩家知道还在累计
+    // 如果这次没有解锁新徽章，就弹一个进度提示
     if (!gotNewBadge) {
         showBadgeToast({ 
             icon: '🧩', 
@@ -1100,7 +1086,6 @@ function showPuzzleModal(name) {
         });
     }
 }
-
 function closePuzzleModal() {
     document.getElementById('puzzle-modal').style.display = 'none';
 }
@@ -1160,40 +1145,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ===== 徽章系统核心逻辑 =====
-const BADGE_KEY = 'dadiwan_badges';
 const badgeDefs = {
     'quiz_master': { icon: '🏆', title: '彩陶大师', desc: '问答正确率 ≥ 80%' },
     'quiz_lover': { icon: '📖', title: '彩陶爱好者', desc: '问答正确率 ≥ 60%' },
     'quiz_beginner': { icon: '🔍', title: '彩陶初学者', desc: '完成一次知识问答' },
-    // 拼图徽章（累计完成数量定级）
     'puzzle_1': { icon: '🧩', title: '初识纹样', desc: '完成 1 套纹样拼图' },
     'puzzle_3': { icon: '🔍', title: '纹样解密者', desc: '累计完成 3 套纹样拼图' },
     'puzzle_all': { icon: '🏆', title: '彩陶修复大师', desc: '完成全部纹样拼图' }
 };
 
-// 获取已解锁的徽章
+// 🔥 核心改动：直接用一个数组存在内存里，不存 localStorage，刷新就重置！
+let unlockedBadges = [];
+
 function getBadges() {
-    try { return JSON.parse(localStorage.getItem(BADGE_KEY)) || []; }
-    catch (e) { return []; }
+    return unlockedBadges;
 }
 
-// 解锁徽章
 function unlockBadge(id) {
     if (!badgeDefs[id]) return false;
-    const unlocked = getBadges();
-    if (unlocked.includes(id)) return false; // 已有就不重复发，返回 false
+    if (unlockedBadges.includes(id)) return false; // 已有就不重复发
 
-    unlocked.push(id);
-    
-    try {
-        localStorage.setItem(BADGE_KEY, JSON.stringify(unlocked));
-    } catch (e) {
-        console.warn('浏览器拦截了 localStorage，徽章无法持久化保存');
-    }
-    
+    unlockedBadges.push(id);
     renderBadgeWall(); 
     showBadgeToast(badgeDefs[id]); 
-    return true; // 👈 关键：告诉调用者，这次确实拿到了新徽章！
+    return true; 
 }
 
 // 显示飘窗
@@ -1201,15 +1176,30 @@ function showBadgeToast(def) {
     const toast = document.getElementById('badge-toast');
     if (!toast) return;
 
-    document.getElementById('toast-icon').textContent = def.icon;
+    // 设置图标和标题
+    document.getElementById('toast-icon').textContent = def.icon || '🏆';
     document.getElementById('toast-title').textContent = def.title;
+
+    // 如果有传 label，就更新顶部小字
+    const labelEl = toast.querySelector('.toast-label');
+    if (labelEl) {
+        labelEl.textContent = def.label || '获得成就';
+    }
+
+    // 🔥 如果是长文本，加上对应的类名
+    if (def.isLong) {
+        toast.classList.add('long-toast');
+    } else {
+        toast.classList.remove('long-toast');
+    }
 
     toast.classList.add('show');
 
+    // 长文本停留时间稍微长一点（5秒），短文本3.5秒
     if (window.toastTimer) clearTimeout(window.toastTimer);
     window.toastTimer = setTimeout(function() {
         toast.classList.remove('show');
-    }, 3500);
+    }, def.isLong ? 5000 : 3500);
 }
 
 // 渲染徽章墙（分问答和拼图两列）
@@ -1288,25 +1278,6 @@ function updateCarousel() {
     });
 }
 
-function handleCardClick(card) {
-    const cards = Array.from(document.querySelectorAll('.carousel-card'));
-    const index = cards.indexOf(card);
-    const total = cards.length;
-
-    let offset = index - carouselIndex;
-    if (offset > total / 2) offset -= total;
-    if (offset < -total / 2) offset += total;
-
-    if (offset === 0) {
-        // 点击中间的卡片 → 打开详情
-        openDetail(card.dataset.key);
-    } else {
-        // 点击两侧的卡片 → 旋转到中间
-        carouselIndex = index;
-        updateCarousel();
-    }
-}
-
 // 页面加载时初始化
 document.addEventListener('DOMContentLoaded', function() {
     updateCarousel();
@@ -1314,15 +1285,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== 工艺简介：S形蜿蜒旋转 =====
 let craftIndex = 0;
+let watchedCrafts = [];
 
 // 工艺步骤详情数据
 const craftData = {
-    'xuan-tu':  { icon: '⛏️', title: '选土', desc: '选用细腻纯净的黄土，去除粗砂与杂质。大地湾先民通常选取河谷地带的沉积黄土，土质细腻、可塑性强，是制作彩陶的基础。' },
-    'tao-xi':   { icon: '💧', title: '淘洗', desc: '将黄土加水搅拌，通过沉淀去除杂质，提高泥料的可塑性与纯度。这一步直接决定了陶器成品的细腻程度与烧制成功率。' },
-    'zhi-pi':   { icon: '🖐️', title: '制坯', desc: '采用手工捏塑或泥条盘筑法，将泥料塑造成陶器器型。大型器物多用泥条盘筑法，一层层向上盘绕成型，再拍打修整。' },
-    'xiu-pi':   { icon: '✂️', title: '修坯', desc: '待陶坯半干时，修整器型、打磨表面，使器壁厚薄均匀、内外光滑。这个环节决定了陶器的美观与耐用程度。' },
-    'cai-hui':  { icon: '🎨', title: '彩绘', desc: '用矿物颜料（主要是红彩和黑彩）在陶坯上绘制纹样。纹样题材丰富，包括鱼纹、鸟纹、蛙纹、网格纹等，反映先民的审美与信仰。' },
-    'shao-zhi': { icon: '🔥', title: '烧制', desc: '将陶坯放入窑炉高温烧制，温度通常在 800-1000℃ 之间。烧制使陶器最终成型，颜色也由红褐逐渐稳定，成为历经千年的彩陶。' }
+    'xuan-tu':  {  title: '选土', desc: '挑选细腻纯净的黄土，去除粗砂与杂质，保证泥土的可塑性。', video: 'videos/xuan-tu.mp4' }, // 没视频就留空
+    'tao-xi':   {  title: '淘洗', desc: '加水搅拌并沉淀，去除泥料中的杂质，提高陶土纯度。', video: 'videos/tao-xi.mp4' },
+    'zhi-pi':   {  title: '制坯', desc: '采用手工捏塑或泥条盘筑法，将泥料塑造成陶器的基本轮廓。', video: 'videos/zhi-pi.mp4' },
+    'xiu-pi':   {  title: '修坯', desc: '待陶坯成型时，修整器型、勾勒表面，使器壁厚薄均匀。', video: 'videos/xiu-pi.mp4' }, // 🔥 这里填入你的视频路径
+    'cai-hui':  {  title: '彩绘', desc: '使用红、黑等矿物颜料，在陶坯表面绘制鱼纹、网格纹等图案。', video: 'videos/cai-hui.mp4' },
+    'shao-zhi': {  title: '烧制', desc: '放入窑炉高温烧制，使陶器最终定型，呈现出稳定的红褐色。', video: 'videos/shao-zhi.mp4' }
 };
 
 function updateCraftCarousel() {
@@ -1369,14 +1341,63 @@ function openCraftDetail(key) {
     const data = craftData[key];
     if (!data) return;
 
-    document.getElementById('craft-modal-icon').textContent = data.icon;
     document.getElementById('craft-modal-title').textContent = data.title;
     document.getElementById('craft-modal-desc').textContent = data.desc;
+    
+    const videoContainer = document.getElementById('craft-video-container');
+    const videoElement = document.getElementById('craft-video');
+    
+    if (data.video && data.video !== '') {
+        videoElement.querySelector('source').src = data.video;
+        videoElement.load(); 
+        videoContainer.style.display = 'block';
+    } else {
+        videoElement.pause();
+        videoContainer.style.display = 'none';
+    }
+
     document.getElementById('craft-modal').style.display = 'flex';
+
+    // 记录进度并给卡片镀金
+    if (!watchedCrafts.includes(key)) {
+        watchedCrafts.push(key);
+        
+        var clickedCard = document.querySelector(`.craft-card[data-key="${key}"]`);
+        if (clickedCard) {
+            clickedCard.classList.add('completed');
+        }
+        
+        // 🔥 如果是第6个，标记一下，等待用户关掉弹窗时触发
+        if (watchedCrafts.length === 6) {
+            window.waitingForGrandFinale = true; 
+        }
+    }
 }
 
 function closeCraftModal() {
     document.getElementById('craft-modal').style.display = 'none';
+    
+    // 暂停视频
+    const videoElement = document.getElementById('craft-video');
+    if(videoElement) {
+        videoElement.pause();
+    }
+
+    // 🔥 检查是不是刚好关掉了第6个视频
+    if (window.waitingForGrandFinale) {
+        window.waitingForGrandFinale = false; // 重置标记，防止重复触发
+        
+        // 稍微延迟 0.5 秒，等弹窗完全消失后，再放彩花和诗句
+        setTimeout(() => {
+            showBadgeToast({ 
+                icon: '✨', 
+                label: '通关成就',
+                title: '从一捧黄土到精美彩陶，八千年的工匠精神，已在你的指尖重现。',
+                isLong: true 
+            });
+            fireConfetti(); 
+        }, 500);
+    }
 }
 
 // 初始化工艺旋转
@@ -1395,22 +1416,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// ===== 彩陶旋转木马：点击逻辑（坐标判断，绕过 3D 变换命中不准的问题） =====
+// ===== 彩陶旋转木马：防误判终极版 =====
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('.carousel-3d-wrapper');
     if (!wrapper) return;
 
     wrapper.addEventListener('click', function (e) {
-        var cards = document.querySelectorAll('.carousel-card');
-        if (cards.length === 0) return;
-
         var mouseX = e.clientX;
         var mouseY = e.clientY;
+        var cards = Array.from(document.querySelectorAll('.carousel-card'));
+        if (cards.length === 0) return;
 
-        // 1. 找到视觉上离鼠标最近的卡片
+        // 🔥 第一步：优先判断是不是点在了正中间卡片上
+        var centerCard = cards[carouselIndex];
+        if (centerCard) {
+            var centerRect = centerCard.getBoundingClientRect();
+            // 增加 15px 的容错范围，只要点在这个范围内，管它偏左偏右，直接进详情！
+            if (mouseX >= centerRect.left - 15 && mouseX <= centerRect.right + 15 &&
+                mouseY >= centerRect.top - 15 && mouseY <= centerRect.bottom + 15) {
+                openDetail(centerCard.dataset.key);
+                return; // 结束函数，不再执行后续代码
+            }
+        }
+
+        // 🔥 第二步：如果没点中中间卡片，再去判断左右两侧
         var closest = null;
         var minDist = Infinity;
         cards.forEach(function (card) {
+            if (card === centerCard) return; // 排除中间卡片
+
             var rect = card.getBoundingClientRect();
             var cx = rect.left + rect.width / 2;
             var cy = rect.top + rect.height / 2;
@@ -1423,34 +1457,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!closest) return;
 
-        var cardsArr = Array.from(cards);
-        var clickedIndex = cardsArr.indexOf(closest);
-        var total = cards.length;
-
-        var offset = clickedIndex - carouselIndex;
-        if (offset > total / 2) offset -= total;
-        if (offset < -total / 2) offset += total;
-
-        if (offset === 0) {
-            // 2. 中间卡片：用坐标判断鼠标是否真的落在图片上
-            var img = closest.querySelector('img');
-            if (img) {
-                var imgRect = img.getBoundingClientRect();
-                if (mouseX >= imgRect.left && mouseX <= imgRect.right &&
-                    mouseY >= imgRect.top && mouseY <= imgRect.bottom) {
-                    openDetail(closest.dataset.key);
-                    return;
-                }
-            }
-            // 点在中间卡片的非图片区域 → 什么都不做
-        } else {
-            // 3. 左/右卡片：旋转到中间
-            carouselIndex = clickedIndex;
-            updateCarousel();
-        }
+        // 第三步：触发左右卡片的旋转
+        var clickedIndex = cards.indexOf(closest);
+        carouselIndex = clickedIndex;
+        updateCarousel();
     });
 
-    console.log('✅ 旋转木马点击委托已绑定');
+    console.log('✅ 完美防误判点击已绑定');
 });
 
 // ===== 细闪粒子生成 =====
@@ -1777,4 +1790,52 @@ function savePotteryImage() {
     link.click();
 }
 
- 
+ // ===== 工艺通关彩花特效 =====
+function fireConfetti() {
+    if (typeof confetti === 'undefined') return; 
+
+    const colors = ['#bf8f60', '#a97a48', '#d4af37', '#f5efe6', '#8c5c35'];
+
+    // 第一波
+    confetti({
+        particleCount: 100,
+        spread: 120,
+        origin: { y: 0.6 },
+        colors: colors,
+        disableForReducedMotion: true
+    });
+
+    // 第二波
+    setTimeout(() => {
+        confetti({
+            particleCount: 80,
+            angle: 60,
+            spread: 80,
+            origin: { x: 0, y: 0.8 }, // 从左边喷
+            colors: colors
+        });
+    }, 250);
+
+    // 第三波
+    setTimeout(() => {
+        confetti({
+            particleCount: 80,
+            angle: 120,
+            spread: 80,
+            origin: { x: 1, y: 0.8 }, // 从右边喷
+            colors: colors
+        });
+    }, 400);
+    
+    // 第四波（从天而降的慢速彩花）
+    setTimeout(() => {
+        confetti({
+            particleCount: 150,
+            spread: 180,
+            startVelocity: 20, // 初始速度慢一点
+            gravity: 0.6,      // 下落慢一点
+            origin: { y: 0 },
+            colors: colors
+        });
+    }, 600);
+}

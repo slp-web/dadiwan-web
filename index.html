@@ -80,9 +80,9 @@
                         <img src="images/rentou.png" alt="人头形器口彩陶瓶" class="carousel-slide" />
                         <img src="images/kuandai.png" alt="宽带纹三足彩陶钵" class="carousel-slide" />
                         <img src="images/yuwen.png" alt="鱼纹彩陶盆" class="carousel-slide" />
-                        <img src="images/wangge.png" alt="网格纹彩陶壶" class="carousel-slide" />
-                        <img src="images/bianti.png" alt="变体鸟纹彩陶罐" class="carousel-slide" />
-                        <img src="images/jihe.png" alt="几何纹彩陶罐" class="carousel-slide" />
+                        <img src="images/shuibowen.png" alt="水波纹彩陶瓶" class="carousel-slide" />
+                        <img src="images/taoping.png" alt="变体鸟纹彩陶瓶" class="carousel-slide" />
+                        <img src="images/yuantibo.png" alt="宽带纹圆底彩陶钵" class="carousel-slide" />
                     </div>
                 </div>
             </div>
@@ -113,40 +113,40 @@
         <div class="carousel-3d-wrapper" id="gallery-carousel-wrapper">
             <div class="carousel-3d" id="gallery-carousel">
 
-                <div class="carousel-card" data-key="ren-tou-ping">
+                <div class="carousel-card" data-key="ren-tou-ping" >
                     <img src="images/ren-tou-xing-qi-kou-cai-tao-ping.jpg" alt="人头形器口彩陶瓶" />
                     <h4>人头形器口彩陶瓶</h4>
                     <p>大地湾"镇馆之宝"，人像与陶器完美结合</p>
                 </div>
 
-                <div class="carousel-card" data-key="kuan-dai-bo">
+                <div class="carousel-card" data-key="kuan-dai-bo" >
                     <img src="images/kuan-dai-wen-san-zu-cai-tao-bo.jpg" alt="宽带纹三足彩陶钵" />
                     <h4>宽带纹三足彩陶钵</h4>
                     <p>我国已知最早的彩陶之一，纹饰简洁古朴</p>
                 </div>
 
-                <div class="carousel-card" data-key="ji-he-guan">
-                    <img src="images/ji-he-wen-cai-tao-guan.jpeg" alt="几何纹彩陶罐" />
-                    <h4>几何纹彩陶罐</h4>
-                    <p>线条流畅，体现先民的抽象审美能力</p>
+                <div class="carousel-card" data-key="shui-bo-wen">
+                    <img src="images/shui-bo-wen-cai-tao-ping.png" alt="水波纹彩陶瓶" />
+                    <h4>水波纹彩陶瓶</h4>
+                    <p>流畅的水波线条，展现先民对自然的观察与审美</p>
                 </div>
 
-                <div class="carousel-card" data-key="yu-wen-pen">
+                <div class="carousel-card" data-key="yu-wen-pen" >
                     <img src="images/yu-wen-cai-tao-pen.jpg" alt="鱼纹彩陶盆" />
                     <h4>鱼纹彩陶盆</h4>
                     <p>鱼纹从具象到抽象的演变代表</p>
                 </div>
 
-                <div class="carousel-card" data-key="wang-ge-hu">
-                    <img src="images/wang-ge-wen-cai-tao-hu.jpg" alt="网格纹彩陶壶" />
-                    <h4>网格纹彩陶壶</h4>
-                    <p>网格纹是大地湾最具代表性的装饰纹样</p>
+                <div class="carousel-card" data-key="yuan-ti-bo" >
+                    <img src="images/kuan-dai-wen-caitao-bo.jpg" alt="宽带纹圆底彩陶钵" />
+                    <h4>宽带纹圆底彩陶钵</h4>
+                    <p>器表绘有深色宽带纹，是大地湾早期的典型特征</p>
                 </div>
 
-                <div class="carousel-card" data-key="niao-wen-guan">
-                    <img src="images/bian-ti-niao-wen-cai-tao-guan.jpeg" alt="变体鸟纹彩陶罐" />
-                    <h4>变体鸟纹彩陶罐</h4>
-                    <p>鸟纹逐渐简化，走向符号化与程式化</p>
+                <div class="carousel-card" data-key="tao-ping" >
+                    <img src="images/tao-ping.png" alt="弧线网格纹彩陶瓶" />
+                    <h4>弧线网格纹彩陶瓶</h4>
+                    <p>纹样逐渐简化，走向符号化与程式化</p>
                 </div>
 
             </div>
@@ -275,9 +275,21 @@
 <div id="craft-modal">
     <div id="craft-modal-content">
         <button class="pattern-modal-close" onclick="closeCraftModal()">✕</button>
-        <div id="craft-modal-icon" style="font-size:4rem; text-align:center; margin-bottom:12px;">⛏️</div>
-        <h3 id="craft-modal-title" style="text-align:center; color:#3e2c1b; margin-bottom:12px;">选土</h3>
-        <p id="craft-modal-desc" style="color:#5a3e2b; line-height:1.9; font-size:0.95rem;"></p>
+        
+        <!-- 标题区 -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h3 id="craft-modal-title" >修坯</h3>
+        </div>
+
+        <!-- 🔥 视频播放区（提前显示在最上面，更抓眼球） -->
+        <div id="craft-video-container" style="display:none;">
+            <video id="craft-video" controls playsinline preload="metadata">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- 文字描述区（如果你不要文字，可以直接把 style="display:none;" 删掉这行 p 标签） -->
+        <p id="craft-modal-desc" style="color:#5a3e2b; line-height:1.9; font-size: 1rem; margin-top: 20px; text-align: justify;"></p>
     </div>
 </div>
 
@@ -507,13 +519,13 @@
                     </p>
                     <h4 style="color:#3e2c1b; margin:20px 0 10px;">📖 主要参考文献</h4>
                     <ul style="color:#5a3e2b; font-size:0.85rem; line-height:1.9; padding-left:20px;">
-                        <li>孙少毅. 大地湾仰韶文化彩陶鱼纹研究[D]. 西北师范大学, 2021.</li>
-                        <li>韩建业. 彩陶之路: 考古所见早期东西文化交流和亚欧世界体系[M]. 中国社会科学出版社, 2024.</li>
-                        <li>侯丽. 马家窑文化中的水元素探析[J]. 丝绸之路, 2026.</li>
-                        <li>刘杨. 马家窑彩陶纹样的设计解译与应用研究[D]. 鲁迅美术学院, 2025.</li>
-                        <li>李洋. HTML5技术在移动Web前端设计与开发中的应用[J]. 电脑知识与技术, 2026.</li>
-                        <li>王岁林. 大地湾彩陶文化融入园本课程的意义与可行性分析[J]. 天津教育, 2020.</li>
-                        <li>李丹. 以服务设计为驱动的仰韶文化博物馆文创设计实践[D]. 西安石油大学, 2025.</li>
+                        <li>孙少毅. 大地湾仰韶文化彩陶鱼纹研究[D]. 兰州: 西北师范大学, 2021.</li>
+                        <li>韩建业. 彩陶之路: 考古所见早期东西文化交流和亚欧世界体系[M]. 北京: 中国社会科学出版社, 2024.</li>
+                        <li>师瑞玲, 熊燕. 博物馆馆藏史前彩陶的数字化展示[J]. 收藏, 2025(11): 142-145.</li>
+                        <li>Tazetdinov A. 3D Web Development with Three.js and Next.js: Creating end-to-end web applications that contain 3D objects[M]. New Delhi: BPB Publications, 2025.</li>
+                        <li>段伟笑, 魏敏. 基于Three.js的Web3D虚拟汽车展厅设计与实现[J]. 科技传播, 2025, 17(15): 174-177.</li>
+                        <li>严健武, 秦宗蓉, 李新燕. Web前端开发: HTML5+CSS3+JavaScript[M]. 北京: 中国铁道出版社, 2024.</li>
+                        <li>李丹. 以服务设计为驱动的仰韶文化博物馆文创设计实践[D]. 西安: 西安石油大学, 2025.</li>
                     </ul>
                 </div>
             </details>
@@ -631,6 +643,8 @@
             </div>
         </div>
     </div>
+    <!-- 引入彩花特效库 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
